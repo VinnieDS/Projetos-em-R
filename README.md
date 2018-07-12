@@ -9,7 +9,7 @@ Verificar na base mtcars se de acordo com os dados apresentados é possivel esti
 ## Pacotes
 library(caret); library(dplyr); library(ggplot2)
 
-## Analise exploratoria de dados (Distribuições, correlações, Histogramas)
+## Analise exploratoria de dados (Distribuições, correlações & histogramas)
 
 ## Pré - processo (Normalização)
 

@@ -11,15 +11,19 @@ library(caret); library(dplyr); library(ggplot2)
 
 ## Analise exploratoria de dados (Distribuições, correlações & histogramas)
 
-## Pré - processo (Normalização)
+## Pré - processo
 
 ## Seleção de variaveis
 
 ## Reamostragem
 
-## Modelos de regressão linear
+## Modelos de regressão linear (Treino)
 
-## Modelos de regressão com base em arvores de decisão
+## Modelos de regressão com base em arvores de decisão (Treino)
+
+## Modelos de regressão linear (Teste)
+
+## Modelos de regressão com base em arvores de decisão (Teste)
 
 ## Métrica RSME
 

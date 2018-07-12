@@ -7,7 +7,7 @@ Neste repositorio tem os meus projetos e codigos de aprendizado de maquina em R
 Verificar na base mtcars se de acordo com os dados apresentados é possivel estimar com rsme razoavel o consumo de combustivel (mpg) com o metodo de reamostragem de validação cruzada (3, 5, 10, 20) em modelos de regressão linear e modelos de regressão com base em arvores de decisão
 
 ## Pacotes
-caret;dplyr;ggplot2
+library(caret); library(dplyr); library(ggplot2)
 
 ## Analise exploratoria de dados (Distribuições, correlações, Histogramas)
 

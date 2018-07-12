@@ -1,4 +1,4 @@
-# Projetos de Machine Learning em liguagem R.
+# Projetos de Machine Learning em linguagem R.
 
 Neste repositorio tem os meus projetos e codigos de aprendizado de maquina em R
 
@@ -20,3 +20,7 @@ library(caret); library(dplyr); library(ggplot2)
 ## Modelos de regressão linear
 
 ## Modelos de regressão com base em arvores de decisão
+
+## Métrica RSME
+
+## Conclusões

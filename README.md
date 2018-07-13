@@ -34,9 +34,9 @@ pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pc
 ```
 ### Partição da base
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-base = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
-treino = mtcars[base,]
-teste = mtcars[-base,]
+corte = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
+treino = mtcars[corte,]
+teste = mtcars[-corte,]
 ```
 
 ### Modelos de regressão linear (Treino)

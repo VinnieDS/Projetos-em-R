@@ -16,6 +16,7 @@ library(caret); library(dplyr); library(ggplot2); library(datasets); library(psy
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 data(mtcars)
+dim(mtcars)
 
 ```
 ### Analise exploratoria de dados

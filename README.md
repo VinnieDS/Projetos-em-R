@@ -14,10 +14,8 @@ library(caret); library(dplyr); library(datasets); library(psych)
 ```
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
 data(mtcars)
 dim(mtcars)
-
 ```
 ### Analise exploratoria de dados
 
@@ -32,21 +30,29 @@ Painel de estatísticas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
 ```
+Matriz de correlações:
+
+## Transformação de dados
+
+Visando uma melhor performance no modelo criaremos variaveis dummys dos preditores 
+
 ### Partição da base
-Particionando a base com 80% de treino e 20% e sempre mantendo a reprocidade da amostragem.
+Particionando a base com 80% de treino e 20% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
 part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
-### Modelos de regressão linear (Treino)
+### Modelos de regressão linear (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_linear = train(mpg~., data = treino, method = "lm")
+summary(model_linear)
+residuos = resid(model_linear)
 ```
-### Modelos de regressão com base em arvores de decisão (Treino)
-
 ### Modelos de regressão linear (Teste)
+
+### Modelos de regressão com base em arvores de decisão (Treino)
 
 ### Modelos de regressão com base em arvores de decisão (Teste)
 

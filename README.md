@@ -13,20 +13,19 @@ library(caret); library(dplyr); library(ggplot2); library(datasets); library(psy
 
 ```
 
-
 ### Analise exploratoria de dados (Distribuições, correlações & histogramas)
 
 Gráficos de densidade:
-
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 par(mfrow=c(3,3))
 for(i in 1:12) {
   boxplot(mtcars[,i], main=names(mtcars)[i])
 }
-
+```
 Painel de estatísticas:
-
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
-
+```
 Mapa de correlação:
 
 ### Reamostragem

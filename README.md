@@ -9,7 +9,7 @@ Verificar na base mtcars se de acordo com os dados apresentados é possivel esti
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret); library(dplyr); library(ggplot2); library(datasets); library(psych)
+library(caret); library(dplyr); library(datasets); library(psych)
 
 ```
 ### Entrada de dados

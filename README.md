@@ -32,7 +32,12 @@ Painel de estatísticas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
 ```
-### Reamostragem
+### Partição da base
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+base = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
+treino = mtcars[base,]
+teste = mtcars[-base,]
+```
 
 ### Modelos de regressão linear (Treino)
 

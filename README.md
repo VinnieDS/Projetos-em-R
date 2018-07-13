@@ -33,14 +33,17 @@ Painel de estatísticas:
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
 ```
 ### Partição da base
+Particionando a base com 80% de treino e 20% e sempre mantendo a reprocidade da amostragem.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-corte = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
-treino = mtcars[corte,]
-teste = mtcars[-corte,]
+set.seed(25441)
+part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
+treino = mtcars[part,]
+teste = mtcars[-part,]
 ```
-
 ### Modelos de regressão linear (Treino)
-
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+model_linear = train(mpg~., data = treino, method = "lm")
+```
 ### Modelos de regressão com base em arvores de decisão (Treino)
 
 ### Modelos de regressão linear (Teste)

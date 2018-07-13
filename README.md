@@ -13,7 +13,7 @@ library(caret); library(dplyr); library(ggplot2); library(datasets); library(psy
 
 ```
 
-### Analise exploratoria de dados (Distribuições, correlações & histogramas)
+### Analise exploratoria de dados
 
 Gráficos de densidade:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

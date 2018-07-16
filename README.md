@@ -1,12 +1,18 @@
 # Projetos de Machine Learning em R e H2O.
 
-Neste repositorio tem os meus projetos e codigos de aprendizado de máquina e aprendizagem profunda em R e H2O.
+Neste repositorio encontra-se os meus projetos realizados e códigos de aprendizado de máquina e aprendizagem profunda em R e H2O e a fonte de dados vem da UCI repositorios de base de Machine learning, Yahoo Finance e Kaggle.
 
-## Projeto 1: Criação de um modelo de regressão linear para estimar o consumo de combustivel na base Motor Trend Car Road Tests (mtcars).
+## Projeto 1: Criação de um modelo de regressão (linear, multilayer perceptron e random forest) para estimar o consumo de combustivel na base Motor Trend Car Road Tests (mtcars).
 
-Verificar na base mtcars se de acordo com os dados apresentados é possivel estimar com rsme razoável o consumo de combustível (mpg) com o metodo de reamostragem de validação cruzada (10) em modelos de regressão linear
+Este conjunto de dados é uma versão ligeiramente modificada do conjunto de dados fornecido na biblioteca do StatLib. Em consonância com o uso de Ross Quinlan (1993) na previsão do atributo "mpg", 8 das instâncias originais foram removidas porque tinham valores desconhecidos para o atributo "mpg". O conjunto de dados original está disponível no arquivo "auto-mpg.data-original".
+
+"Os dados dizem respeito ao consumo de combustível do ciclo urbano em milhas por galão, a ser previsto em termos de 3 atributos discretos e 5 contínuos de valor múltiplo." (Quinlan, 1993)
+
+As tarefas são verificar na base de dados apresentado é possivel prever o consumo de combustível de cada carro (mpg) via modelo de regressão linear comparando o método de reamostragem de validação cruzada (10) com a validação holdout (80% de treino e 20% de teste) (visando a métrica rsme), a segunda tarefa é fazer a mesma abordagem via floresta aleatória (ntrees = 100) e verificar os resultados e a ultima tarefa e realizar um pré - processo com as variaveis e aplicar uma rede neural multilayer perceptron e realizar a mesma abordagem e verificar.
 
 ## Projeto 2: Criação de um modelo para detecção de anomalias em pneus de caminhões rodoviarios via Autoenconder R.H2O.
+
+
 
 ## Projeto 3: Titanic - Machine Learning from Disaster (Kaggle) abordargem com modelos de redes neurais multilayer perceptron com R e H2O.
 
@@ -24,4 +30,4 @@ A abordagem de um modelo Xgboost para classificar os doadores.
 
 ## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
 
-## Projeto 7: Previsão de preços de casas em Boston.
+## Projeto 7: 

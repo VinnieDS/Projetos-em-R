@@ -9,7 +9,7 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret); library(dplyr); library(datasets); library(psych); library(h2o);
+library(caret); library(dplyr); library(datasets); library(psych); library(h2o);library(mlbench);data(BostonHousing)
 
 ```
 ### Entrada de dados

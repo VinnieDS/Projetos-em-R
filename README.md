@@ -31,3 +31,5 @@ A abordagem de um modelo Xgboost para classificar os doadores.
 ## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
 
 ## Projeto 7: Forecast do valor de mercado do par de moeda BRLUSD com LSTM e analise de sentimentos do mercado após a eleição presidencial do Brasil.
+
+## Projeto 8: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base BreastCancer.

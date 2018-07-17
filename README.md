@@ -32,4 +32,4 @@ A abordagem de um modelo Xgboost para classificar os doadores.
 
 ## Projeto 7: Forecast do valor de mercado do par de moeda BRLUSD com LSTM e analise de sentimentos do mercado após a eleição presidencial do Brasil.
 
-## Projeto 8: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base BreastCancer.
+## Projeto 8: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base Breast Cancer.

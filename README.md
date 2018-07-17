@@ -1,6 +1,6 @@
 # Projetos de Machine Learning em R e H2O.
 
-Neste repositorio encontra-se os meus projetos realizados e códigos de aprendizado de máquina e aprendizagem profunda em R e H2O e a fonte de dados vem da UCI repositorios de base de Machine learning, Yahoo Finance e Kaggle.
+Neste repositório encontram-se os meus projetos realizados e códigos de aprendizado de máquina e aprendizagem profunda em R e H2O. e a fonte de dados vem da UCI repositórios de base de Machine learning, Yahoo Finance e Kaggle.
 
 ## Projeto 1: Criação de um modelo de regressão (linear, multilayer perceptron e random forest) para estimar o consumo de combustivel na base Motor Trend Car Road Tests (mtcars).
 

@@ -26,9 +26,13 @@ mtcars$am = as.factor(mtcars$vs)
 mtcars$gear = as.factor(mtcars$vs)
 mtcars$carb = as.factor(mtcars$vs)
 ```
-## Transformação de dados
+### Transformação de dados
 
 Transformação das variáveis categoricas em variáveis dammys
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+
+```
 
 ### Analise exploratoria de dados
 

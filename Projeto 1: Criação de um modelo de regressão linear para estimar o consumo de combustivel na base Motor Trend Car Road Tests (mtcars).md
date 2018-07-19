@@ -99,7 +99,29 @@ residuos = resid(model_rf)
 
 ### Modelos de regressão com base no Random Forest Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rl = pred(model_rf,teste)
+cv_pred_rl = pred(model_rf,teste)
+```
+### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_linear = train(mpg~., data = treino, method = "lm")
+summary(cv_model_linear)
+residuos = resid(cv_model_linear)
 ```
 
+### Modelos de regressão linear Cross Validation 10 (Teste)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_rl = pred(cv_model_linear,teste)
+```
+
+### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_rf = train(mpg~., data = treino, method = "rf")
+summary(cv_model_rf)
+residuos = resid(cv_model_rf)
+```
+
+### Modelos de regressão com base no Random Forest Cross Validation 10 (Teste)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_pred_rf = pred(cv_model_rf,teste)
+```
 ### Conclusões

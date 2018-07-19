@@ -31,7 +31,9 @@ Painel de estatísticas:
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
 ```
 Matriz de correlações:
-
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+corrplot(mtcars,number.digits = 2, number.cex = 0.75)
+```
 ## Transformação de dados
 
 Visando uma melhor performance no modelo criaremos variaveis dummys dos preditores 
@@ -52,11 +54,8 @@ residuos = resid(model_linear)
 ```
 ### Modelos de regressão linear (Teste)
 
-### Modelos de regressão com base em arvores de decisão (Treino)
+### Modelos de regressão com base no Random Forest (Treino)
 
-### Modelos de regressão com base em arvores de decisão (Teste)
-
-### Métrica RSME
+### Modelos de regressão com base no Random Forest (Teste)
 
 ### Conclusões
-

@@ -68,6 +68,8 @@ mtcars.cor$mpg <- NULL
 mtcars.cor <- cor(mtcars.cor)
 findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
 ```
+
+
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ctrl = trainControl(method = “cv”,number = 10)
@@ -86,7 +88,8 @@ teste = mtcars[-part,]
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_linear = train(mpg~., data = treino, method = "lm")
 summary(model_linear)
-residuos = resid(model_linear)
+plot(resid(model_linear))
+plot(varImp(model_linear))
 ```
 
 ### Modelos de regressão linear Hold-out (Teste)
@@ -98,7 +101,8 @@ pred_rl = pred(model_linear,teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_rf = train(mpg~., data = treino, method = "rf")
 summary(model_rf)
-residuos = resid(model_rf)
+plot(resid(model_rf))
+plot(varImp(model_rf))
 ```
 
 ### Modelos de regressão com base no Random Forest Hold-out (Teste)
@@ -109,7 +113,8 @@ pred_rl = pred(model_rf,teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_linear = train(mpg~., data = treino, method = "lm", trControl = ctrl, metric="Rsquared")
 summary(cv_model_linear)
-residuos = resid(cv_model_linear)
+plot(resid(cv_model_linear))
+plot(varImp(cv_model_linear))
 ```
 
 ### Modelos de regressão linear Cross Validation 10 (Teste)
@@ -121,7 +126,8 @@ pred_rl = pred(cv_model_linear,teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_rf = train(mpg~., data = treino, method = "rf", trControl = ctrl, metric="Rsquared")
 summary(cv_model_rf)
-residuos = resid(cv_model_rf)
+plot(resid(cv_model_rf))
+plot(varImp(cv_model_rf))
 ```
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Teste)

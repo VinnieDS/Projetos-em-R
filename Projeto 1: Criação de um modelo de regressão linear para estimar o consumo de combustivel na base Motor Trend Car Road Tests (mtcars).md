@@ -26,6 +26,9 @@ mtcars$am = as.factor(mtcars$vs)
 mtcars$gear = as.factor(mtcars$vs)
 mtcars$carb = as.factor(mtcars$vs)
 ```
+## Transformação de dados
+
+Transformação das variáveis categoricas em variáveis dammys
 
 ### Analise exploratoria de dados
 
@@ -44,9 +47,6 @@ Matriz de correlações:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
-## Transformação de dados
-
-Transformação das variáveis categoricas em variáveis dammys
 
 ### Partição da base
 Particionando a base com 80% de treino e 20% de teste.

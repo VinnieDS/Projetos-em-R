@@ -12,12 +12,14 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 library(caret); library(dplyr); library(datasets); library(psych);
 
 ```
+
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data(mtcars)
 dim(mtcars)
 str(mtcars)
 ```
+
 ### Transformação do tipo de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mtcars$cyl = as.factor(mtcars$cyl)
@@ -26,8 +28,8 @@ mtcars$am = as.factor(mtcars$am)
 mtcars$gear = as.factor(mtcars$gear)
 mtcars$carb = as.factor(mtcars$carb)
 ```
-### Transformação de dados
 
+### Transformação de dados
 Transformação das variáveis categoricas em variáveis dammys
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
@@ -35,7 +37,6 @@ Transformação das variáveis categoricas em variáveis dammys
 ```
 
 ### Analise exploratoria de dados
-
 Gráficos de histograma:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 par(mfrow=c(3,3))
@@ -59,6 +60,15 @@ Matriz de correlações:
 corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
 
+### Seleção de variáveis
+Verificar se temos variaveis preditoras com correlação 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+mtcars.cor <- mtcars[, sapply(mtcars, is.numeric)]
+mtcars.cor$mpg <- NULL
+mtcars.cor <- cor(mtcars.cor)
+findCorrelation(mtcars.cor, cutoff = .7, verbose = T, names = T)
+```
+
 ### Partição da base
 Particionando a base com 80% de treino e 20% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -67,26 +77,27 @@ part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
-### Modelos de regressão linear (Treino e resultados)
+
+### Modelos de regressão linear Hold-out (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_linear = train(mpg~., data = treino, method = "lm")
 summary(model_linear)
 residuos = resid(model_linear)
 ```
 
-### Modelos de regressão linear (Teste)
+### Modelos de regressão linear Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = pred(model_linear,teste)
 ```
 
-### Modelos de regressão com base no Random Forest (Treino)
+### Modelos de regressão com base no Random Forest Hold-out (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_rf = train(mpg~., data = treino, method = "rf")
 summary(model_rf)
 residuos = resid(model_rf)
 ```
 
-### Modelos de regressão com base no Random Forest (Teste)
+### Modelos de regressão com base no Random Forest Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = pred(model_rf,teste)
 ```

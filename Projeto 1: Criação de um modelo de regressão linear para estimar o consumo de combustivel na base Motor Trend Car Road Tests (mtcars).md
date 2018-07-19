@@ -99,7 +99,7 @@ residuos = resid(model_rf)
 
 ### Modelos de regressão com base no Random Forest Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_pred_rl = pred(model_rf,teste)
+pred_rl = pred(model_rf,teste)
 ```
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

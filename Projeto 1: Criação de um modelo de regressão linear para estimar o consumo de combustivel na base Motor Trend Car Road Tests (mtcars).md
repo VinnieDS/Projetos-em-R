@@ -20,7 +20,7 @@ str(mtcars)
 ```
 ### Transformação do tipo de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-mtcars$cyl= as.factor(mtcars$cyl)
+mtcars$cyl = as.factor(mtcars$cyl)
 mtcars$vs = as.factor(mtcars$vs)
 mtcars$am = as.factor(mtcars$vs)
 mtcars$gear = as.factor(mtcars$vs)

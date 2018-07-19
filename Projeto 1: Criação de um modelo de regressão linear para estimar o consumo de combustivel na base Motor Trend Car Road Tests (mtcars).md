@@ -9,7 +9,7 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret); library(dplyr); library(datasets); library(psych);
+library(caret);library(dplyr);library(datasets);library(psych);
 
 ```
 
@@ -61,14 +61,24 @@ corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
 
 ### Seleção de variáveis
-Verificação se temos variáveis preditoras com correlação acima de 0.70
+
+Verificação de variáveis preditoras combinadas linearmente
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-mtcars.cor <- mtcars[, sapply(mtcars, is.numeric)]
-mtcars.cor$mpg <- NULL
-mtcars.cor <- cor(mtcars.cor)
-findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
+combolinear = findLinearCombos(mtcars)
 ```
 
+Verificação de variáveis preditoras com correlação acima de 0.70
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+mtcars.cor = mtcars[, sapply(mtcars, is.numeric)]
+mtcars.cor$mpg = NULL
+mtcars.cor = cor(mtcars.cor)
+autocor = findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
+```
+
+Base com a seleção de variáveis
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+mtcars
+```
 
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

@@ -61,12 +61,12 @@ corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
 
 ### Seleção de variáveis
-Verificar se temos variaveis preditoras com correlação 
+Verificar se temos variaveis preditoras com correlação acima de 0.70
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mtcars.cor <- mtcars[, sapply(mtcars, is.numeric)]
 mtcars.cor$mpg <- NULL
 mtcars.cor <- cor(mtcars.cor)
-findCorrelation(mtcars.cor, cutoff = .7, verbose = T, names = T)
+findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
 ```
 
 ### Partição da base

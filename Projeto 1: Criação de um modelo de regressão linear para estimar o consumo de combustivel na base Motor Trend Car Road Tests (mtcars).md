@@ -22,9 +22,9 @@ str(mtcars)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mtcars$cyl = as.factor(mtcars$cyl)
 mtcars$vs = as.factor(mtcars$vs)
-mtcars$am = as.factor(mtcars$vs)
-mtcars$gear = as.factor(mtcars$vs)
-mtcars$carb = as.factor(mtcars$vs)
+mtcars$am = as.factor(mtcars$am)
+mtcars$gear = as.factor(mtcars$gear)
+mtcars$carb = as.factor(mtcars$carb)
 ```
 ### Transformação de dados
 

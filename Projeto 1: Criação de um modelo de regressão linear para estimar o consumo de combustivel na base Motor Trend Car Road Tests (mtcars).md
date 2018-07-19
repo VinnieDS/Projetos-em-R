@@ -16,7 +16,17 @@ library(caret); library(dplyr); library(datasets); library(psych); library(h2o)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data(mtcars)
 dim(mtcars)
+str(mtcars)
 ```
+### Transformação do tipo de dados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+mtcars$cyl= as.factor(mtcars$cyl)
+mtcars$vs = as.factor(mtcars$vs)
+mtcars$am = as.factor(mtcars$vs)
+mtcars$gear = as.factor(mtcars$vs)
+mtcars$carb = as.factor(mtcars$vs)
+```
+
 ### Analise exploratoria de dados
 
 Gráficos de boxplot:
@@ -36,7 +46,7 @@ corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
 ## Transformação de dados
 
-Visando uma melhor performance no modelo criaremos variaveis dummys dos preditores 
+Transformação das variáveis categoricas em variáveis dammys
 
 ### Partição da base
 Particionando a base com 80% de treino e 20% de teste.

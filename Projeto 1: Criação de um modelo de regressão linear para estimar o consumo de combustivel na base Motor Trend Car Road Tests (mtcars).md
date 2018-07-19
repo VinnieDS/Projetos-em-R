@@ -61,7 +61,7 @@ corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 ```
 
 ### Seleção de variáveis
-Verificar se temos variaveis preditoras com correlação acima de 0.70
+Verificação se temos variáveis preditoras com correlação acima de 0.70
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mtcars.cor <- mtcars[, sapply(mtcars, is.numeric)]
 mtcars.cor$mpg <- NULL
@@ -84,7 +84,7 @@ treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
 
-### Modelos de regressão linear Hold-out (Treino e resultados)
+### Modelo de regressão linear Hold-out (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 model_linear = train(mpg~., data = treino, method = "lm")
 summary(model_linear)
@@ -92,9 +92,15 @@ plot(resid(model_linear))
 plot(varImp(model_linear))
 ```
 
-### Modelos de regressão linear Hold-out (Teste)
+### Modelo de regressão linear Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = pred(model_linear,teste)
+```
+
+### Resultados modelo de regressão linear Hold-out
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+res_model_linear = data.frame(obs = treino$mpg, pred=pred_rl)
+defaultSummary(res_model_linear)
 ```
 
 ### Modelos de regressão com base no Random Forest Hold-out (Treino)
@@ -109,6 +115,13 @@ plot(varImp(model_rf))
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = pred(model_rf,teste)
 ```
+
+### Resultados modelos de regressão com base no Random Forest Hold-out
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+res_model_rf = data.frame(obs = treino$mpg, pred=pred_rf)
+defaultSummary(res_model_rf)
+```
+
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_linear = train(mpg~., data = treino, method = "lm", trControl = ctrl, metric="Rsquared")

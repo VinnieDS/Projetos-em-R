@@ -68,6 +68,10 @@ mtcars.cor$mpg <- NULL
 mtcars.cor <- cor(mtcars.cor)
 findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
 ```
+### Controle do treinamento
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ctrl = trainControl(method = “cv”,number = 10)
+```
 
 ### Partição da base
 Particionando a base com 80% de treino e 20% de teste.
@@ -103,7 +107,7 @@ pred_rl = pred(model_rf,teste)
 ```
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_linear = train(mpg~., data = treino, method = "lm")
+cv_model_linear = train(mpg~., data = treino, method = "lm", trControl = ctrl, metric= "Rsquared")
 summary(cv_model_linear)
 residuos = resid(cv_model_linear)
 ```
@@ -115,7 +119,7 @@ pred_rl = pred(cv_model_linear,teste)
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_rf = train(mpg~., data = treino, method = "rf")
+cv_model_rf = train(mpg~., data = treino, method = "rf", trControl = ctrl, metric= "Rsquared")
 summary(cv_model_rf)
 residuos = resid(cv_model_rf)
 ```

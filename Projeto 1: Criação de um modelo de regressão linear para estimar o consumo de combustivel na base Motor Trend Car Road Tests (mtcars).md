@@ -40,7 +40,7 @@ Gráficos de histograma:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 par(mfrow=c(3,3))
 for(i in 1:12) {
-  boxplot(mtcars[,i], main=names(mtcars)[i])
+  hist(mtcars[,i], main=names(mtcars)[i])
 }
 ```
 
@@ -51,7 +51,7 @@ pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pc
 
 Tabelas cruzadas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
+
 ```
 
 Matriz de correlações:

@@ -27,3 +27,5 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 ## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
 
 ## Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base Breast Cancer.
+
+## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.

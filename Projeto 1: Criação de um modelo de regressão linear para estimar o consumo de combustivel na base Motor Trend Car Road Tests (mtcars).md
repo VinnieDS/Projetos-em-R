@@ -9,7 +9,7 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret); library(dplyr); library(datasets); library(psych); library(h2o)
+library(caret); library(dplyr); library(datasets); library(psych);
 
 ```
 ### Entrada de dados
@@ -73,10 +73,22 @@ model_linear = train(mpg~., data = treino, method = "lm")
 summary(model_linear)
 residuos = resid(model_linear)
 ```
+
 ### Modelos de regressão linear (Teste)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_rl = pred(model_linear,teste)
+```
 
 ### Modelos de regressão com base no Random Forest (Treino)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+model_rf = train(mpg~., data = treino, method = "rf")
+summary(model_rf)
+residuos = resid(model_rf)
+```
 
 ### Modelos de regressão com base no Random Forest (Teste)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_rl = pred(model_rf,teste)
+```
 
 ### Conclusões

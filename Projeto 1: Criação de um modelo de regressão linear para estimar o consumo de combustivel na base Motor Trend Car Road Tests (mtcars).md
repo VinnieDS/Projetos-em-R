@@ -33,7 +33,9 @@ Informações sobre Atributos:
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret);library(dplyr);library(datasets);library(psych);library(car);library(corrplot);library(stats);library(ggplot2);
+library(caret);library(dplyr);library(datasets);
+library(psych);library(car);library(corrplot);
+library(stats);library(ggplot2);
 
 ```
 

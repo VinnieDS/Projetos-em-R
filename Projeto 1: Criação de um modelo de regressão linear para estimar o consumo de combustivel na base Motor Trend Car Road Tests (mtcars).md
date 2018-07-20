@@ -6,6 +6,18 @@ Este conjunto de dados é uma versão ligeiramente modificada do conjunto de dad
 
 As tarefas são verificar na base de dados apresentado é possivel prever o consumo de combustível de cada carro (mpg) via modelo de regressão linear comparando o método de reamostragem de validação cruzada (10) com a validação holdout (80% de treino e 20% de teste) (visando a métrica rsme), a segunda tarefa é fazer a mesma abordagem via floresta aleatória (ntrees = 100) e verificar os resultados e a ultima tarefa e realizar um pré - processo com as variaveis e aplicar uma rede neural multilayer perceptron e realizar a mesma abordagem e verificar.
 
+Informações sobre Atributos:
+
+1. mpg: continuous 
+2. cylinders: multi-valued discrete 
+3. displacement: continuous 
+4. horsepower: continuous 
+5. weight: continuous 
+6. acceleration: continuous 
+7. model year: multi-valued discrete 
+8. origin: multi-valued discrete 
+9. car name: string (unique for each instance)
+
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 

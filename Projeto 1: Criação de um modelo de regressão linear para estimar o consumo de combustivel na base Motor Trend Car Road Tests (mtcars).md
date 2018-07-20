@@ -173,7 +173,7 @@ plot(varImp(model_mlp))
 pred_mlp = predict(model_mlp,teste)
 ```
 
-### Resultados modelos de regressão com base no Random Forest Hold-out
+### Resultados modelos de regressão com base no MLP Hold-out
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 res_model_mlp = data.frame(obs = treino$mpg, pred=pred_mlp)
 defaultSummary(res_model_mlp)

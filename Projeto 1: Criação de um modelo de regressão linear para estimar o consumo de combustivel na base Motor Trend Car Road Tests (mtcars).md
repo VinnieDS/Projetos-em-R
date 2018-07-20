@@ -92,6 +92,7 @@ corrplot(mtcars,number.digits = 2, number.cex = 0.75)
 Verificação de variáveis preditoras combinadas linearmente
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 combolinear = findLinearCombos(mtcars)
+mtcars = mtcars[,-combolinear$remove]
 ```
 
 Verificação de variáveis preditoras com correlação acima de 0.70
@@ -100,6 +101,7 @@ mtcars.cor = mtcars[, sapply(mtcars, is.numeric)]
 mtcars.cor$mpg = NULL
 mtcars.cor = cor(mtcars.cor)
 autocor = findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
+mtcars = mtcars[,-c(2,4,5,6,8,10,11,12,13)]
 ```
 
 Base com a seleção de variáveis

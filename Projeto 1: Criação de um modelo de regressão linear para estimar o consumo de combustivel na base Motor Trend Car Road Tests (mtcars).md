@@ -33,7 +33,7 @@ Informações sobre Atributos:
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret);library(dplyr);library(datasets);library(psych);
+library(caret);library(dplyr);library(datasets);library(psych);library(car);library(corrplot);library(stats);library(ggplot2);
 
 ```
 
@@ -53,6 +53,45 @@ mtcars$gear = as.factor(mtcars$gear)
 mtcars$carb = as.factor(mtcars$carb)
 ```
 
+### Analise exploratoria de dados
+
+Painel de estatísticas:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
+```
+
+Matriz de correlações:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+corrplot(mtcars)
+```
+
+Relação entre as variáveis (mpg x am):
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars, aes(y=mpg, x=factor(am, labels = c("automatic", "manual")), fill=factor(am)))+
+        geom_violin(colour="black", size=1)+
+        xlab("transmission") + ylab("MPG")
+
+ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cyl)))+
+        geom_violin(colour="black", size=1)+
+        xlab("CYL") + ylab("MPG")
+
+```
+
+
+## Testes de hipóteses
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
+result = data.frame("t-statistic"  = test$statistic, 
+                     "df" = test$parameter,
+                     "p-value"  = test$p.value,
+                     "lower CL" = test$conf.int[1],
+                     "upper CL" = test$conf.int[2],
+                     "automatic mean" = test$estimate[1],
+                     "manual mean" = test$estimate[2],
+                      row.names = "")
+```
+
+
 ### Transformação de dados
 Padronização das variáveis numericas
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -68,26 +107,13 @@ mtcars <- data.frame(predict(dummy, newdata = mtcars))
 print(mtcars)
 ```
 
-### Analise exploratoria de dados
-Gráficos de histograma:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-par(mfrow=c(3,3))
-for(i in 1:12) {
-  hist(mtcars[,i], main=names(mtcars)[i])
-}
-```
-
-Painel de estatísticas:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
-```
-
-Matriz de correlações:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-corrplot(mtcars,number.digits = 2, number.cex = 0.75)
-```
-
 ### Seleção de variáveis
+
+Detectando colinearidade
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+fitvif = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
+kable(vif(fitvif),align = 'c')
+```
 
 Verificação de variáveis preditoras combinadas linearmente
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -111,7 +137,7 @@ ctrl = trainControl(method = “cv”,number = 10)
 ```
 
 ### Partição da base
-Particionando a base com 80% de treino e 20% de teste.
+Particionando a base com 70% de treino e 30% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
 part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)

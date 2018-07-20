@@ -8,15 +8,17 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 
 Informações sobre Atributos:
 
-1. mpg: continuous 
-2. cylinders: multi-valued discrete 
-3. displacement: continuous 
-4. horsepower: continuous 
-5. weight: continuous 
-6. acceleration: continuous 
-7. model year: multi-valued discrete 
-8. origin: multi-valued discrete 
-9. car name: string (unique for each instance)
+1]   mpg	 Miles/(US) gallon
+2]	 cyl	 Number of cylinders
+3]	 disp	 Displacement (cu.in.)
+4]	 hp	 Gross horsepower
+5]	 drat	 Rear axle ratio
+6]	 wt	 Weight (1000 lbs)
+7]	 qsec	 1/4 mile time
+8]	 vs	 Engine (0 = V-shaped, 1 = straight)
+9]	 am	 Transmission (0 = automatic, 1 = manual)
+10]	 gear	 Number of forward gears
+11]	 carb	 Number of carburetors
 
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -44,7 +46,9 @@ mtcars$carb = as.factor(mtcars$carb)
 ### Transformação de dados
 Transformação das variáveis categoricas em variáveis dammys
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+dummy <- dummyVars(" ~ .", data = mtcars)
+mtcars <- data.frame(predict(dummy, newdata = mtcars))
+print(mtcars)
 
 ```
 
@@ -60,11 +64,6 @@ for(i in 1:12) {
 Painel de estatísticas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
-```
-
-Tabelas cruzadas:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
 ```
 
 Matriz de correlações:
@@ -116,7 +115,7 @@ plot(varImp(model_linear))
 
 ### Modelo de regressão linear Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rl = pred(model_linear,teste)
+pred_rl = predict(model_linear,teste)
 ```
 
 ### Resultados modelo de regressão linear Hold-out
@@ -135,7 +134,7 @@ plot(varImp(model_rf))
 
 ### Modelos de regressão com base no Random Forest Hold-out (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rl = pred(model_rf,teste)
+pred_rf = predict(model_rf,teste)
 ```
 
 ### Resultados modelos de regressão com base no Random Forest Hold-out
@@ -156,6 +155,11 @@ plot(varImp(cv_model_linear))
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = pred(cv_model_linear,teste)
 ```
+### Resultados modelo de regressão linear Cross Validation 10
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+res_cv_model_linear = data.frame(obs = treino$mpg, pred=pred_rl)
+defaultSummary(res_cv_model_linear)
+```
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -167,6 +171,13 @@ plot(varImp(cv_model_rf))
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_pred_rf = pred(cv_model_rf,teste)
+cv_pred_rf = predict(cv_model_rf,teste)
 ```
+
+### Resultados modelo de regressão linear Cross Validation 10
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+res_cv_model_rf = data.frame(obs = treino$mpg, pred=pred_rl)
+defaultSummary(res_cv_model_rf)
+```
+
 ### Conclusões

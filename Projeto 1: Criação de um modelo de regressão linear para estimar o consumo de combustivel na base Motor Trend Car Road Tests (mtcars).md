@@ -8,27 +8,27 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 
 Informações sobre Atributos:
 
-1]   mpg	 Miles/(US) gallon
+1] mpg = Miles/(US) gallon
 
-2]	 cyl	 Number of cylinders
+2] cyl = Number of cylinders
 
-3]	 disp	 Displacement (cu.in.)
+3] disp = Displacement (cu.in.)
 
-4]	 hp	 Gross horsepower
+4] hp = Gross horsepower
 
-5]	 drat	 Rear axle ratio
+5] drat = Rear axle ratio
 
-6]	 wt	 Weight (1000 lbs)
+6] wt = Weight (1000 lbs)
 
-7]	 qsec	 1/4 mile time
+7] qsec = 1/4 mile time
 
-8]	 vs	 Engine (0 = V-shaped, 1 = straight)
+8] vs = Engine (0 = V-shaped, 1 = straight)
 
-9]	 am	 Transmission (0 = automatic, 1 = manual)
+9] am = Transmission (0 = automatic, 1 = manual)
 
-10]	 gear	 Number of forward gears
+10] gear = Number of forward gears
 
-11]	 carb	 Number of carburetors
+11] carb = Number of carburetors
 
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -56,8 +56,9 @@ mtcars$carb = as.factor(mtcars$carb)
 ### Transformação de dados
 Padronização das variáveis numericas
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-preprocessParams = preProcess(mtcars,method=c("center", "scale"))
+preprocessParams = preProcess(mtcars[,-1],method=c("center", "scale"))
 mtcars = predict(preprocessParams, mtcars)
+print(mtcars)
 ```
 
 Transformação das variáveis categoricas em variáveis dammys
@@ -156,6 +157,24 @@ pred_rf = predict(model_rf,teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 res_model_rf = data.frame(obs = treino$mpg, pred=pred_rf)
 defaultSummary(res_model_rf)
+```
+### Modelos de regressão com base no MLP Hold-out (Treino)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+model_mlp = train(mpg~., data = treino, method = "nnet")
+summary(model_mlp)
+plot(resid(model_mlp))
+plot(varImp(model_mlp))
+```
+
+### Modelos de regressão com base no MLP Hold-out (Teste)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_mlp = predict(model_mlp,teste)
+```
+
+### Resultados modelos de regressão com base no Random Forest Hold-out
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+res_model_mlp = data.frame(obs = treino$mpg, pred=pred_mlp)
+defaultSummary(res_model_mlp)
 ```
 
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)

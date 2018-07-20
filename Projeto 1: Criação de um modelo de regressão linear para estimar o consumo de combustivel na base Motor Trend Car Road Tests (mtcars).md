@@ -101,12 +101,8 @@ mtcars.cor = mtcars[, sapply(mtcars, is.numeric)]
 mtcars.cor$mpg = NULL
 mtcars.cor = cor(mtcars.cor)
 autocor = findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
+autocor
 mtcars = mtcars[,-c(2,4,5,6,8,10,11,12,13)]
-```
-
-Base com a seleção de variáveis
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-mtcars
 ```
 
 ### Controle do treinamento

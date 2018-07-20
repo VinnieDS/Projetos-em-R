@@ -9,15 +9,25 @@ As tarefas são verificar na base de dados apresentado é possivel prever o cons
 Informações sobre Atributos:
 
 1]   mpg	 Miles/(US) gallon
+
 2]	 cyl	 Number of cylinders
+
 3]	 disp	 Displacement (cu.in.)
+
 4]	 hp	 Gross horsepower
+
 5]	 drat	 Rear axle ratio
+
 6]	 wt	 Weight (1000 lbs)
+
 7]	 qsec	 1/4 mile time
+
 8]	 vs	 Engine (0 = V-shaped, 1 = straight)
+
 9]	 am	 Transmission (0 = automatic, 1 = manual)
+
 10]	 gear	 Number of forward gears
+
 11]	 carb	 Number of carburetors
 
 ### Pacotes
@@ -44,12 +54,17 @@ mtcars$carb = as.factor(mtcars$carb)
 ```
 
 ### Transformação de dados
+Padronização das variáveis numericas
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+preprocessParams = preProcess(mtcars,method=c("center", "scale"))
+mtcars = predict(preprocessParams, mtcars)
+```
+
 Transformação das variáveis categoricas em variáveis dammys
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dummy <- dummyVars(" ~ .", data = mtcars)
 mtcars <- data.frame(predict(dummy, newdata = mtcars))
 print(mtcars)
-
 ```
 
 ### Analise exploratoria de dados
@@ -100,7 +115,7 @@ ctrl = trainControl(method = “cv”,number = 10)
 Particionando a base com 80% de treino e 20% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
-part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
+part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```

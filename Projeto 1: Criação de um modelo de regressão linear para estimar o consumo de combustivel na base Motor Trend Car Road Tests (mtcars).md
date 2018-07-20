@@ -34,8 +34,8 @@ Informações sobre Atributos:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 library(caret);library(dplyr);library(datasets);
-library(psych);library(car);library(corrplot);
-library(stats);library(ggplot2);
+library(psych);library(car);library(stats);
+library(ggplot2);
 
 ```
 
@@ -59,12 +59,7 @@ mtcars$carb = as.factor(mtcars$carb)
 
 Painel de estatísticas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pairs.panels(mtcars[1:6], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 21)
-```
-
-Matriz de correlações:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-corrplot(mtcars)
+pairs.panels(mtcars[1,3,4,5], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 18)
 ```
 
 Relação entre as variáveis (mpg x am):
@@ -72,7 +67,10 @@ Relação entre as variáveis (mpg x am):
 ggplot(mtcars, aes(y=mpg, x=factor(am, labels = c("automatic", "manual")), fill=factor(am)))+
         geom_violin(colour="black", size=1)+
         xlab("transmission") + ylab("MPG")
+```
 
+Relação entre as variáveis (mpg x cyl):
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cyl)))+
         geom_violin(colour="black", size=1)+
         xlab("CYL") + ylab("MPG")
@@ -97,19 +95,25 @@ result = data.frame("t-statistic"  = test$statistic,
 ### Transformação de dados
 Padronização das variáveis numericas
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-preprocessParams = preProcess(mtcars[,-1],method=c("center", "scale"))
+preprocessParams = preProcess(mtcars[,-1],method=c("pca"))
 mtcars = predict(preprocessParams, mtcars)
 print(mtcars)
 ```
 
 Transformação das variáveis categoricas em variáveis dammys
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dummy <- dummyVars(" ~ .", data = mtcars)
-mtcars <- data.frame(predict(dummy, newdata = mtcars))
+dummy = dummyVars(" ~ .", data = mtcars)
+mtcars = data.frame(predict(dummy, newdata = mtcars))
 print(mtcars)
 ```
 
 ### Seleção de variáveis
+
+Verificação de variáveis
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+varzero = nearZeroVar(mtcars)
+
+```
 
 Detectando colinearidade
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -135,7 +139,7 @@ mtcars = mtcars[,-c(2,4,5,6,8,10,11,12,13)]
 
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ctrl = trainControl(method = “cv”,number = 10)
+ctrl = trainControl(method = "cv",number = 10)
 ```
 
 ### Partição da base
@@ -236,7 +240,7 @@ cv_pred_rf = predict(cv_model_rf,teste)
 
 ### Resultados modelo de regressão linear Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_cv_model_rf = data.frame(obs = treino$mpg, pred=pred_rl)
+res_cv_model_rf = data.frame(obs = treino$mpg, pred=cv_pred_rf)
 defaultSummary(res_cv_model_rf)
 ```
 

@@ -77,8 +77,7 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 
 ```
 
-
-## Testes de hipóteses
+### Testes de hipóteses
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
 result = data.frame("t-statistic"  = test$statistic, 
@@ -90,7 +89,6 @@ result = data.frame("t-statistic"  = test$statistic,
                      "manual mean" = test$estimate[2],
                       row.names = "")
 ```
-
 
 ### Transformação de dados
 Padronização das variáveis numericas
@@ -151,62 +149,6 @@ treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
 
-### Modelo de regressão linear Hold-out (Treino e resultados)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-model_linear = train(mpg~., data = treino, method = "lm")
-summary(model_linear)
-plot(resid(model_linear))
-plot(varImp(model_linear))
-```
-
-### Modelo de regressão linear Hold-out (Teste)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rl = predict(model_linear,teste)
-```
-
-### Resultados modelo de regressão linear Hold-out
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_model_linear = data.frame(obs = treino$mpg, pred=pred_rl)
-defaultSummary(res_model_linear)
-```
-
-### Modelos de regressão com base no Random Forest Hold-out (Treino)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-model_rf = train(mpg~., data = treino, method = "rf")
-summary(model_rf)
-plot(resid(model_rf))
-plot(varImp(model_rf))
-```
-
-### Modelos de regressão com base no Random Forest Hold-out (Teste)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rf = predict(model_rf,teste)
-```
-
-### Resultados modelos de regressão com base no Random Forest Hold-out
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_model_rf = data.frame(obs = treino$mpg, pred=pred_rf)
-defaultSummary(res_model_rf)
-```
-### Modelos de regressão com base no MLP Hold-out (Treino)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-model_mlp = train(mpg~., data = treino, method = "nnet")
-summary(model_mlp)
-plot(resid(model_mlp))
-plot(varImp(model_mlp))
-```
-
-### Modelos de regressão com base no MLP Hold-out (Teste)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_mlp = predict(model_mlp,teste)
-```
-
-### Resultados modelos de regressão com base no MLP Hold-out
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_model_mlp = data.frame(obs = treino$mpg, pred=pred_mlp)
-defaultSummary(res_model_mlp)
-```
-
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_linear = train(mpg~., data = treino, method = "lm", trControl = ctrl, metric="Rsquared")
@@ -238,7 +180,7 @@ plot(varImp(cv_model_rf))
 cv_pred_rf = predict(cv_model_rf,teste)
 ```
 
-### Resultados modelo de regressão linear Cross Validation 10
+### Resultados modelo de regressão com base no Random Forest Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 res_cv_model_rf = data.frame(obs = treino$mpg, pred=cv_pred_rf)
 defaultSummary(res_cv_model_rf)

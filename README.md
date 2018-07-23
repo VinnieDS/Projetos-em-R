@@ -30,7 +30,7 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 
 ## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.
 
-## Projeto 9: Dados do Banco Mundial (1960 a 2016) Analise explorátoria de dados, criação de target, analise de cluster e o desenvolvimento de um modelo preditivo
+## Projeto 9: Dados do Banco Mundial (1960 a 2016) Analise explorátoria de dados, criação de target, analise de cluster, o desenvolvimento de um modelo preditivo e visualização.
 
 População de países, taxa de fertilidade e expectativa de vida. 
 

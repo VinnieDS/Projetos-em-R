@@ -31,8 +31,11 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 ## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.
 
 ## Projeto 9: Dados do Banco Mundial (1960 a 2016) Analise explorátoria de dados, criação de target, analise de cluster e o desenvolvimento de um modelo preditivo
+
 População de países, taxa de fertilidade e expectativa de vida. 
 
 https://www.kaggle.com/gemartin/world-bank-data-1960-to-2016
 
 ## Projeto 10: Time series in R
+
+A previsão e modelagem de séries temporais desempenham um papel importante na análise de dados. A análise de séries temporais é um ramo especializado da estatística amplamente utilizado em campos como a Econometria e a Pesquisa Operacional. A série temporal está sendo amplamente usada em análise e ciência de dados. Isso é especificamente projetado problema de série temporal para você e desafio é prever o tráfego.

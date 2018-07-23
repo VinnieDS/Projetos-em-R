@@ -34,3 +34,5 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 População de países, taxa de fertilidade e expectativa de vida. 
 
 https://www.kaggle.com/gemartin/world-bank-data-1960-to-2016
+
+## Projeto 10: Time series in R

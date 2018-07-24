@@ -79,21 +79,6 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 
 ```
 
-### Testes de hipóteses
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
-result = data.frame("t-statistic"  = test$statistic, 
-                     "df" = test$parameter,
-                     "p-value"  = test$p.value,
-                     "IC abaixo" = test$conf.int[1],
-                     "IC alto" = test$conf.int[2],
-                     "Média automatica" = test$estimate[1],
-                     "Média manual" = test$estimate[2],
-                      row.names = "")
-kable(x = round(result,3),align = 'c')
-```
-
 ### Seleção de variáveis
 
 Procedimento de seleção do modelo
@@ -125,6 +110,7 @@ Ajustando o modelo final
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_rl_final = lm(mpg ~ wt+qsec+factor(am), data = mtcars)
 summary(modelo_rl_final)$coef
+summary(modelo_rl_final)$r.squared
 ```
 
 ### Controle do treinamento
@@ -143,7 +129,7 @@ teste = mtcars[-part,]
 
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_linear = train(mpg~wt+qsec+factor(am), data = treino, method = "lm", metric="Rsquared")
+cv_model_linear = train(mpg~wt+qsec+factor(am), data = treino, method = "lm", trainControl = ctrl, metric="Rsquared")
 summary(cv_model_linear)
 plot(resid(cv_model_linear))
 plot(varImp(cv_model_linear))
@@ -153,6 +139,7 @@ plot(varImp(cv_model_linear))
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_rl = predict(cv_model_linear,teste)
 ```
+
 ### Resultados modelo de regressão linear Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 res_cv_model_linear = data.frame(obs = teste$mpg, pred=pred_rl)
@@ -161,7 +148,7 @@ defaultSummary(res_cv_model_linear)
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_rf = train(mpg~wt+qsec+factor(am), data = treino, method = "rf", metric="Rsquared")
+cv_model_rf = train(mpg~wt+qsec+factor(am), data = treino, method = "rf", trainControl = ctrl, metric="Rsquared")
 summary(cv_model_rf)
 plot(resid(cv_model_rf))
 ```

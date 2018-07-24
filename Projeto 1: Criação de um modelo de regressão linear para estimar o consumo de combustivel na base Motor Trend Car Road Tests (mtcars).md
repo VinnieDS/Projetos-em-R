@@ -36,12 +36,14 @@ Informações sobre Atributos:
 library(caret);library(dplyr);library(datasets);
 library(psych);library(car);library(stats);
 library(ggplot2);library(MASS);library(car);
+library(knitr);library(printr);
 
 ```
 
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data(mtcars)
+kable(head(mtcars),align = 'c')
 dim(mtcars)
 str(mtcars)
 ```

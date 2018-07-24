@@ -80,22 +80,10 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 ```
 
 ### Testes de hipóteses
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-test1 = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
-result1 = data.frame("t-statistic"  = test$statistic, 
-                     "df" = test$parameter,
-                     "p-value"  = test$p.value,
-                     "IC abaixo" = test$conf.int[1],
-                     "IC alto" = test$conf.int[2],
-                     "Média automatica" = test$estimate[1],
-                     "Média manual" = test$estimate[2],
-                      row.names = "")
-kable(x = round(result1,3),align = 'c')
-```
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-test2 = t.test(mpg ~ cyl, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
-result2 = data.frame("t-statistic"  = test$statistic, 
+test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
+result = data.frame("t-statistic"  = test$statistic, 
                      "df" = test$parameter,
                      "p-value"  = test$p.value,
                      "IC abaixo" = test$conf.int[1],
@@ -103,7 +91,7 @@ result2 = data.frame("t-statistic"  = test$statistic,
                      "Média automatica" = test$estimate[1],
                      "Média manual" = test$estimate[2],
                       row.names = "")
-kable(x = round(result2,3),align = 'c')
+kable(x = round(result,3),align = 'c')
 ```
 
 ### Seleção de variáveis
@@ -119,7 +107,10 @@ kable(vif(fitvif),align = 'c')
 ```
 Método de seleção gradual
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars))$coef
+fit = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
+step = stepAIC(fit, direction="both", trace=FALSE)
+summary(step)$coeff
+summary(step)$r.squared
 ```
 Teste de razão de verossimilhança
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -142,17 +133,17 @@ ctrl = trainControl(method = "cv",number = 10)
 ```
 
 ### Partição da base
-Particionando a base com 80% de treino e 20% de teste.
+Particionando a base com 70% de treino e 30% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
-part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
+part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
 
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_linear = train(mpg~wt+qsec+factor(am), data = treino, method = "lm", trControl = ctrl, metric="Rsquared")
+cv_model_linear = train(mpg~wt+qsec+factor(am), data = treino, method = "lm", metric="Rsquared")
 summary(cv_model_linear)
 plot(resid(cv_model_linear))
 plot(varImp(cv_model_linear))
@@ -160,17 +151,17 @@ plot(varImp(cv_model_linear))
 
 ### Modelos de regressão linear Cross Validation 10 (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pred_rl = pred(cv_model_linear,teste)
+pred_rl = predict(cv_model_linear,teste)
 ```
 ### Resultados modelo de regressão linear Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_cv_model_linear = data.frame(obs = treino$mpg, pred=pred_rl)
+res_cv_model_linear = data.frame(obs = teste$mpg, pred=pred_rl)
 defaultSummary(res_cv_model_linear)
 ```
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_rf = train(mpg~wt+qsec+factor(am), data = treino, method = "rf", trControl = ctrl, metric="Rsquared")
+cv_model_rf = train(mpg~wt+qsec+factor(am), data = treino, method = "rf", metric="Rsquared")
 summary(cv_model_rf)
 plot(resid(cv_model_rf))
 ```
@@ -182,7 +173,7 @@ cv_pred_rf = predict(cv_model_rf,teste)
 
 ### Resultados modelo de regressão com base no Random Forest Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_cv_model_rf = data.frame(obs = treino$mpg, pred=cv_pred_rf)
+res_cv_model_rf = data.frame(obs = teste$mpg, pred=cv_pred_rf)
 defaultSummary(res_cv_model_rf)
 ```
 

@@ -140,17 +140,17 @@ ctrl = trainControl(method = "cv",number = 10)
 ```
 
 ### Partição da base
-Particionando a base com 70% de treino e 30% de teste.
+Particionando a base com 80% de treino e 20% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
-part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)
+part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
 
 ### Modelos de regressão linear Cross Validation 10 (Treino e resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_linear = train(mpg~., data = treino, method = "lm", trControl = ctrl, metric="Rsquared")
+cv_model_linear = train(mpg~wt+qsec+factor(am), data = treino, method = "lm", trControl = ctrl, metric="Rsquared")
 summary(cv_model_linear)
 plot(resid(cv_model_linear))
 plot(varImp(cv_model_linear))
@@ -168,10 +168,9 @@ defaultSummary(res_cv_model_linear)
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_rf = train(mpg~., data = treino, method = "rf", trControl = ctrl, metric="Rsquared")
+cv_model_rf = train(mpg~wt+qsec+factor(am), data = treino, method = "rf", trControl = ctrl, metric="Rsquared")
 summary(cv_model_rf)
 plot(resid(cv_model_rf))
-plot(varImp(cv_model_rf))
 ```
 
 ### Modelos de regressão com base no Random Forest Cross Validation 10 (Teste)

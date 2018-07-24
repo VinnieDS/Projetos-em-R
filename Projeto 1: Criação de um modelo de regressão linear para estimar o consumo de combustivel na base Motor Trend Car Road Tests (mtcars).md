@@ -4,7 +4,7 @@ Este conjunto de dados é uma versão ligeiramente modificada do conjunto de dad
 
 "Os dados dizem respeito ao consumo de combustível do ciclo urbano em milhas por galão, a ser previsto em termos de 3 atributos discretos e 5 contínuos de valor múltiplo." (Quinlan, 1993)
 
-Desenvolver um modelo de regressão linear selecionando as variáveis via stepwise e depois de acordo com esse modelo aplicar reamostragem e gerar outros tipos de modelos de regressão para verificar se temos um aumento de performance do que um modelo de regressão linear.
+Desenvolver um modelo de regressão linear selecionando as variáveis via stepwise e depois de acordo com esse modelo aplicar validação cruzada e gerar outros tipos de modelos de regressão para verificar se temos um aumento de performance do que um modelo de regressão linear.
 
 Informações sobre Atributos:
 
@@ -46,15 +46,6 @@ data(mtcars)
 kable(head(mtcars),align = 'c')
 dim(mtcars)
 str(mtcars)
-```
-
-### Transformação do tipo de dados
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-mtcars$cyl = as.factor(mtcars$cyl)
-mtcars$vs = as.factor(mtcars$vs)
-mtcars$am = as.factor(mtcars$am)
-mtcars$gear = as.factor(mtcars$gear)
-mtcars$carb = as.factor(mtcars$carb)
 ```
 
 ### Analise exploratoria de dados
@@ -164,4 +155,14 @@ res_cv_model_rf = data.frame(obs = teste$mpg, pred=cv_pred_rf)
 defaultSummary(res_cv_model_rf)
 ```
 
+### Base de comparação de resultados
+Base de resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+base_comp = cbind(obs = res_cv_model_linear$obs,pred_linear = round(res_cv_model_linear$pred,1),pred_rf = round(res_cv_model_rf$pred,1))
+```
+
+Base de métricas 
+
 ### Conclusões
+
+O modelo de regressão com base no algoritmo de Random Forest obteve melhor resultado no r-quadrado e no rmse em relação do modelo linear, mlp e svm (kernel linear) e aplicando a validação cruzada reduzindo o sobreajuste assim construindo um resultado mais proximo do observado a hipotese de melhora da performance aplicando a validação cruzada e aplicando um modelo de regressão diferente do linear, neste caso o Random Forest.

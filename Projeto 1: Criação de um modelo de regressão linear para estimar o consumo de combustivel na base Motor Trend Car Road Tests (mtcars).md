@@ -90,6 +90,7 @@ result1 = data.frame("t-statistic"  = test$statistic,
                      "Média automatica" = test$estimate[1],
                      "Média manual" = test$estimate[2],
                       row.names = "")
+kable(x = round(result1,3),align = 'c')
 ```
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -102,6 +103,7 @@ result2 = data.frame("t-statistic"  = test$statistic,
                      "Média automatica" = test$estimate[1],
                      "Média manual" = test$estimate[2],
                       row.names = "")
+kable(x = round(result2,3),align = 'c')
 ```
 
 ### Seleção de variáveis

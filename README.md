@@ -2,13 +2,12 @@
 
 Neste repositório encontram-se os meus projetos realizados e códigos de aprendizado de máquina e aprendizagem profunda em R e H2O em diversos universos de conhecimentos e todas as abordagens de aprendizado supervisionada e não supervisionada.
 
-## Projeto 1: Criação de um modelo de regressão (linear e random forest) para estimar o consumo de combustivel na base Motor Trend Car Road Tests (mtcars).
+## Projeto 1: Criação de um modelo de regressão para estimar o consumo de combustivel na base Motor Trend Car Road Tests (mtcars).
 
 Este conjunto de dados é uma versão ligeiramente modificada do conjunto de dados fornecido na biblioteca do StatLib. Em consonância com o uso de Ross Quinlan (1993) na previsão do atributo "mpg", 8 das instâncias originais foram removidas porque tinham valores desconhecidos para o atributo "mpg". O conjunto de dados original está disponível no arquivo "auto-mpg.data-original".
-
 "Os dados dizem respeito ao consumo de combustível do ciclo urbano em milhas por galão, a ser previsto em termos de 3 atributos discretos e 5 contínuos de valor múltiplo." (Quinlan, 1993)
 
-As tarefas são verificar na base de dados apresentado é possivel prever o consumo de combustível de cada carro (mpg) via modelo de regressão linear comparando o método de reamostragem de validação cruzada (10) com a validação holdout (80% de treino e 20% de teste) (visando a métrica rsme), a segunda tarefa é fazer a mesma abordagem via floresta aleatória (ntrees = 100) e verificar os resultados e a ultima tarefa e realizar um pré - processo com as variaveis e aplicar uma rede neural multilayer perceptron e realizar a mesma abordagem e verificar.
+Gerar um modelo de regressão selecionando as variáveis via stepwise e depois de acordo com essa função aplicar reamostragem e gerar outros tipos de modelos de regressão para verificar se temos um aumento de performance do que um modelo de regressão linear.
 
 ## Projeto 2: Criação de um modelo para detecção de anomalias em pneus de caminhões rodóviarios via Autoenconder R e H2O.
 

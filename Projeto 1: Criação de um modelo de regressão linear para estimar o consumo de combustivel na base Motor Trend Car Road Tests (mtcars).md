@@ -81,8 +81,20 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 
 ### Testes de hipóteses
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
-result = data.frame("t-statistic"  = test$statistic, 
+test1 = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
+result1 = data.frame("t-statistic"  = test$statistic, 
+                     "df" = test$parameter,
+                     "p-value"  = test$p.value,
+                     "IC abaixo" = test$conf.int[1],
+                     "IC alto" = test$conf.int[2],
+                     "Média automatica" = test$estimate[1],
+                     "Média manual" = test$estimate[2],
+                      row.names = "")
+```
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+test2 = t.test(mpg ~ cyl, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.level = .95)
+result2 = data.frame("t-statistic"  = test$statistic, 
                      "df" = test$parameter,
                      "p-value"  = test$p.value,
                      "IC abaixo" = test$conf.int[1],

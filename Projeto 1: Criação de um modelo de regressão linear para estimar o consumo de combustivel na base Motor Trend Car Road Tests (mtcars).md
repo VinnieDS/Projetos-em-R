@@ -85,10 +85,10 @@ test = t.test(mpg ~ am, data= mtcars, var.equal = FALSE, paired=FALSE ,conf.leve
 result = data.frame("t-statistic"  = test$statistic, 
                      "df" = test$parameter,
                      "p-value"  = test$p.value,
-                     "lower CL" = test$conf.int[1],
-                     "upper CL" = test$conf.int[2],
-                     "automatic mean" = test$estimate[1],
-                     "manual mean" = test$estimate[2],
+                     "IC abaixo" = test$conf.int[1],
+                     "IC alto" = test$conf.int[2],
+                     "Média automatica" = test$estimate[1],
+                     "Média manual" = test$estimate[2],
                       row.names = "")
 ```
 
@@ -109,17 +109,17 @@ summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data 
 ```
 Teste de razão de verossimilhança
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-fit1 <- lm(mpg ~ factor(am), data = mtcars)
-fit2 <- lm(mpg ~ factor(am)+wt, data = mtcars)
-fit3 <- lm(mpg ~ factor(am)+wt+qsec, data = mtcars)
-fit4 <- lm(mpg ~ factor(am)+wt+qsec+hp, data = mtcars)
-fit5 <- lm(mpg ~ factor(am)+wt+qsec+hp+drat, data = mtcars)
+fit1 = lm(mpg ~ factor(am), data = mtcars)
+fit2 = lm(mpg ~ factor(am)+wt, data = mtcars)
+fit3 = lm(mpg ~ factor(am)+wt+qsec, data = mtcars)
+fit4 = lm(mpg ~ factor(am)+wt+qsec+hp, data = mtcars)
+fit5 = lm(mpg ~ factor(am)+wt+qsec+hp+drat, data = mtcars)
 anova(fit1, fit2, fit3, fit4, fit5)
 ```
 Ajustando o modelo final
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-finalfit <- lm(mpg ~ wt+qsec+factor(am), data = mtcars)
-summary(finalfit)$coef
+modelo_rl_final = lm(mpg ~ wt+qsec+factor(am), data = mtcars)
+summary(modelo_rl_final)$coef
 ```
 
 ### Controle do treinamento

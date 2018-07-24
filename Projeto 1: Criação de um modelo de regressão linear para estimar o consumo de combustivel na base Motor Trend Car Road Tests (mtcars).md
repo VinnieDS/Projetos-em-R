@@ -4,7 +4,7 @@ Este conjunto de dados é uma versão ligeiramente modificada do conjunto de dad
 
 "Os dados dizem respeito ao consumo de combustível do ciclo urbano em milhas por galão, a ser previsto em termos de 3 atributos discretos e 5 contínuos de valor múltiplo." (Quinlan, 1993)
 
-As tarefas são verificar na base de dados apresentado é possivel prever o consumo de combustível de cada carro (mpg) via modelo de regressão linear comparando o método de reamostragem de validação cruzada (10) com a validação holdout (80% de treino e 20% de teste) (visando a métrica rsme), a segunda tarefa é fazer a mesma abordagem via floresta aleatória (ntrees = 100) e verificar os resultados e a ultima tarefa e realizar um pré - processo com as variaveis e aplicar uma rede neural multilayer perceptron e realizar a mesma abordagem e verificar.
+Desenvolver um modelo de regressão linear selecionando as variáveis via stepwise e depois de acordo com esse modelo aplicar reamostragem e gerar outros tipos de modelos de regressão para verificar se temos um aumento de performance do que um modelo de regressão linear.
 
 Informações sobre Atributos:
 
@@ -35,7 +35,7 @@ Informações sobre Atributos:
 
 library(caret);library(dplyr);library(datasets);
 library(psych);library(car);library(stats);
-library(ggplot2);
+library(ggplot2);library(MASS);library(car);
 
 ```
 
@@ -90,49 +90,34 @@ result = data.frame("t-statistic"  = test$statistic,
                       row.names = "")
 ```
 
-### Transformação de dados
-Padronização das variáveis numericas
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-preprocessParams = preProcess(mtcars[,-1],method=c("pca"))
-mtcars = predict(preprocessParams, mtcars)
-print(mtcars)
-```
-
-Transformação das variáveis categoricas em variáveis dammys
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dummy = dummyVars(" ~ .", data = mtcars)
-mtcars = data.frame(predict(dummy, newdata = mtcars))
-print(mtcars)
-```
-
 ### Seleção de variáveis
 
-Verificação de variáveis
+Procedimento de seleção do modelo
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-varzero = nearZeroVar(mtcars)
-
+summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars))$coef
 ```
-
 Detectando colinearidade
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fitvif = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
 kable(vif(fitvif),align = 'c')
 ```
-
-Verificação de variáveis preditoras combinadas linearmente
+Método de seleção gradual
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-combolinear = findLinearCombos(mtcars)
-mtcars = mtcars[,-combolinear$remove]
+summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars))$coef
 ```
-
-Verificação de variáveis preditoras com correlação acima de 0.70
+Teste de razão de verossimilhança
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-mtcars.cor = mtcars[, sapply(mtcars, is.numeric)]
-mtcars.cor$mpg = NULL
-mtcars.cor = cor(mtcars.cor)
-autocor = findCorrelation(mtcars.cor, cutoff = .70, verbose = T, names = T)
-autocor
-mtcars = mtcars[,-c(2,4,5,6,8,10,11,12,13)]
+fit1 <- lm(mpg ~ factor(am), data = mtcars)
+fit2 <- lm(mpg ~ factor(am)+wt, data = mtcars)
+fit3 <- lm(mpg ~ factor(am)+wt+qsec, data = mtcars)
+fit4 <- lm(mpg ~ factor(am)+wt+qsec+hp, data = mtcars)
+fit5 <- lm(mpg ~ factor(am)+wt+qsec+hp+drat, data = mtcars)
+anova(fit1, fit2, fit3, fit4, fit5)
+```
+Ajustando o modelo final
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+finalfit <- lm(mpg ~ wt+qsec+factor(am), data = mtcars)
+summary(finalfit)$coef
 ```
 
 ### Controle do treinamento

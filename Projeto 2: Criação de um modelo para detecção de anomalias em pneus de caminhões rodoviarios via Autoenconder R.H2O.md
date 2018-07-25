@@ -46,6 +46,11 @@ Criação de variáveis (Transformação da informação dos trechos)
 
 ### Analise exploratoria de dados no dataset
 
+Historgramas
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
 Iniciar o framework h2o no R

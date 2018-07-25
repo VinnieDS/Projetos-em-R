@@ -81,7 +81,7 @@ Gráfico de reconstrução do dataset
 plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstruction Error')
 ```
 
-### Definição das anomalias em pneus via métrica MSE.
+### Definição das anomalias no dataset.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

@@ -9,12 +9,35 @@ library(h2o);library(dplyr);library(ggplot2);library(MASS);
 
 ### Entrada de dados.
 
-Dados de telemetria
+Dados de telemetria e dos caminhões
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-Dados de rotas
+```
+
+Dados de rotas dos caminhões
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 
 ### Modelagem do dataset com práticas de ETL em dplyr.
 
-### Analise exploratoria de dados.
+### Analise exploratoria de dados no dataset 
 
-### 
+### Modelagem da rede neural Autoencoder não supervisionado via H2O.
+
+Iniciar o h2o.ai
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+h2o.init()
+```
+
+### Analise dos resultados da rede neural Autoencoder.
+
+### Definição das anomalias em pneus via métrica MSE.
+
+### Sinalização no dataset das anomalias.
+
+### Verificação dos trechos com maior frequencia de anomalias detectadas.
+
+### Verificação dos caminhões com maior frequencia de anomalias detectadas.
+
+### Conclusão.

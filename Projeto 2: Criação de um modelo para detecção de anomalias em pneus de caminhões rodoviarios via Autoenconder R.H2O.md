@@ -5,7 +5,6 @@ Na área de manutenção de caminhões recebe as informações de maneira remota
 ### Pacotes.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(h2o);library(dplyr);library(ggplot2);library(MASS);
-
 ```
 
 ### Entrada de dados.

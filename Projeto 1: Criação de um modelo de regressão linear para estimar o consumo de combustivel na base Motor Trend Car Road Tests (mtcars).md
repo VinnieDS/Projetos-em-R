@@ -154,37 +154,20 @@ cv_pred_rf = predict(cv_model_rf,teste)
 res_cv_model_rf = data.frame(obs = teste$mpg, pred=cv_pred_rf)
 defaultSummary(res_cv_model_rf)
 ```
-### Modelos de regressão com base no mlp Cross Validation 10 (Treino)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_mlp = train(mpg~wt+qsec+factor(am), data = treino, method = "nnet", trainControl = ctrl, metric="Rsquared")
-summary(cv_model_mlp)
-plot(resid(cv_model_mlp))
-```
 
-### Modelos de regressão com base no mlp Cross Validation 10 (Teste)
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_pred_mlp = predict(cv_model_mlp,teste)
-```
-
-### Resultados modelo de regressão com base no mlp Cross Validation 10
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-res_cv_model_mlp = data.frame(obs = teste$mpg, pred=cv_pred_mlp)
-defaultSummary(res_cv_model_mlp)
-```
-
-### Modelos de regressão com base no rpart Cross Validation 10 (Treino)
+### Modelos de regressão com base no SVM Cross Validation 10 (Treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_svm = train(mpg~wt+qsec+factor(am), data = treino, method = "svmLinear2", trainControl = ctrl, metric="Rsquared")
 summary(cv_model_svm)
 plot(resid(cv_model_svm))
 ```
 
-### Modelos de regressão com base no rpart Cross Validation 10 (Teste)
+### Modelos de regressão com base no SVM Cross Validation 10 (Teste)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_pred_svm = predict(cv_model_svm,teste)
 ```
 
-### Resultados modelo de regressão com base no rpart Cross Validation 10
+### Resultados modelo de regressão com base no SVM Cross Validation 10
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 res_cv_model_svm = data.frame(obs = teste$mpg, pred=cv_pred_svm)
 defaultSummary(res_cv_model_svm)
@@ -193,14 +176,13 @@ defaultSummary(res_cv_model_svm)
 ### Base de comparação de resultados
 Base de resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-base_comp = cbind(res_cv_model_linear,pred_rf = round(res_cv_model_rf$pred,1),pred_mlp = round(res_cv_model_mlp$pred,1),pred_svm = round(res_cv_model_svm$pred,1))
+base_comp = cbind(res_cv_model_linear,pred_rf = round(res_cv_model_rf$pred,1),pred_svm = round(res_cv_model_svm$pred,1))
 lm=defaultSummary(res_cv_model_linear)
 rf=defaultSummary(res_cv_model_rf)
-ml=defaultSummary(res_cv_model_mlp)
 svm =defaultSummary(res_cv_model_svm)
-base_comp2 = rbind(lm,rf,ml,svm)
+base_comp2 = rbind(lm,rf,svm)
 ```
 
 ### Conclusões
 
-O modelo de regressão com base no algoritmo de Random Forest obteve melhor resultado no r-quadrado e no rmse em relação do modelo linear, mlp e svm (kernel linear) e aplicando a validação cruzada reduzindo o sobreajuste assim construindo um resultado mais proximo do observado a hipotese de melhora da performance aplicando a validação cruzada e aplicando um modelo de regressão diferente do linear, neste caso o Random Forest.
+O modelo de regressão com base no algoritmo de Random Forest obteve melhor resultado no r-quadrado e no rmse em relação do modelo linear e svm (kernel linear) e aplicando a validação cruzada reduzindo o sobreajuste assim construindo um resultado mais proximo do observado a hipotese de melhora da performance aplicando a validação cruzada e aplicando um modelo de regressão diferente do linear, neste caso o Random Forest.

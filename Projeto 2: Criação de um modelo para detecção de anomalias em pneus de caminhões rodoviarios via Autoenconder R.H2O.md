@@ -48,7 +48,7 @@ Criação de variáveis (Transformação da informação dos trechos)
 
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
-Iniciar o framework h2o.ai no R
+Iniciar o framework h2o no R
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```

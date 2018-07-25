@@ -64,7 +64,7 @@ modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                autoencoder = TRUE,
                                reproducible = T,
                                seed = 547813,
-                               hidden = c(6,5,6), epochs = 100)                          
+                               hidden = c(6,5,6), epochs = 100)                         
 ```
 
 Detecção de anomalias do modelo 

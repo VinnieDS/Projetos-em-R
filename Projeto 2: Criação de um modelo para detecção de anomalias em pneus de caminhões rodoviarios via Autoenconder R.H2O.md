@@ -55,10 +55,13 @@ h2o.init()
 
 Inserir os dados no h2o
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-h2o.init()
+
 ```
 
 ### Analise dos resultados da rede neural Autoencoder.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 
 ### Definição das anomalias em pneus via métrica MSE.
 

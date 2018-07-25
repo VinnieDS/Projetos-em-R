@@ -51,6 +51,16 @@ Historgramas
 
 ```
 
+Gráficos Temperatura vs. Pressão
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+Tabela cruzadas Pressão e trecho
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
 Iniciar o framework h2o no R
@@ -63,7 +73,7 @@ Inserir os dados no h2o
 dataset.hex = as.h2o(dataset, destination_frame="dataset.hex")
 ```
 
-Modelo de rede neural Autoencoder (epochs = 100)
+Treino do modelo da rede neural Autoencoder (epochs = 100)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                autoencoder = TRUE,
@@ -72,7 +82,7 @@ modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                hidden = c(6,5,6), epochs = 100)                         
 ```
 
-Detecção de anomalias do modelo 
+Detecção de anomalias do modelo
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset_anomalias = h2o.anomaly(modelo_auto, dataset.hex, per_feature=FALSE)
 head(dataset_anomalias)
@@ -86,15 +96,20 @@ Gráfico de reconstrução do dataset
 plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstruction Error')
 ```
 
-### Definição das anomalias no dataset.
+Ponto de corte dos dados anomalos
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-### Sinalização no dataset das anomalias.
+### Definição das anomalias no dataset.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 
 ### Verificação dos trechos com maior frequencia de anomalias detectadas.
 
 ### Verificação dos caminhões com maior frequencia de anomalias detectadas.
 
 ### Conclusão.
+
+Numa amostra de um mês de telemetria e rotas 

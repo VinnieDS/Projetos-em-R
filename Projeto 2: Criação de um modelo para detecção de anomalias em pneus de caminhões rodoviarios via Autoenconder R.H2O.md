@@ -4,11 +4,10 @@ Na área de manutenção de caminhões recebe as informações de maneira remota
 
 ### Pacotes.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(MASS);
+library(h2o);library(dplyr);library(ggplot2);library(caret);
 ```
 
 ### Entrada de dados.
-
 Dados de telemetria e dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
@@ -20,12 +19,41 @@ Dados de rotas dos caminhões
 ```
 
 ### Modelagem do dataset com práticas de ETL em dplyr.
+Seleção de variáveis
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-### Analise exploratoria de dados no dataset 
+```
+
+Junção das base de telemetria e das rotas dos caminhões
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+Ajustamento dos dados na regra do negócio 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+Criação de variáveis (Classificação estatística dos dados númericos)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+Criação de variáveis (Transformação da informação dos trechos)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+### Analise exploratoria de dados no dataset
 
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
-Iniciar o h2o.ai
+Iniciar o framework h2o.ai no R
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+h2o.init()
+```
+
+Inserir os dados no h2o
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```

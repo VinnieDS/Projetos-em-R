@@ -75,8 +75,10 @@ tab_anomalias = as.data.frame(dataset_anomalias)
 ```
 
 ### Analise dos resultados da rede neural Autoencoder.
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
+Gráfico de reconstrução do dataset
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstruction Error')
 ```
 
 ### Definição das anomalias em pneus via métrica MSE.

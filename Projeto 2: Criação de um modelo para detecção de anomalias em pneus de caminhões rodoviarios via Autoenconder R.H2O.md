@@ -68,39 +68,39 @@ Dataset final:
 
 ### Analise exploratoria de dados no dataset
 
-Historgramas das variáveis de temperatura e pressão
+Historgramas das variáveis de temperatura e pressão:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-Gráficos Temperatura vs. Pressão
+Gráficos Temperatura vs. Pressão:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-Tabela cruzadas Pressão e trecho
+Tabela cruzadas Pressão e trecho:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-Tabela cruzadas Pressão e Posição da roda
+Tabela cruzadas Pressão e Posição da roda:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
-Iniciar o framework h2o no R
+Iniciar o framework h2o no R:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```
 
-Inserir os dados no h2o
+Inserir os dados no h2o:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset.hex = as.h2o(dataset, destination_frame="dataset.hex")
 ```
 
-Treino do modelo da rede neural Autoencoder (epochs = 100)
+Treino do modelo da rede neural Autoencoder (epochs = 100):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                autoencoder = TRUE,
@@ -109,7 +109,7 @@ modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                hidden = c(6,5,6), epochs = 100)                         
 ```
 
-Detecção de anomalias do modelo
+Detecção de anomalias do modelo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset_anomalias = h2o.anomaly(modelo_auto, dataset.hex, per_feature=FALSE)
 head(dataset_anomalias)
@@ -118,12 +118,12 @@ tab_anomalias = as.data.frame(dataset_anomalias)
 
 ### Analise dos resultados da rede neural Autoencoder.
 
-Gráfico de reconstrução do dataset
+Gráfico de reconstrução do dataset:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstrução do dataset')
 ```
 
-Ponto de corte dos dados anomalos
+Ponto de corte dos dados anomalos:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
@@ -139,4 +139,4 @@ Ponto de corte dos dados anomalos
 
 ### Conclusão.
 
-Numa amostra de um mês de telemetria e rotas 
+Numa amostra de um mês de telemetria e rotas

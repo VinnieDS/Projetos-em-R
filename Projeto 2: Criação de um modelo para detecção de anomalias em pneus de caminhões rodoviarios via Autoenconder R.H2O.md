@@ -62,7 +62,7 @@ predict(dummy, dataset)
 
 Dataset final:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+dataset = dataset %>% select()
 ```
 
 

@@ -20,19 +20,17 @@ mydata2 = read.csv2("rota.csv")
 str(mydata2)
 ```
 
-### Modelagem do dataset com práticas de ETL em dplyr.
+### Modelagem do dataset em dplyr.
 Seleção de variáveis
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
 base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
 str(base_telemetria)
 
 base_rotas = mydata2 %>% select(TRUCK,LOC,BLAST,EXCAV,LOAD,DIST,SHIFT,DDMMYY)
 str(base_rotas)
-
 ```
 
-Criação do chaveiro
+Criação do chaveiro (Data & Caminhão)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
@@ -42,7 +40,7 @@ Junção das base de telemetria e das rotas dos caminhões
 
 ```
 
-Ajustamento dos dados na regra do negócio 
+Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

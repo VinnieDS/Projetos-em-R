@@ -4,7 +4,7 @@ Na área de manutenção de caminhões recebe as informações de maneira remota
 
 ### Pacotes.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(caret);
+library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);
 ```
 
 ### Entrada de dados.
@@ -32,6 +32,11 @@ str(base_rotas)
 
 Criação do chaveiro (Data & Caminhão)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+chave = str_c(base_telemetria$vehicleid, base_telemetria$td_time)
+base_telemetria = cbind(chave,base_telemetria)
+
+chave = str_c(base_rotas$TRUCK, base_rotas$tDDMMYY)
+base_rotas = cbind(chave,base_rotas)
 
 ```
 

@@ -21,7 +21,7 @@ str(mydata2)
 ```
 
 ### Modelagem do dataset em dplyr.
-Seleção de variáveis
+Seleção de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
 str(base_telemetria)
@@ -30,7 +30,7 @@ base_rotas = mydata2 %>% select(TRUCK,LOC,BLAST,EXCAV,LOAD,DIST,SHIFT,DDMMYY)
 str(base_rotas)
 ```
 
-Criação do chaveiro (Data & Caminhão)
+Criação do chaveiro (Data & Caminhão):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 chave = str_c(base_telemetria$vehicleid, base_telemetria$td_time)
 base_telemetria = cbind(chave,base_telemetria)
@@ -39,27 +39,27 @@ chave = str_c(base_rotas$TRUCK, base_rotas$tDDMMYY)
 base_rotas = cbind(chave,base_rotas)
 ```
 
-Junção das base de telemetria e das rotas dos caminhões
+Junção das base de telemetria e das rotas dos caminhões:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = left_join(base_telemetria,base_rotas,by="chave")
 ```
 
-Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar)
+Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% filter(td_press<600)
 ```
 
-Criação de variáveis (Classificação estatística dos dados númericos)
+Criação de variáveis (Classificação estatística dos dados númericos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-Criação de variáveis (Transformação da informação dos trechos)
+Criação de variáveis (Transformação da informação dos trechos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-Dataset final
+Dataset final:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

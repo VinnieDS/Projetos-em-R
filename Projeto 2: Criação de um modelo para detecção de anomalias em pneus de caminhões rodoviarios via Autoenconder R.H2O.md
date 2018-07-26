@@ -10,16 +10,27 @@ library(h2o);library(dplyr);library(ggplot2);library(caret);
 ### Entrada de dados.
 Dados de telemetria e dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+mydata1 = read.csv2("C:/Users/vd114342/Desktop/mtcars.csv")
+str(mydata1)
 ```
 
 Dados de rotas dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+mydata2 = read.csv2("C:/Users/vd114342/Desktop/mtcars.csv")
+str(mydata2)
 ```
 
 ### Modelagem do dataset com práticas de ETL em dplyr.
 Seleção de variáveis
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
+str(base_telemetria)
+
+base_rotas = mydata2 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
+str(base_rotas)
+```
+
+Criação do chaveiro 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

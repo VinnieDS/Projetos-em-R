@@ -46,7 +46,7 @@ dataset = left_join(base_telemetria,base_rotas,by="chave")
 
 Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+dataset = dataset %>% filter(td_press < 600)
 ```
 
 Criação de variáveis (Classificação estatística dos dados númericos)

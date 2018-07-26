@@ -51,7 +51,8 @@ dataset = dataset %>% filter(td_press<600)
 
 Criação de variáveis (Classificação estatística dos dados númericos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+dummy = dummyVars(~.,data = dataset,levelsOnly = TRUE)
+predict(dummy, dataset)
 ```
 
 Criação de variáveis (Transformação da informação dos trechos):

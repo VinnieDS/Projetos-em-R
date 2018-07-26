@@ -55,9 +55,15 @@ Criação de variáveis (Transformação da informação dos trechos)
 
 ```
 
+Dataset final
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+
 ### Analise exploratoria de dados no dataset
 
-Historgramas
+Historgramas das variáveis de temperatura e pressão
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
@@ -68,6 +74,11 @@ Gráficos Temperatura vs. Pressão
 ```
 
 Tabela cruzadas Pressão e trecho
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+Tabela cruzadas Pressão e Posição da roda
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

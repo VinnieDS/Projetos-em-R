@@ -42,7 +42,7 @@ base_rotas = cbind(chave,base_rotas)
 
 Junção das base de telemetria e das rotas dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+left_join(base_telemetria,base_rotas,by="chave")
 ```
 
 Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar)

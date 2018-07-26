@@ -119,7 +119,7 @@ tab_anomalias = as.data.frame(dataset_anomalias)
 
 Gráfico de reconstrução do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstruction Error')
+plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstrução do dataset')
 ```
 
 Ponto de corte dos dados anomalos

@@ -55,7 +55,7 @@ dummy = dummyVars(~.,data = dataset,levelsOnly = TRUE)
 predict(dummy, dataset)
 ```
 
-Criação de variáveis (Verificar os quartis dos dados contínuos):
+Criação de variáveis (Binalização dos dados contínuos por quartis):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset.bin = subset(dataset, select = ...)
 
@@ -84,7 +84,7 @@ Analise das variáveis continuas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 # Resumo 
 ExpNumStat (Affairs, 
-            by = "A",       # Agrupar por A (estatísticas resumidas por Todos), G (estatísticas resumidas por grupo), GA (estatísticas resumidas por grupo e Geral)
+            by = "A",       # Agrupar por A (estatísticas resumidas por Todos)
             gp = NULL,      # variável de destino, se houver, padrão NULL
             MesofShape = 2, # Medidas de formas (assimetria e curtose).
             Outlier = TRUE, # Calcular o limite inferior, o limite superior e o número de outliers
@@ -170,5 +170,3 @@ Ponto de corte dos dados anomalos:
 ### Verificação dos caminhões com maior frequencia de anomalias detectadas.
 
 ### Conclusão.
-
-Numa amostra de um mês de telemetria e rotas

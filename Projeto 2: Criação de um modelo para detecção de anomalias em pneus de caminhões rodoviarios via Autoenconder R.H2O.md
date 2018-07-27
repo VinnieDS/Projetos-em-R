@@ -49,8 +49,22 @@ Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600
 dataset = dataset %>% filter(td_press<600)
 ```
 
-Criação de variáveis (Classificação estatística dos dados númericos):
+Criação de variáveis (Verificar os quartis dos dados contínuos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dataset.bin = subset(dataset, select = ...)
+
+v.bin  = c("td_temp","td_press")
+
+for (i in 1:length(v.bin) ){ 
+  v_x    = dataset[,v.bin[i]]
+  qnt    = unique(quantile(v_x,seq(0, 1, .25)))
+ 
+  for ( ii in 1:(length(qnt)-1) ) {
+    dataset.bin$tmp   = ifelse (v_x > qnt[ii] & v_x <= qnt[ii+1], 1, 0)
+    dataset.bin$tmp   = ifelse (qnt[ii] == qnt[1] & v_x == qnt[ii], 1, dataset.bin$tmp)
+    names(dataset.bin)[names(dataset.bin)=="tmp"] = paste(v.bin[i],"_disc_", ii, sep = "")
+  }
+}
 
 ```
 

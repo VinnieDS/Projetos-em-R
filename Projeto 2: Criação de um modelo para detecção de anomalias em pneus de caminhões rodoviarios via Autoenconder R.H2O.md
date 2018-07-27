@@ -82,17 +82,17 @@ dataset = dataset %>% select()
 
 ### Analise exploratoria de dados no dataset
 
-Historgramas das variáveis de temperatura e pressão:
+Visão completa do dataset:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+ExpReport(dataset,op_file = "teste.html")
 ```
 
-Gráficos Temperatura vs. Pressão:
+Gráficos de correlação de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 
-Tabela cruzadas Pressão e trecho:
+Analise das varivaeis continuas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

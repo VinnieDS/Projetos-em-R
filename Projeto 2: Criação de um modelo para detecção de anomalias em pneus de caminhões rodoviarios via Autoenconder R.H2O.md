@@ -49,6 +49,12 @@ Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600
 dataset = dataset %>% filter(td_press<600)
 ```
 
+Criação de variáveis (Transformação da informação dos trechos):
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dummy = dummyVars(~.,data = dataset,levelsOnly = TRUE)
+predict(dummy, dataset)
+```
+
 Criação de variáveis (Verificar os quartis dos dados contínuos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset.bin = subset(dataset, select = ...)
@@ -65,20 +71,7 @@ for (i in 1:length(v.bin) ){
     names(dataset.bin)[names(dataset.bin)=="tmp"] = paste(v.bin[i],"_disc_", ii, sep = "")
   }
 }
-
 ```
-
-Criação de variáveis (Transformação da informação dos trechos):
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dummy = dummyVars(~.,data = dataset,levelsOnly = TRUE)
-predict(dummy, dataset)
-```
-
-Dataset final:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dataset = dataset %>% select()
-```
-
 
 ### Analise exploratoria de dados no dataset
 
@@ -87,19 +80,44 @@ Visão completa do dataset:
 ExpReport(dataset,op_file = "teste.html")
 ```
 
+Analise das variáveis continuas:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+# Resumo 
+ExpNumStat (Affairs, 
+            by = "A",       # Agrupar por A (estatísticas resumidas por Todos), G (estatísticas resumidas por grupo), GA (estatísticas resumidas por grupo e Geral)
+            gp = NULL,      # variável de destino, se houver, padrão NULL
+            MesofShape = 2, # Medidas de formas (assimetria e curtose).
+            Outlier = TRUE, # Calcular o limite inferior, o limite superior e o número de outliers
+            round = 2)      # Arredondar
+
+# Gráficos de curtoses
+ExpNumViz(Affairs,
+          gp=NULL, # Variaveel alvo
+          Page=c(2,2), # padrão de saída. 
+          sample=8) # seleção aleatória de plots
+```
+
+Analise das variáveis categóricas:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpCatViz(Affairs,
+          gp=NULL, # Variavel target
+          fname=NULL, # Nome do arquivo de saida, default é pdf
+          clim=10,# categorias máximas a incluir nos gráficos de barras.
+          margin=2,# índice, 1 para proporções baseadas em linha e 2 para proporções baseadas em colunas
+          Page = c(2,1), # padrao de saida
+          sample=4) # seleção aleatória de plot
+```
+
 Gráficos de correlação de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 
-Analise das varivaeis continuas:
+### Seleção de variáveis.
+
+Dataset final:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
-```
-
-Tabela cruzadas Pressão e Posição da roda:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+dataset = dataset %>% select()
 ```
 
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.

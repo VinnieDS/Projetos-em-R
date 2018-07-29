@@ -95,7 +95,7 @@ pred_rf = predict(cv_model_rf,teste)
 confusionMatrix(pred_rf,teste$target, positive = "UP")
 ```
 
-# Modelo Xgboost com validacao cruzada
+### Modelo Xgboost com validacao cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
 print(cv_model_xgbTree)

@@ -23,6 +23,8 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 
 ## Projeto 5: Previsão de preços de fechamento do par de moeda EURUSD para elaborar estrategias de negociação em forex no grafico diario.
 
+Um estudo para verificação de padrões no gráfico diario no par de moeda EURUSD para criação de estrategias de negociação em forex.
+
 ## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
 
 ## Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base Breast Cancer.

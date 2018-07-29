@@ -48,7 +48,59 @@ ExpNumStat(dataset,by="A",gp="target",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE
 ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```
 
-# Seleção de dados 
+### Seleção de dados 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% select(rsi,ADX,trend,sar,target)
+```
+### Controle do treinamento
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ctrl = trainControl(method = "cv",number = 5)
+```
+
+### Particionamento de dados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(77489)
+part = createDataPartition(y = dataset$target, p = 0.8, list = FALSE)
+treino = dataset[part,]
+teste = dataset[-part,]
+```
+
+### Modelo naive bayes com validacao cruzada
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_nb = train(target~., data = treino, method = "nb", trainControl = ctrl)
+print(cv_model_nb)
+
+pred_nb = predict(cv_model_nb,teste)
+
+confusionMatrix(pred_nb,teste$target, positive = "UP")
+```
+
+### Modelo SVM com validacao cruzada
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_svm = train(target~., data = treino, method = "svmLinear2", trainControl = ctrl)
+print(cv_model_svm)
+
+pred_svm = predict(cv_model_svm,teste)
+
+confusionMatrix(pred_svm,teste$target, positive = "UP")
+```
+
+### Modelo random forest com validacao cruzada
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_rf = train(target~., data = treino, method = "rf", trainControl = ctrl)
+print(cv_model_rf)
+
+pred_rf = predict(cv_model_rf,teste)
+
+confusionMatrix(pred_rf,teste$target, positive = "UP")
+```
+
+# Modelo Xgboost com validacao cruzada
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
+print(cv_model_xgbTree)
+
+pred_xgbTree = predict(cv_model_xgbTree,teste)
+
+confusionMatrix(pred_xgbTree,teste$target, positive = "UP")
 ```

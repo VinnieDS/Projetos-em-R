@@ -20,6 +20,10 @@ rsi = RSI(dataset$Close, n=14, maType="WMA")
 adx = data.frame(ADX(dataset[,c("Maxima","Minima","Close")]))
 sar = SAR(dataset[,c("Maxima","Minima")], accel = c(0.02, 0.2))
 trend = dataset$Close - sar
+trend_aroon = aroon(dataset[,c("Maxima", "Minima")],n=14)
+trend_cci = CCI(dataset[,c("Maxima","Minima","Close")])
+trend_vhf = VHF(dataset[,c("Maxima","Minima","Close")])
+
 ```
 
 ### Lag
@@ -27,11 +31,14 @@ trend = dataset$Close - sar
 rsi = c(NA,head(rsi,-1)) 
 adx$ADX = c(NA,head(adx$ADX,-1)) 
 trend = c(NA,head(trend,-1))
+trend_aroon = c(NA,head(trend_aroon,-1))
+trend_cci = c(NA,head(trend_cci,-1))
+trend_vhf = c(NA,head(trend_vhf,-1))
 ```
 
 ### Construção do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dataset = cbind(dataset,rsi,adx,sar,trend,target)
+dataset = cbind(dataset,rsi,adx,sar,trend,trend_aroon,trend_cci,trend_vhf,target)
 ```
 
 ### Retirar as instâncias com dados faltantes
@@ -56,7 +63,7 @@ ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 
 ### Seleção de dados 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dataset = dataset %>% select(rsi,ADX,trend,sar,target)
+dataset = dataset %>% select(ADX,sar,trend_cci,trend_vhf,target)
 ```
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

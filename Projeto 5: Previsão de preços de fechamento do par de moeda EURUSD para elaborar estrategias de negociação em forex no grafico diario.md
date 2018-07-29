@@ -22,7 +22,7 @@ sar = SAR(dataset[,c("Maxima","Minima")], accel = c(0.02, 0.2))
 trend = dataset$Close - sar
 ```
 
-### Criação de lag
+### Lag
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 rsi = c(NA,head(rsi,-1)) 
 adx$ADX = c(NA,head(adx$ADX,-1)) 
@@ -34,16 +34,22 @@ trend = c(NA,head(trend,-1))
 dataset = cbind(dataset,rsi,adx,sar,trend,target)
 ```
 
-### Retirar NA
+### Retirar as instâncias com dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = na.omit(dataset)
 ```
 
-### EDA
+### Análise exploratoria de dados
+
+Avaliação dos dados númericos
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpNumStat(dataset,by="A",gp="target",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
 ```
-
+Avalição dos dados númericos no foco do target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+```
+Matriz de correlações
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```

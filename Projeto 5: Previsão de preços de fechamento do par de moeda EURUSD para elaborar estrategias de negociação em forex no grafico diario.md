@@ -88,26 +88,6 @@ pred_nb = predict(cv_model_nb,teste)
 confusionMatrix(pred_nb,teste$target, positive = "UP")
 ```
 
-### Modelo SVM com validação cruzada
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_svm = train(target~., data = treino, method = "svmLinear2", trainControl = ctrl)
-print(cv_model_svm)
-
-pred_svm = predict(cv_model_svm,teste)
-
-confusionMatrix(pred_svm,teste$target, positive = "UP")
-```
-
-### Modelo Random Forest com validação cruzada
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_rf = train(target~., data = treino, method = "rf", trainControl = ctrl)
-print(cv_model_rf)
-
-pred_rf = predict(cv_model_rf,teste)
-
-confusionMatrix(pred_rf,teste$target, positive = "UP")
-```
-
 ### Modelo Xgboost com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)

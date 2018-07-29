@@ -71,7 +71,7 @@ treino = dataset[part,]
 teste = dataset[-part,]
 ```
 
-### Modelo naive bayes com validacao cruzada
+### Modelo Naive Bayes com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_nb = train(target~., data = treino, method = "nb", trainControl = ctrl)
 print(cv_model_nb)
@@ -81,7 +81,7 @@ pred_nb = predict(cv_model_nb,teste)
 confusionMatrix(pred_nb,teste$target, positive = "UP")
 ```
 
-### Modelo SVM com validacao cruzada
+### Modelo SVM com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_svm = train(target~., data = treino, method = "svmLinear2", trainControl = ctrl)
 print(cv_model_svm)
@@ -91,7 +91,7 @@ pred_svm = predict(cv_model_svm,teste)
 confusionMatrix(pred_svm,teste$target, positive = "UP")
 ```
 
-### Modelo random forest com validacao cruzada
+### Modelo Random Forest com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_rf = train(target~., data = treino, method = "rf", trainControl = ctrl)
 print(cv_model_rf)
@@ -101,7 +101,7 @@ pred_rf = predict(cv_model_rf,teste)
 confusionMatrix(pred_rf,teste$target, positive = "UP")
 ```
 
-### Modelo Xgboost com validacao cruzada
+### Modelo Xgboost com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
 print(cv_model_xgbTree)

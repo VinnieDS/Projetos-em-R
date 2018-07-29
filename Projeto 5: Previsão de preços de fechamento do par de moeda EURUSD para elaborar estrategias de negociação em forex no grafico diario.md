@@ -9,7 +9,7 @@ library(caret);library(smartEAD);library(TTR);library(readr);
 
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dataset = read_delim("C:/Users/PC/Desktop/EUR_USD.csv", ";", escape_double = FALSE, col_types = cols(Data = col_date(format = "%d.%m.%Y"), Var = col_skip()), trim_ws = TRUE)
+dataset = read_delim("EUR_USD.csv", ";", escape_double = FALSE, col_types = cols(Data = col_date(format = "%d.%m.%Y"), Var = col_skip()), trim_ws = TRUE)
 ```
 
 ### Criação de indicadores técnicos

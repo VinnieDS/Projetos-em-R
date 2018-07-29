@@ -4,7 +4,7 @@ Um estudo para verificação de padrões no gráfico diario no par de moeda EURU
 
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(caret);library(smartEAD);library(TTR);library(readr);
+library(caret);library(smartEAD);library(TTR);library(readr);library(GGally);
 ```
 
 ### Entrada de dados
@@ -51,7 +51,7 @@ ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),P
 ```
 Matriz de correlações
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 
 ### Seleção de dados 

@@ -9,7 +9,8 @@ library(caret);library(SmartEDA);library(TTR);library(readr);library(GGally);lib
 
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dataset = read_delim("EUR_USD.csv", ";", escape_double = FALSE, col_types = cols(Data = col_date(format = "%d.%m.%Y"), Var = col_skip()), trim_ws = TRUE)
+dataset = read_delim("EUR_USD.csv", ";", escape_double = FALSE, 
+col_types = cols(Data = col_date(format = "%d.%m.%Y"), Var = col_skip()), trim_ws = TRUE)
 ```
 
 ### Criação de indicadores técnicos
@@ -116,7 +117,8 @@ ctrl = trainControl(method = "cv",number = 5,verboseIter = TRUE,savePredictions 
 
 ### Grid search
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-xgb_grid = expand.grid(nrounds = c(100, 150, 200),max_depth = 1,min_child_weight = 1,subsample = 1,gamma = 0,colsample_bytree = 0.8,eta = c(.2, .3, .4))
+xgb_grid = expand.grid(nrounds = c(100, 150, 200),max_depth = 1,min_child_weight = 1,
+subsample = 1,gamma = 0,colsample_bytree = 0.8,eta = c(.2, .3, .4))
 ```
 
 ### Particionamento de dados

@@ -145,8 +145,8 @@ Teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_xgbTree = predict(cv_model_xgbTree,teste)
 confusionMatrix(pred_xgbTree,teste$target, positive = "UP")
-
 ```
+
 ### Hipotese 2
 
 Treinar modelos sazonais um para tendencia de alta e um outro para tendencia de baixa no gráfico diario do EURUSD. Na analise de series temporais na amostra podemos visualizar dois ciclos de alta de baixa e assim tentar diminuir o erro de classificação do modelo na hipotese 1.

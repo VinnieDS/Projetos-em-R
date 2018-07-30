@@ -25,12 +25,11 @@ trend_cci = CCI(dataset[,c("Maxima","Minima","Close")])
 trend_vhf = VHF(dataset[,c("Maxima","Minima","Close")])
 ```
 
-### Lag
+### Lag dos indicadores técnicos
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 rsi = c(NA,head(rsi,-1)) 
 adx$ADX = c(NA,head(adx$ADX,-1)) 
 trend = c(NA,head(trend,-1))
-trend_aroon = c(NA,head(trend_aroon,-1))
 trend_cci = c(NA,head(trend_cci,-1))
 trend_vhf = c(NA,head(trend_vhf,-1))
 ```

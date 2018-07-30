@@ -102,7 +102,7 @@ ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 ### Hipotese 1
 
-Treinar um modelo com seleção aleatoria com toda a base.
+Treinar um modelo boosting (Xgboost) partição aleatoria 
 
 ### Seleção de dados 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -114,8 +114,7 @@ dataset = dataset %>% select(ADX,sar,trend_cci,trend_vhf,target)
 ctrl = trainControl(method = "cv",number = 5,verboseIter = TRUE,savePredictions = "final")
 ```
 
-### Grid
-
+### Grid search
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 xgb_grid = expand.grid(nrounds = c(100, 150, 200),max_depth = 1,min_child_weight = 1,subsample = 1,gamma = 0,colsample_bytree = 0.8,eta = c(.2, .3, .4))
 ```
@@ -129,13 +128,22 @@ treino = dataset[part,]
 teste = dataset[-part,]
 ```
 
-### Modelo Xgboost com validação cruzada
+### Treino e Teste do modelo Xgboost
 
+Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
+cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl, tuneGrid = xgb_grid)
 print(cv_model_xgbTree)
+confusionMatrix(cv_model_xgbTree,positive = "UP")
+plot(cv_model_xgbTree)
+plot(varImp(xgboost.model))
+```
+
+Teste
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pred_xgbTree = predict(cv_model_xgbTree,teste)
 confusionMatrix(pred_xgbTree,teste$target, positive = "UP")
+
 ```
 ### Hipotese 2
 

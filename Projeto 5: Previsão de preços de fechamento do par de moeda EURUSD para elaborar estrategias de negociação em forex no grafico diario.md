@@ -103,7 +103,7 @@ ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 ### Hipotese 1
 
-Treinar um modelo boosting (Xgboost) partição aleatoria 
+Treinar um modelo boosting (Xgboost) repartição aleatoria para verficar se é possivel determinar se o preço do ativo vai fechar em alta ou em baixa.
 
 ### Seleção de dados 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

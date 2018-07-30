@@ -100,21 +100,28 @@ Matriz de correlações
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
+### Hipotese 1
+
+Treinar um modelo com seleção aleatoria com toda a base.
 
 ### Seleção de dados 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% select(ADX,sar,trend_cci,trend_vhf,target)
 ```
-### Hipotese 1
-
-Treinar um modelo com seleção aleatoria com toda a base.
 
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ctrl = trainControl(method = "cv",number = 5)
+ctrl = trainControl(method = "cv",number = 5,verboseIter = TRUE,savePredictions = "final")
+```
+
+### Grid
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgb_grid = expand.grid(nrounds = c(100, 150, 200),max_depth = 1,min_child_weight = 1,subsample = 1,gamma = 0,colsample_bytree = 0.8,eta = c(.2, .3, .4))
 ```
 
 ### Particionamento de dados
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(77489)
 part = createDataPartition(y = dataset$target, p = 0.9, list = FALSE)
@@ -123,6 +130,7 @@ teste = dataset[-part,]
 ```
 
 ### Modelo Xgboost com validação cruzada
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
 print(cv_model_xgbTree)

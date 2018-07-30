@@ -45,7 +45,8 @@ dataset = cbind(dataset,rsi,adx,sar,trend,trend_aroon,trend_cci,trend_vhf,target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = na.omit(dataset)
 ```
-# Analise de series temporal
+
+### Analise de series temporal
 
 Transformação dos dados categoricos para dados de uma serie temporal
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

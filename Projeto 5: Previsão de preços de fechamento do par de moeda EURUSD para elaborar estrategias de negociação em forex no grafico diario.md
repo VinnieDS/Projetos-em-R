@@ -4,7 +4,7 @@ Um estudo para verificação de padrões no gráfico diario no par de moeda EURU
 
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(caret);library(smartEAD);library(TTR);library(readr);library(GGally);
+library(caret);library(SmartEDA);library(TTR);library(readr);library(GGally);library(forecast);library(dplyr);
 ```
 
 ### Entrada de dados
@@ -20,10 +20,8 @@ rsi = RSI(dataset$Close, n=14, maType="WMA")
 adx = data.frame(ADX(dataset[,c("Maxima","Minima","Close")]))
 sar = SAR(dataset[,c("Maxima","Minima")], accel = c(0.02, 0.2))
 trend = dataset$Close - sar
-trend_aroon = aroon(dataset[,c("Maxima", "Minima")],n=14)
 trend_cci = CCI(dataset[,c("Maxima","Minima","Close")])
 trend_vhf = VHF(dataset[,c("Maxima","Minima","Close")])
-
 ```
 
 ### Lag
@@ -48,7 +46,7 @@ dataset = na.omit(dataset)
 
 ### Analise de series temporal
 
-Transformação dos dados categoricos para dados de uma serie temporal
+Transformação dos dados para uma serie temporal
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset_ts = ts(dataset$Close, start=c(2013,1,1), end=c(2018,5,14), frequency=365)
 plot(dataset_ts, main = "EURUSD - 2013-01-01 at 2018-05-14")

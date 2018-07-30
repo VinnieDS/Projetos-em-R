@@ -45,8 +45,49 @@ dataset = cbind(dataset,rsi,adx,sar,trend,trend_aroon,trend_cci,trend_vhf,target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = na.omit(dataset)
 ```
+# Analise de series temporal
 
-### Análise exploratoria de dados
+Transformação dos dados categoricos para dados de uma serie temporal
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dataset_ts = ts(dataset$Close, start=c(2013,1,1), end=c(2018,5,14), frequency=365)
+plot(dataset_ts, main = "EURUSD - 2013-01-01 at 2018-05-14")
+```
+
+Decomposição da serie temporal
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+stlRes = stl(dataset_ts, s.window = "periodic")
+plot(stlRes,main = "Decomposição da serie EURUSD")
+```
+
+### Análise exploratoria de dados do dataset
+
+Avaliação dos dados númericos
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumStat(dataset,by="A",gp="target",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
+```
+Avalição dos dados númericos no foco do target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+```
+Matriz de correlações
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
+```
+### Análise exploratoria de dados dos ciclos
+
+Avaliação dos dados númericos
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumStat(dataset,by="A",gp="target",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
+```
+Avalição dos dados númericos no foco do target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumViz(dataset,gp="target",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+```
+Matriz de correlações
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
+```
+### Análise exploratoria de dados dos anos
 
 Avaliação dos dados númericos
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -65,6 +106,10 @@ ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% select(ADX,sar,trend_cci,trend_vhf,target)
 ```
+### Hipotese 1
+
+Treinar um modelo com seleção aleatoria com toda a base.
+
 ### Controle do treinamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ctrl = trainControl(method = "cv",number = 5)
@@ -73,27 +118,18 @@ ctrl = trainControl(method = "cv",number = 5)
 ### Particionamento de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(77489)
-part = createDataPartition(y = dataset$target, p = 0.8, list = FALSE)
+part = createDataPartition(y = dataset$target, p = 0.9, list = FALSE)
 treino = dataset[part,]
 teste = dataset[-part,]
-```
-
-### Modelo Naive Bayes com validação cruzada
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-cv_model_nb = train(target~., data = treino, method = "nb", trainControl = ctrl)
-print(cv_model_nb)
-
-pred_nb = predict(cv_model_nb,teste)
-
-confusionMatrix(pred_nb,teste$target, positive = "UP")
 ```
 
 ### Modelo Xgboost com validação cruzada
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 cv_model_xgbTree = train(target~., data = treino, method = "xgbTree", trainControl = ctrl)
 print(cv_model_xgbTree)
-
 pred_xgbTree = predict(cv_model_xgbTree,teste)
-
 confusionMatrix(pred_xgbTree,teste$target, positive = "UP")
 ```
+### Hipotese 2
+
+Treinar modelos sazonais um para tendencia de alta e um outro para tendencia de baixa no gráfico diario do EURUSD. Na analise de series temporais na amostra podemos visualizar dois ciclos de alta de baixa e assim tentar diminuir o erro de classificação do modelo na hipotese 1.

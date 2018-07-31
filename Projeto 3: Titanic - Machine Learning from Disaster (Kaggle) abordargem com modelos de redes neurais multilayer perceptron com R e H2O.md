@@ -68,7 +68,7 @@ h2o.init()
 treino.hex = as.h2o(treino, destination_frame="treino.hex")
 ```
 
-### Grid Search.
+### Grid Search e Modelo 
 
 Deep learning hiperparametros
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -99,13 +99,13 @@ dl_gridperf = h2o.getGrid(grid_id = "dl_grid",
 print(dl_gridperf)
 ```
 
-Grab the model_id for the top DL model, chosen by validation AUC
+Pegue o model_id para o modelo top DL, escolhido pela validação AUC
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_model_id <- dl_gridperf@model_ids[[1]]
 best_dl <- h2o.getModel(best_dl_model_id)
 ```
 
-Now let's evaluate the model performance on a test set so we get an honest estimate of top model performance
+Agora, vamos avaliar o desempenho do modelo em um conjunto de testes, para obtermos uma estimativa honesta do desempenho do modelo superior
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_perf <- h2o.performance(model = best_dl,newdata = test)
 h2o.auc(best_dl_perf)  # .683855910541 

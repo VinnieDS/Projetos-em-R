@@ -41,6 +41,11 @@ dim(teste)
 str(treino)
 str(teste)
 ```
+
+### Criação de novas variáveis
+
+Criação da letras iniciais da cabine
+
 ### Análise explorátoria de dados (Dados de treino).
 
 Análise dos dados do treino com foco no target

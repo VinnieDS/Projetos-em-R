@@ -7,7 +7,9 @@ https://www.kaggle.com/c/titanic/data
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);library(DMwR);library(Amelia);library(SmartAED)
+library(h2o);library(dplyr);library(ggplot2);
+library(caret);library(stringr);library(DMwR);
+library(Amelia);library(SmartEDA)
 ```
 
 ### Entrada de dados.

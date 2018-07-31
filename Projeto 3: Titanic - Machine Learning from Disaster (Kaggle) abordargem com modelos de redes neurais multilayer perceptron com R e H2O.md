@@ -61,3 +61,12 @@ print(treino)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```
+
+### Entrada de dados no H2O.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino.hex = as.h2o(treino, destination_frame="treino.hex")
+```
+### Treino de um modelo Deep Learning.
+
+

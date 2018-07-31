@@ -22,12 +22,6 @@ str(treino)
 str(teste)
 ```
 
-### Transformação dos dados.
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino$Pclass = as.factor(treino$Pclass)
-```
-
 ### Tratamento do dados faltantes.
 
 Verificação dos dados faltantes
@@ -40,9 +34,18 @@ Preenchimento dos dados faltantes da variável "Age" via algoritmo KNN
 treino = knnImputation(treino[,!names(treino) %in% "Survived"])
 ```
 
-### Seleção de variáveis
+### Seleção de variáveis.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Embarked)
+```
+
+### Tratamento de dados.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino$Pclass = as.factor(treino$Pclass)
+treino$SibSp = as.factor(treino$SibSp)
+treino$Parch = as.factor(treino$Parch)
+treino$Embarked = as.factor(treino$Embarked)
 ```
 
 ### Criação de variaveis dummy.

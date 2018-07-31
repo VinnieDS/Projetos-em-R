@@ -93,20 +93,18 @@ dl_grid = h2o.grid("deeplearning", x = x, y = y,
 
 Resultados do Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_gridperf = h2o.getGrid(grid_id = "dl_grid", 
-                           sort_by = "auc", 
-                           decreasing = TRUE)
+dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "auc", decreasing = TRUE)
 print(dl_gridperf)
 ```
 
 Pegue o model_id para o modelo top DL, escolhido pela validação AUC
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-best_dl_model_id <- dl_gridperf@model_ids[[1]]
-best_dl <- h2o.getModel(best_dl_model_id)
+best_dl_model_id = dl_gridperf@model_ids[[1]]
+best_dl = h2o.getModel(best_dl_model_id)
 ```
 
 Agora, vamos avaliar o desempenho do modelo em um conjunto de testes, para obtermos uma estimativa honesta do desempenho do modelo superior
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_perf <- h2o.performance(model = best_dl,newdata = test)
-h2o.auc(best_dl_perf)  # .683855910541 
+h2o.auc(best_dl_perf)
 ```

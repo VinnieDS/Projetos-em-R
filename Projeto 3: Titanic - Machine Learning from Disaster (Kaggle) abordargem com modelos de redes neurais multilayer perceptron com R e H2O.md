@@ -23,10 +23,12 @@ dim(teste)
 str(treino)
 str(teste)
 ```
-### Análise explorátoria de dados(Dados de treino).
+### Análise explorátoria de dados (Dados de treino).
 
+Análise dos dados do treino com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+ExpNumStat(treino,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
+ExpNumViz(treino,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```
 
 ### Tratamento do dados faltantes.

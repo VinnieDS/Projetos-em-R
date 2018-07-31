@@ -56,9 +56,8 @@ dummy = dummyVars(" ~ .", data = treino)
 treino = data.frame(predict(dummy, newdata = treino))
 print(treino)
 ```
-### Inicialização do H2O
+### Inicialização do H2O.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```
-

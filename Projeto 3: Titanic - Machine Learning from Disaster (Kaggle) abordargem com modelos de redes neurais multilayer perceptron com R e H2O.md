@@ -7,7 +7,7 @@ https://www.kaggle.com/c/titanic/data
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);library(DMwR);library(Amelia);
+library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);library(DMwR);library(Amelia);library(SmartAED)
 ```
 
 ### Entrada de dados.
@@ -21,6 +21,10 @@ dim(teste)
 str(treino)
 str(teste)
 ```
+### Análise explorátoria de dados(Dados de treino).
+
+
+
 
 ### Tratamento do dados faltantes.
 

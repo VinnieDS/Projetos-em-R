@@ -67,6 +67,34 @@ h2o.init()
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino.hex = as.h2o(treino, destination_frame="treino.hex")
 ```
-### Treino de um modelo Deep Learning.
+
+### Grid Search.
+
+Deep learning hiperparametros
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+activation_opt = c("Rectifier", "RectifierWithDropout", "Maxout", "MaxoutWithDropout")
+l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
+l2_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
+hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
+search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 120)
+```
+
+Grid Deep learning
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dl_grid = h2o.grid("deeplearning", x = x, y = y,
+                    grid_id = "dl_grid",
+                    training_frame = train,
+                    validation_frame = valid,
+                    seed = 1,
+                    hidden = c(10,10),
+                    hyper_params = hyper_params,
+                    search_criteria = search_criteria)
+```
 
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dl_gridperf = h2o.getGrid(grid_id = "dl_grid", 
+                           sort_by = "auc", 
+                           decreasing = TRUE)
+print(dl_gridperf)
+```

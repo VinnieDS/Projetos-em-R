@@ -50,5 +50,4 @@ treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Emba
 dummy = dummyVars(" ~ .", data = treino)
 treino = data.frame(predict(dummy, newdata = treino))
 print(treino)
-
 ```

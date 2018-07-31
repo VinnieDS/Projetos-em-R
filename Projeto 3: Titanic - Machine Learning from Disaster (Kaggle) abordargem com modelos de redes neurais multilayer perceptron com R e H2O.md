@@ -25,8 +25,9 @@ str(teste)
 ```
 ### Análise explorátoria de dados(Dados de treino).
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-
+```
 
 ### Tratamento do dados faltantes.
 

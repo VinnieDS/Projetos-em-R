@@ -7,7 +7,7 @@ https://www.kaggle.com/c/titanic/data
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);
+library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);library(DMwR);
 ```
 
 ### Entrada de dados.
@@ -25,15 +25,30 @@ str(teste)
 ### Transformação dos dados.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino$Survived = as.factor(treino$Survived)
 treino$Pclass = as.factor(treino$Pclass)
 ```
 
 ### Tratamento do dados faltantes.
 
+Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 missmap(treino)
-
-
 ```
 
+Preenchimento dos dados faltantes da variável "Age" via algoritmo KNN
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino = knnImputation(treino[,!names(treino) %in% "Survived"])
+```
+
+### Seleção de variáveis
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Embarked)
+```
+
+### Criação de variaveis dummy.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dummy = dummyVars(" ~ .", data = treino)
+treino = data.frame(predict(dummy, newdata = treino))
+print(treino)
+
+```

@@ -80,7 +80,7 @@ hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
 search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 120)
 ```
 
-Grid Deep learning
+Grid Search Deep learning
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dl_grid = h2o.grid("deeplearning", x = x, y = y,
                     grid_id = "dl_grid",

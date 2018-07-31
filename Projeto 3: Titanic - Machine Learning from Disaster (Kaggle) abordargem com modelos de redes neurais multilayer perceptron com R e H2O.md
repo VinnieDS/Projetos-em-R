@@ -4,3 +4,36 @@ O naufrágio do RMS Titanic é um dos mais infames naufrágios da história. Em 
 
 https://www.kaggle.com/c/titanic/data
 
+### Pacotes.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);
+```
+
+### Entrada de dados.
+
+Dados de treino e teste
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino = read.csv2("treino.csv")
+teste = read.csv2("teste.csv")
+dim(treino)
+dim(teste)
+str(treino)
+str(teste)
+```
+
+### Transformação dos dados.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino$Survived = as.factor(treino$Survived)
+treino$Pclass = as.factor(treino$Pclass)
+```
+
+### Tratamento do dados faltantes.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+missmap(treino)
+
+
+```
+

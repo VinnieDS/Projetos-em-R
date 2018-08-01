@@ -138,7 +138,7 @@ best_dl_model_id = dl_gridperf@model_ids[[1]]
 best_dl = h2o.getModel(best_dl_model_id)
 ```
 
-Avaliação do desempenho do modelo em um conjunto de testes, para obtermos uma estimativa desempenho do modelo escolhido
+Avaliação do desempenho do modelo em um conjunto de testes, para obtermos a performance do modelo escolhido
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_perf = h2o.performance(model = best_dl,newdata = teste)
 h2o.auc(best_dl_perf)

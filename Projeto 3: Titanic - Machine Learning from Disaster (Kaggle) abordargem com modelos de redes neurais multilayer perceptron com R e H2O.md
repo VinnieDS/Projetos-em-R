@@ -25,9 +25,9 @@ Some children travelled only with a nanny, therefore parch=0 for them.
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);
-library(caret);library(stringr);library(DMwR);
-library(Amelia);library(SmartEDA)
+library(h2o);library(dplyr);library(caret);
+library(stringr);library(DMwR);library(Amelia);
+library(SmartEDA);
 ```
 
 ### Entrada de dados.
@@ -36,15 +36,9 @@ Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
-dim(treino)
-dim(teste)
-str(treino)
-str(teste)
+titanic = cbind(treino,teste)
+dim(titanic)
 ```
-
-### Criação de novas variáveis
-
-Criação da letras iniciais da cabine
 
 ### Análise explorátoria de dados (Dados de treino).
 
@@ -53,6 +47,13 @@ Análise dos dados do treino com foco no target
 ExpNumStat(treino,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
 ExpNumViz(treino,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```
+
+### Criação de novas variáveis
+
+Criação da letras iniciais da cabine.
+Criação do tamanho de familia.
+Titulo do nome.
+Criação dos fatores mulheres e crianças.
 
 ### Tratamento do dados faltantes.
 
@@ -64,12 +65,6 @@ missmap(treino)
 Preenchimento dos dados faltantes da variável "Age" via algoritmo KNN
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = knnImputation(treino[,!names(treino) %in% "Survived"])
-```
-
-### Seleção de variáveis.
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Embarked)
 ```
 
 ### Tratamento de dados.
@@ -88,6 +83,13 @@ dummy = dummyVars(" ~ .", data = treino)
 treino = data.frame(predict(dummy, newdata = treino))
 print(treino)
 ```
+
+### Seleção de variáveis.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Embarked)
+```
+
 ### Inicialização do H2O.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

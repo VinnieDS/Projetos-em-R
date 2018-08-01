@@ -36,8 +36,6 @@ Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
-titanic = cbind(treino,teste)
-dim(titanic)
 ```
 
 ### Análise explorátoria de dados.

@@ -40,7 +40,7 @@ titanic = cbind(treino,teste)
 dim(titanic)
 ```
 
-### Análise explorátoria de dados (Dados de treino).
+### Análise explorátoria de dados.
 
 Análise dos dados do treino com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

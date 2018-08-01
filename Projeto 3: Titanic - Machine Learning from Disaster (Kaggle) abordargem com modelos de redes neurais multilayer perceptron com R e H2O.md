@@ -51,8 +51,11 @@ ExpNumViz(treino,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),
 ### Criação de novas variáveis
 
 Criação da letras iniciais da cabine.
+
 Criação do tamanho de familia.
+
 Titulo do nome.
+
 Criação dos fatores mulheres e crianças.
 
 ### Tratamento do dados faltantes.

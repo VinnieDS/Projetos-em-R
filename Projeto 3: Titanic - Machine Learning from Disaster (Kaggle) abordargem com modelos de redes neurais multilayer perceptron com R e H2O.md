@@ -52,7 +52,7 @@ Criação da letras iniciais da cabine.
 
 Criação do tamanho de familia.
 
-Titulo do nome.
+Título do nome.
 
 Criação dos fatores mulheres e crianças.
 

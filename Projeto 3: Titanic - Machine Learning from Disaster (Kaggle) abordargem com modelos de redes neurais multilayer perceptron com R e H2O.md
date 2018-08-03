@@ -27,7 +27,7 @@ Some children travelled only with a nanny, therefore parch=0 for them.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(h2o);library(dplyr);library(caret);
 library(stringr);library(DMwR);library(Amelia);
-library(SmartEDA);
+library(SmartEDA);library(GGally);library(ggplot2);
 ```
 
 ### Entrada de dados.
@@ -88,6 +88,18 @@ full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
 dummy = dummyVars(" ~ .", data = treino)
 treino = data.frame(predict(dummy, newdata = treino))
 print(treino)
+```
+
+### Análise explorátoria de dados do dataset 
+
+* Análise dos dados com foco no target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
+ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+```
+* Matriz de correlação
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggcorr(Affairs,label = T,nbreaks = 5,label_round = 4)
 ```
 
 ### Inicialização do H2O.

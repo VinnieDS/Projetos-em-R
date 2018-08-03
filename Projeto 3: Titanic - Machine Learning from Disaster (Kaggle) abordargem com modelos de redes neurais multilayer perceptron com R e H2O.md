@@ -104,6 +104,12 @@ ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Pa
 ggcorr(full,label = T,nbreaks = 5,label_round = 4)
 ```
 
+### Seleção de variáveis.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full = full %>% select()
+```
+
 ### Divisão do dataset.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

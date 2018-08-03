@@ -67,11 +67,6 @@ full$Surname = sapply(full$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]]
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$FamilySize = full$SibSp + full$Parch + 1
 ```
-* Preenchimento de valores faltantes na variável idade:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,data=full[!is.na(full$Age),], method="anova")
-full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
-```
 * Local de embarque:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Embarked[c(62,830)] = "S"
@@ -80,6 +75,11 @@ full$Embarked = factor(full$Embarked)
 * Preenchimento de valores faltantes na variável tarifa:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Fare[1044] = median(full$Fare, na.rm=TRUE)
+```
+* Preenchimento de valores faltantes na variável idade:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,data=full[!is.na(full$Age),], method="anova")
+full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
 ```
 
 ### Criação de variaveis dummy.

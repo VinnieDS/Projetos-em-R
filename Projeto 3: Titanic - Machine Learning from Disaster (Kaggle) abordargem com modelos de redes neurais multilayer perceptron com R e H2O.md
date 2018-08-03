@@ -36,45 +36,50 @@ Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
+full = rbind(treino,teste)
 ```
 
 ### Análise explorátoria de dados.
 
-Análise dos dados do treino com foco no target
+Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpNumStat(treino,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
-ExpNumViz(treino,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
+ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```
 
 ### Criação de novas variáveis
 
-Criação da letras iniciais da cabine.
-
-Criação do tamanho de familia.
-
-Título do nome.
-
-Criação dos fatores mulheres e crianças.
-
-### Tratamento do dados faltantes.
-
-Verificação dos dados faltantes
+* Titulo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-missmap(treino)
+full$Name = as.character(full$Name)
+full$Title = sapply(full$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
+full$Title = sub(' ', '', full$Title)
+full$Title[full$Title %in% c('Mme', 'Mlle')] = 'Mlle'
+full$Title[full$Title %in% c('Capt', 'Don', 'Major', 'Sir')] = 'Sir'
+full$Title[full$Title %in% c('Dona', 'Lady', 'the Countess', 'Jonkheer')] = 'Lady'
+full$Title = factor(full$Title)
 ```
-
-Preenchimento dos dados faltantes da variável "Age" via algoritmo KNN
+* Sobrenome:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino = knnImputation(treino[,!names(treino) %in% "Survived"])
+full$Surname = sapply(full$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][1]})
 ```
-
-### Tratamento de dados.
-
+* Tamanho da familia:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino$Pclass = as.factor(treino$Pclass)
-treino$SibSp = as.factor(treino$SibSp)
-treino$Parch = as.factor(treino$Parch)
-treino$Embarked = as.factor(treino$Embarked)
+full$FamilySize = full$SibSp + full$Parch + 1
+```
+* Preenchimento de valores faltantes na variável idade:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,data=full[!is.na(full$Age),], method="anova")
+full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
+```
+* Local de embarque:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$Embarked[c(62,830)] = "S"
+full$Embarked = factor(full$Embarked)
+```
+* Preenchimento de valores faltantes na variável tarifa:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$Fare[1044] = median(full$Fare, na.rm=TRUE)
 ```
 
 ### Criação de variaveis dummy.
@@ -83,12 +88,6 @@ treino$Embarked = as.factor(treino$Embarked)
 dummy = dummyVars(" ~ .", data = treino)
 treino = data.frame(predict(dummy, newdata = treino))
 print(treino)
-```
-
-### Seleção de variáveis.
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-treino =  treino %>% select(PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,Embarked)
 ```
 
 ### Inicialização do H2O.

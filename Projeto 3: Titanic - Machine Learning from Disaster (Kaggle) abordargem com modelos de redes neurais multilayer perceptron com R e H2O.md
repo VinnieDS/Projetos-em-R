@@ -32,7 +32,7 @@ library(SmartEDA);
 
 ### Entrada de dados.
 
-Dados de treino e teste
+* Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
@@ -41,7 +41,7 @@ full = rbind(treino,teste)
 
 ### Análise explorátoria de dados.
 
-Análise dos dados com foco no target
+* Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
 ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
@@ -105,7 +105,7 @@ teste.hex = as.h2o(teste, destination_frame="teste.hex")
 
 ### Grid Search, Seleção do modelo e Teste.
 
-Deep learning hiperparametros
+* Deep learning hiperparametros
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 activation_opt = c("Rectifier", "RectifierWithDropout", "Maxout", "MaxoutWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
@@ -114,7 +114,7 @@ hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
 search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 120)
 ```
 
-Grid Search Deep learning
+* Grid Search Deep learning
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dl_grid = h2o.grid("deeplearning", x = x, y = y,
                     grid_id = "dl_grid",
@@ -126,19 +126,19 @@ dl_grid = h2o.grid("deeplearning", x = x, y = y,
                     search_criteria = search_criteria)
 ```
 
-Resultados do Grid
+* Resultados do Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "auc", decreasing = TRUE)
 print(dl_gridperf)
 ```
 
-Selecionar o model_id para o modelo top DL, escolhido pela validação AUC
+* Selecionar o model_id para o modelo top DL, escolhido pela validação AUC
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_model_id = dl_gridperf@model_ids[[1]]
 best_dl = h2o.getModel(best_dl_model_id)
 ```
 
-Avaliação do desempenho do modelo em um conjunto de testes, para obtermos a performance do modelo escolhido
+* Avaliação do desempenho do modelo em um conjunto de testes, para obtermos a performance do modelo escolhido
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_perf = h2o.performance(model = best_dl,newdata = teste)
 h2o.auc(best_dl_perf)

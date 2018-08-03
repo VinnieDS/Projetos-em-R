@@ -28,6 +28,7 @@ Some children travelled only with a nanny, therefore parch=0 for them.
 library(h2o);library(dplyr);library(caret);
 library(stringr);library(DMwR);library(Amelia);
 library(SmartEDA);library(GGally);library(ggplot2);
+library(rpart);library(randomForest);
 ```
 
 ### Entrada de dados.

@@ -37,6 +37,7 @@ library(rpart);library(randomForest);
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
+teste = cbind(teste,Survived = NA)
 full = rbind(treino,teste)
 dim(full)
 ```

@@ -172,3 +172,8 @@ prediction = h2o.predict(my_rf, newdata = teste.hex)
 ```
 
 ### Subimissão ao Kaggle
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+solucao = data.frame(PassengerId = teste["PassengerId"], Survived = prediction)
+write.csv(solucao, file="solucao.csv",  row.names = FALSE)
+```

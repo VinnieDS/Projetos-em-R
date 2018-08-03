@@ -99,7 +99,7 @@ ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Pa
 ```
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(Affairs,label = T,nbreaks = 5,label_round = 4)
+ggcorr(full,label = T,nbreaks = 5,label_round = 4)
 ```
 
 ### Inicialização do H2O.

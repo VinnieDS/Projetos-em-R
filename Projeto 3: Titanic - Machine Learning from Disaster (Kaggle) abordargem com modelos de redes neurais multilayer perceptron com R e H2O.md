@@ -159,6 +159,11 @@ best_dl_model_id = dl_gridperf@model_ids[[1]]
 best_dl = h2o.getModel(best_dl_model_id)
 ```
 
+* Verficação da importância das variáveis do modelo
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+h2o.varimp_plot(best-dl)
+```
+
 * Avaliação do desempenho do modelo em um conjunto de testes, para obtermos a performance do modelo escolhido
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_perf = h2o.performance(model = best_dl,newdata = teste)

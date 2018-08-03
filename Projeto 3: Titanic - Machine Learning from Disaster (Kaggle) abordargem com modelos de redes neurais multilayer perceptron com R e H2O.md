@@ -84,7 +84,7 @@ Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + Fa
 full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
 ```
 
-### Criação de variaveis dummy.
+* Criação de variaveis dummy.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dummy = dummyVars(" ~ .", data = treino)

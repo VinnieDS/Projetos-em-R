@@ -165,3 +165,10 @@ best_dl_perf = h2o.performance(model = best_dl,newdata = teste)
 h2o.auc(best_dl_perf)
 h2o.confusionMatrix(best_dl_perf, teste)
 ```
+
+* Predições
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+prediction = h2o.predict(my_rf, newdata = teste.hex)
+```
+
+### Subimissão ao Kaggle

@@ -80,7 +80,9 @@ full$Fare[1044] = median(full$Fare, na.rm=TRUE)
 ```
 * Preenchimento de valores faltantes na variável idade:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,data=full[!is.na(full$Age),], method="anova")
+Agefit = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,
+               data=full[!is.na(full$Age),], method="anova")
+               
 full$Age[is.na(full$Age)] = predict(Agefit, full[is.na(full$Age),])
 ```
 * Criação de variaveis dummy:

@@ -102,6 +102,13 @@ ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Pa
 ggcorr(full,label = T,nbreaks = 5,label_round = 4)
 ```
 
+### Divisão do dataset.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino = full[1:891,]
+teste = full[892:1309,]
+```
+
 ### Inicialização do H2O.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

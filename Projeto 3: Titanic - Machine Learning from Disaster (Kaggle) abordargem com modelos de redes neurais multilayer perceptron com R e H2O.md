@@ -168,7 +168,7 @@ h2o.confusionMatrix(best_dl_perf, teste)
 
 * Predições
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-prediction = h2o.predict(my_rf, newdata = teste.hex)
+prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 ```
 
 ### Subimissão ao Kaggle

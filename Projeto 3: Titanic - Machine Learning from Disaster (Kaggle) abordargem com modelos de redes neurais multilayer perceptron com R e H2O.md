@@ -49,7 +49,7 @@ ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,
 ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
 ```
 
-### Criação de novas variáveis
+### Features Engineering.
 
 * Titulo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -85,13 +85,13 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
 ```
-* Extração das letras da cabine:
+* Cabine:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+full = full %>% select(-PassengerId,-Name)
 ```
 * Criação de variaveis dummy:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -100,7 +100,7 @@ full = data.frame(predict(dummy, newdata = full))
 print(full)
 ```
 
-### Análise explorátoria de dados do dataset 
+### Análise explorátoria de dados do dataset.
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

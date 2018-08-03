@@ -85,6 +85,14 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
 ```
+* Extração das letras da cabine:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+* Retirada de dados não modelaveis:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 * Criação de variaveis dummy:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dummy = dummyVars(" ~ .", data = full)

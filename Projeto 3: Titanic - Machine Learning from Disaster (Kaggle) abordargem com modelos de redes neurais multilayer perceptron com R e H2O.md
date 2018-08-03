@@ -38,6 +38,7 @@ library(rpart);library(randomForest);
 treino = read.csv2("treino.csv")
 teste = read.csv2("teste.csv")
 full = rbind(treino,teste)
+dim(full)
 ```
 
 ### Análise explorátoria de dados.

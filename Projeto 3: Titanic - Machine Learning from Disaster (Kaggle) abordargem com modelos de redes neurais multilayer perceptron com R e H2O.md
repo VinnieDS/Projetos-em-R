@@ -100,6 +100,11 @@ full = data.frame(predict(dummy, newdata = full))
 print(full)
 ```
 
+* Padronização dos dados númericos:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
+
 ### Análise explorátoria de dados do dataset.
 
 * Análise dos dados com foco no target

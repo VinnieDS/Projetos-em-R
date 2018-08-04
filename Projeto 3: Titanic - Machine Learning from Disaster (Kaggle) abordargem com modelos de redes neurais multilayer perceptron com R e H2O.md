@@ -142,7 +142,7 @@ search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 400)
 
 * Grid Search Deep learning
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_grid = h2o.grid("deeplearning", x = 2:15, y = "Survived",
+dl_grid = h2o.grid("deeplearning", x = 2:21, y = "Survived",
                     grid_id = "dl_grid",
                     training_frame = treino.hex,
                     validation_frame = teste.hex,
@@ -167,13 +167,6 @@ best_dl = h2o.getModel(best_dl_model_id)
 * Verficação da importância das variáveis do modelo
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.varimp_plot(best-dl)
-```
-
-* Avaliação do desempenho do modelo em um conjunto de testes, para obtermos a performance do modelo escolhido
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-best_dl_perf = h2o.performance(model = best_dl,newdata = teste)
-h2o.auc(best_dl_perf)
-h2o.confusionMatrix(best_dl_perf, teste)
 ```
 
 * Predições

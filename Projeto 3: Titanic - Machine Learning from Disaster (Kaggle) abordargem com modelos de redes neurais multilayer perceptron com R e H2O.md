@@ -62,10 +62,6 @@ full$Title[full$Title %in% c('Capt', 'Don', 'Major', 'Sir')] = 'Sir'
 full$Title[full$Title %in% c('Dona', 'Lady', 'the Countess', 'Jonkheer')] = 'Lady'
 full$Title = factor(full$Title)
 ```
-* Sobrenome:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full$Surname = sapply(full$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][1]})
-```
 * Tamanho da familia:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$FamilySize = full$SibSp + full$Parch + 1
@@ -77,7 +73,7 @@ full$Embarked = factor(full$Embarked)
 ```
 * Preenchimento de valores faltantes na variável tarifa:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full$Fare[1044] = median(full$Fare, na.rm=TRUE)
+full$Fare[1039] = median(full$Fare, na.rm=TRUE)
 ```
 * Preenchimento de valores faltantes na variável idade:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -85,10 +81,6 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                data=full[!is.na(full$Age),], method="anova")
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
-```
-* Cabine:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
 ```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -98,12 +90,11 @@ full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket,-Cabin)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dummy = dummyVars(" ~ .", data = full)
 full = data.frame(predict(dummy, newdata = full))
-print(full)
+View(full)
 ```
-
-* Padronização dos dados númericos:
+* Criação do target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+full$Survived = as.factor(full$Survived)
 ```
 
 ### Análise explorátoria de dados do dataset.
@@ -116,12 +107,6 @@ ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Pa
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(full,label = T,nbreaks = 5,label_round = 4)
-```
-
-### Seleção de variáveis.
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full = full %>% select()
 ```
 
 ### Divisão do dataset.
@@ -157,10 +142,10 @@ search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 400)
 
 * Grid Search Deep learning
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_grid = h2o.grid("deeplearning", x = x, y = y,
+dl_grid = h2o.grid("deeplearning", x = 2:15, y = "Survived",
                     grid_id = "dl_grid",
-                    training_frame = treino,
-                    validation_frame = teste,
+                    training_frame = treino.hex,
+                    validation_frame = teste.hex,
                     seed = 1,
                     hidden = c(10,10),
                     hyper_params = hyper_params,

@@ -133,11 +133,11 @@ teste.hex = as.h2o(teste, destination_frame="teste.hex")
 
 * Deep learning hiperparametros
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-activation_opt = c("Rectifier", "RectifierWithDropout", "Maxout", "MaxoutWithDropout","Tanh","TanhWithDropout")
+activation_opt = c("Rectifier", "RectifierWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 l2_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
-search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 400)
+search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 100)
 ```
 
 * Grid Search Deep learning
@@ -154,7 +154,7 @@ dl_grid = h2o.grid("deeplearning", x = 2:21, y = "Survived",
 
 * Resultados do Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "auc", decreasing = TRUE)
+dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "logloss", decreasing = TRUE)
 print(dl_gridperf)
 ```
 
@@ -166,7 +166,7 @@ best_dl = h2o.getModel(best_dl_model_id)
 
 * Verficação da importância das variáveis do modelo
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-h2o.varimp_plot(best-dl)
+h2o.varimp_plot(best_dl)
 ```
 
 * Predições

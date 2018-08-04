@@ -92,7 +92,7 @@ full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
 ```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full = full %>% select(-PassengerId,-Name)
+full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket,-Cabin)
 ```
 * Criação de variaveis dummy:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

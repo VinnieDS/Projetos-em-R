@@ -46,8 +46,7 @@ dim(full)
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
-ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+ExpReport(full,op_file = "EDA_titanic.html")
 ```
 
 ### Features Engineering.
@@ -75,6 +74,7 @@ full$Embarked = factor(full$Embarked)
 * Preenchimento de valores faltantes na variável tarifa:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Fare[1039] = median(full$Fare, na.rm=TRUE)
+full$Fare = log(full$Fare)
 ```
 * Preenchimento de valores faltantes na variável idade:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -82,6 +82,7 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                data=full[!is.na(full$Age),], method="anova")
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
+full$Age = log(full$Age)
 ```
 * Criação da variavél categorica Pclass:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -107,8 +108,7 @@ full$Survived = as.factor(full$Survived)
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpNumStat(full,by="A",gp="Survived",Qnt=seq(0,1,0.1),MesofShape=1,Outlier=TRUE,round=4)
-ExpNumViz(full,gp="Survived",type=1,nlim=NULL,col=c("blue","yellow","orange"),Page=c(2,2),sample=8)
+ExpReport(full,op_file = "EDA_titanic_trans.html")
 ```
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

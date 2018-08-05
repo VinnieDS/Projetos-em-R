@@ -147,7 +147,7 @@ search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 150)
 
 * Grid Search Deep learning
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_grid = h2o.grid("deeplearning", x = 2:21, y = "Survived",
+dl_grid = h2o.grid("deeplearning", x = 2:23, y = "Survived",
                     grid_id = "dl_grid",
                     training_frame = treino.hex,
                     validation_frame = teste.hex,

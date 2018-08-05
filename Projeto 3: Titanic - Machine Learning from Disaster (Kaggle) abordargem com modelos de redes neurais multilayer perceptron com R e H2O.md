@@ -46,7 +46,7 @@ dim(full)
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(full,op_file = "EDA_titanic.html")
+ExpReport(full,Target="Survived",op_file = "EDA_titanic.html")
 ```
 
 ### Features Engineering.
@@ -108,7 +108,7 @@ full$Survived = as.factor(full$Survived)
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(full,op_file = "EDA_titanic_trans.html")
+ExpReport(full,Target="Survived",op_file = "EDA_titanic_trans.html")
 ```
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

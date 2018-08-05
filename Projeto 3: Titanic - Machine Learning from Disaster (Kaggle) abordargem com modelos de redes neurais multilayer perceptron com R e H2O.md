@@ -84,7 +84,7 @@ full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
 ```
 * Criação da variavél categorica Pclass:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full$Fare[1039] = median(full$Fare, na.rm=TRUE)
+full$Pclass = as.factor(full$Pclass)
 ```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

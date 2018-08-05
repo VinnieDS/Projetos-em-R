@@ -104,17 +104,6 @@ dim(full)
 full$Survived = as.factor(full$Survived)
 ```
 
-### Análise explorátoria de dados do dataset.
-
-* Análise dos dados com foco no target
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(full,Target="Survived",op_file = "EDA_titanic_trans.html")
-```
-* Matriz de correlação
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(full,label = T,nbreaks = 5,label_round = 2)
-```
-
 ### Divisão do dataset.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -122,6 +111,16 @@ treino = full[1:891,]
 teste = full[892:1309,]
 ```
 
+### Análise explorátoria de dados do dataset.
+
+* Análise dos dados com foco no target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpReport(treino,Target="Survived",op_file = "EDA_titanic_trans.html")
+```
+* Matriz de correlação
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggcorr(treino,label = T,nbreaks = 5,label_round = 2)
+```
 ### Inicialização do H2O.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

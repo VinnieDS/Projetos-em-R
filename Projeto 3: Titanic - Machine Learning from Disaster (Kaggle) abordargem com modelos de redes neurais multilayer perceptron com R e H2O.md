@@ -82,6 +82,7 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                data=full[!is.na(full$Age),], method="anova")
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
+full$Age = log(full$Age)
 ```
 * Criação da variavél categorica Pclass:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

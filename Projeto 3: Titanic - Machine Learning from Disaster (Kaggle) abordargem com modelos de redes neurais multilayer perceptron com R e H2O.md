@@ -65,6 +65,7 @@ full$Title = factor(full$Title)
 * Tamanho da familia:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$FamilySize = full$SibSp + full$Parch + 1
+full$FamilySize = as.factor(full$FamilySize)
 ```
 * Local de embarque:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

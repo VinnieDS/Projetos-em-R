@@ -111,7 +111,7 @@ ExpReport(full,Target="Survived",op_file = "EDA_titanic_trans.html")
 ```
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(full,label = T,nbreaks = 5,label_round = 4)
+ggcorr(full,label = T,nbreaks = 5,label_round = 2)
 ```
 
 ### Divisão do dataset.

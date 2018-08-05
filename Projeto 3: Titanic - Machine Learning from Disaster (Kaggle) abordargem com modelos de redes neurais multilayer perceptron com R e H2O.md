@@ -82,6 +82,10 @@ age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + 
                
 full$Age[is.na(full$Age)] = predict(age_miss, full[is.na(full$Age),])
 ```
+* Criação da variavél categorica Pclass:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$Fare[1039] = median(full$Fare, na.rm=TRUE)
+```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket,-Cabin)
@@ -91,6 +95,7 @@ full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket,-Cabin)
 dummy = dummyVars(" ~ .", data = full)
 full = data.frame(predict(dummy, newdata = full))
 View(full)
+dim(full)
 ```
 * Criação do target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -137,7 +142,7 @@ activation_opt = c("Rectifier", "RectifierWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 l2_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
-search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 100)
+search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 150)
 ```
 
 * Grid Search Deep learning

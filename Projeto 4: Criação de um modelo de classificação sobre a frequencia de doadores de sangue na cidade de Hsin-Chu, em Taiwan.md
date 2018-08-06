@@ -11,6 +11,7 @@ library(SmartEDA);
 library(GGally);
 library(Matrix);
 library(Xgboost);
+library(rpart);
 ```
 
 ### Entrada de dados.

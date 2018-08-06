@@ -145,7 +145,7 @@ activation_opt = c("Rectifier", "RectifierWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 l2_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
-search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 150)
+search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 1000)
 ```
 
 * Grid Search Deep learning

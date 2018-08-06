@@ -182,9 +182,9 @@ h2o.varimp_plot(best_dl)
 prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 ```
 
-### Subimissão ao Kaggle
+### Solução ao Kaggle
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 solucao = data.frame(PassengerId = teste["PassengerId"], Survived = prediction)
-write.csv(solucao, file="solucao_deep_learning_rh2o.csv",  row.names = FALSE)
+write.csv(solucao, file="solucao_deep_learning_h2o.csv",  row.names = FALSE)
 ```

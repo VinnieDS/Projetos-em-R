@@ -29,7 +29,7 @@ Um estudo para verificação de padrões no gráfico diario no par de moeda EURU
 
 ## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
 
-## Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base Breast Cancer.
+## Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) aplicando um modelo de SVM na base Breast Cancer.
 
 ## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.
 

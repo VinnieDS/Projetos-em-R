@@ -35,9 +35,12 @@ Um estudo para verificação de padrões no gráfico diario no par de moeda EURU
 
 O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.
 
+http://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength
+
 ## Projeto 9: Dados do Banco Mundial (1960 a 2016) Analise explorátoria de dados, criação de target, analise de cluster, o desenvolvimento de um modelo preditivo e visualização.
 
 População de países, taxa de fertilidade e expectativa de vida. 
+
 https://www.kaggle.com/gemartin/world-bank-data-1960-to-2016
 
 ## Projeto 10: Time series in R

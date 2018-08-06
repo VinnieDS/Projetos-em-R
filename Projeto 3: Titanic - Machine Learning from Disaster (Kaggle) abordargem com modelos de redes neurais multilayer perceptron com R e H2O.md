@@ -139,7 +139,7 @@ teste.hex = as.h2o(teste, destination_frame="teste.hex")
 
 ### Grid Search, Seleção do modelo e Teste.
 
-* Deep learning hiperparametros
+* Lista de hiperparametros:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 activation_opt = c("Rectifier", "RectifierWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
@@ -148,7 +148,7 @@ hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
 search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 1000)
 ```
 
-* Grid Search Deep learning
+* Grid Search Deep learning:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dl_grid = h2o.grid("deeplearning", x = 2:31, y = "Survived",
                     grid_id = "dl_grid",
@@ -160,24 +160,24 @@ dl_grid = h2o.grid("deeplearning", x = 2:31, y = "Survived",
                     search_criteria = search_criteria)
 ```
 
-* Resultados do Grid
+* Resultados do Grid:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "logloss", decreasing = TRUE)
 print(dl_gridperf)
 ```
 
-* Selecionar o model_id para o modelo top DL, escolhido pela validação AUC
+* Selecionar o model_id para o modelo top DL, escolhido pela validação logloss:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_model_id = dl_gridperf@model_ids[[1]]
 best_dl = h2o.getModel(best_dl_model_id)
 ```
 
-* Verficação da importância das variáveis do modelo
+* Verficação da importância das variáveis do modelo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.varimp_plot(best_dl)
 ```
 
-* Predições
+* Predições:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 ```

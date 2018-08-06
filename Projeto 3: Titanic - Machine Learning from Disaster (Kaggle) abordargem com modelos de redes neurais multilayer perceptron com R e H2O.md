@@ -30,7 +30,6 @@ library(dplyr);
 library(caret);
 library(SmartEDA);
 library(GGally);
-library(ggplot2);
 library(rpart);
 ```
 

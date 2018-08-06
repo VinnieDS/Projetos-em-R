@@ -31,6 +31,8 @@ Um estudo para verificação de padrões no gráfico diario no par de moeda EURU
 
 ## Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) aplicando um modelo de SVM na base Breast Cancer.
 
+O objetivo é identificar cada uma das várias classes benignas ou malignas. As amostras chegam periodicamente como o Dr. Wolberg relata seus casos clínicos. O banco de dados, portanto, reflete essa ordem cronológica agrupamento dos dados. Esta informação de agrupamento aparece imediatamente abaixo, tendo sido removida dos dados em si. Cada variável, exceto a primeira, foi convertida em 11 números numéricos primitivos. atributos com valores que variam de 0 a 10. Há 16 valores de atributos ausentes.
+
 ## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). 
 
 O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.

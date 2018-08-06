@@ -102,7 +102,7 @@ full = data.frame(predict(dummy, newdata = full))
 View(full)
 dim(full)
 ```
-* Criação do target
+* Criação do target:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Survived = as.factor(full$Survived)
 ```
@@ -116,11 +116,11 @@ teste = full[892:1309,]
 
 ### Análise explorátoria de dados do dataset.
 
-* Análise dos dados com foco no target
+* Análise dos dados com foco no target:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(treino,Target="Survived",op_file = "EDA_titanic_trans.html")
 ```
-* Matriz de correlação
+* Matriz de correlação:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(treino,label = T,nbreaks = 5,label_round = 2)
 ```

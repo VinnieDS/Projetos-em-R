@@ -1,6 +1,6 @@
 ## Projeto 3: Titanic - Machine Learning from Disaster (Kaggle) abordargem com modelos de Deep Learning com R e H2O.
 
-O naufrágio do RMS Titanic é um dos mais infames naufrágios da história. Em 15 de abril de 1912, durante sua viagem inaugural, o Titanic afundou depois de colidir com um iceberg, matando 1502 de 2224 passageiros e tripulantes. Esta tragédia sensacional chocou a comunidade internacional e levou a melhores normas de segurança para os navios. Uma das razões pelas quais o naufrágio causou tal perda de vida foi que não havia botes salva-vidas suficientes para os passageiros e a tripulação. Embora houvesse algum elemento de sorte envolvido na sobrevivência do naufrágio, alguns grupos de pessoas tinham maior probabilidade de sobreviver do que outros, como mulheres, crianças e a classe alta. Neste desafio, pedimos que você conclua a análise de quais tipos de pessoas provavelmente sobreviveriam. Para esse desafio irei abordar um modelo de classificação via redes neurais deep learning no h2o.
+O naufrágio do RMS Titanic é um dos mais infames naufrágios da história. Em 15 de abril de 1912, durante sua viagem inaugural, o Titanic afundou depois de colidir com um iceberg, matando 1502 de 2224 passageiros e tripulantes. Esta tragédia sensacional chocou a comunidade internacional e levou a melhores normas de segurança para os navios. Uma das razões pelas quais o naufrágio causou tal perda de vida foi que não havia botes salva-vidas suficientes para os passageiros e a tripulação. Embora houvesse algum elemento de sorte envolvido na sobrevivência do naufrágio, alguns grupos de pessoas tinham maior probabilidade de sobreviver do que outros, como mulheres, crianças e a classe alta. Neste desafio, pedimos que você conclua a análise de quais tipos de pessoas provavelmente sobreviveriam. Para esse desafio irei abordar um modelo de classificação via redes neurais deep learning no h2o, pois estamos falando de um desenvolvimento de modelo não linear.
 
 https://www.kaggle.com/c/titanic/data
 
@@ -177,7 +177,7 @@ best_dl = h2o.getModel(best_dl_model_id)
 h2o.varimp_plot(best_dl)
 ```
 
-* Predições:
+* Predições e threshold:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 ```
@@ -188,3 +188,6 @@ prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 solucao = data.frame(PassengerId = teste["PassengerId"], Survived = prediction)
 write.csv(solucao, file="solucao_deep_learning_h2o.csv",  row.names = FALSE)
 ```
+### Resultado
+
+Modelando o dataset e utilizando o Grid e escolhendo o melhor modelo de deep learning de acordo com logloss conseguimos uma pontuação de 0.80 e com isso na competição  

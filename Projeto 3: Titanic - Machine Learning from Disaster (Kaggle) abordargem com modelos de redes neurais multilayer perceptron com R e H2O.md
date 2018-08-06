@@ -74,12 +74,12 @@ full$FamilySize = as.factor(full$FamilySize)
 full$Embarked[c(62,830)] = "S"
 full$Embarked = as.factor(full$Embarked)
 ```
-* Preenchimento de valores faltantes na variável tarifa:
+* Preenchimento de valores faltantes na variável tarifa e padronização:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Fare[1039] = median(full$Fare, na.rm=TRUE)
 full$Fare = log(full$Fare)
 ```
-* Preenchimento de valores faltantes na variável idade:
+* Preenchimento de valores faltantes na variável idade e padronização:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 age_miss = rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + FamilySize,
                data=full[!is.na(full$Age),], method="anova")

@@ -25,10 +25,13 @@ Some children travelled only with a nanny, therefore parch=0 for them.
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(caret);
-library(stringr);library(DMwR);library(Amelia);
-library(SmartEDA);library(GGally);library(ggplot2);
-library(rpart);library(randomForest);
+library(h2o);
+library(dplyr);
+library(caret);
+library(SmartEDA);
+library(GGally);
+library(ggplot2);
+library(rpart);
 ```
 
 ### Entrada de dados.
@@ -59,7 +62,7 @@ full$Title = sub(' ', '', full$Title)
 full$Title[full$Title %in% c('Mme', 'Mlle')] = 'Mlle'
 full$Title[full$Title %in% c('Capt', 'Don', 'Major', 'Sir')] = 'Sir'
 full$Title[full$Title %in% c('Dona', 'Lady', 'the Countess', 'Jonkheer')] = 'Lady'
-full$Title = factor(full$Title)
+full$Title = as.factor(full$Title)
 ```
 * Tamanho da familia:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -69,7 +72,7 @@ full$FamilySize = as.factor(full$FamilySize)
 * Local de embarque:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Embarked[c(62,830)] = "S"
-full$Embarked = factor(full$Embarked)
+full$Embarked = as.factor(full$Embarked)
 ```
 * Preenchimento de valores faltantes na variável tarifa:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -183,5 +186,5 @@ prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 solucao = data.frame(PassengerId = teste["PassengerId"], Survived = prediction)
-write.csv(solucao, file="solucao.csv",  row.names = FALSE)
+write.csv(solucao, file="solucao_deep_learning_rh2o.csv",  row.names = FALSE)
 ```

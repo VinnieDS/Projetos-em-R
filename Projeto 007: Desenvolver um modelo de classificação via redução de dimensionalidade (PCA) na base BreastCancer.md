@@ -161,9 +161,6 @@ grid = expand.grid(interaction.depth=c(1,2),
                     shrinkage=c(0.01,0.1),
                     n.minobsinnode = 20)      
 
-registerDoParallel(4)
-getDoParWorkers()
-
 gbm.tune = train(x=treino[1:10],y=treino$Class,
                               method = "gbm",
                               metric = "ROC",

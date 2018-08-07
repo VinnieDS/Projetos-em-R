@@ -69,5 +69,17 @@ BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
 ```
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + Epith.c.size + Bl.cromatin + Normal.nucleoli, data=full[!is.na(data$Bare.nuclei),], method="anova")
+               
+data$Bare.nuclei[is.na(data$Bare.nuclei)] = predict(bare_nuclei_miss, data[is.na(data$Bare.nuclei),])
+```
+### Análise explorátoria de dados.
+
+* Análise de dados modelados e com foco no target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
+```
+* Matriz de correlação
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

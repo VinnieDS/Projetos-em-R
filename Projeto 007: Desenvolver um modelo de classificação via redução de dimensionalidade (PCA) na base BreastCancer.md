@@ -149,3 +149,13 @@ bwplot(resultados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dotplot(resultados)
 ```
+
+### Tuning 
+
+* O melhor modelo de acordo com os resultados acima é o random forest
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+tuned_model <- train(x = predictors, y = output,
+                     ntree = 5, # number of trees (passed ot random forest)
+                     method = "rf") # random forests
+print(tuned_model)
+```

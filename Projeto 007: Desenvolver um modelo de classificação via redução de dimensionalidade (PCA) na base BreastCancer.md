@@ -24,7 +24,6 @@ O objetivo é identificar cada uma das várias classes benignas ou malignas. As 
 
 11] Class - Class
 
-
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -34,6 +33,7 @@ library(SmartEDA);
 library(GGally);
 library(rpart);
 library(e1079);
+library(Amelia);
 library(mlbench);
 ```
 
@@ -52,5 +52,22 @@ data = BreastCancer
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(data,Target="Class",op_file = "EDA_BreastCancer.html")
 ```
-### Featriring engeeniri!
 
+### Features Engineering.
+
+* Transformação dos fatores em dados númericos
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+BreastCancer$Cl.thickness = as.numeric(BreastCancer$Cl.thickness)
+BreastCancer$Cell.size = as.numeric(BreastCancer$Cell.size)
+BreastCancer$Cell.shape = as.numeric(BreastCancer$Cell.shape)
+BreastCancer$Marg.adhesion = as.numeric(BreastCancer$Marg.adhesion)
+BreastCancer$Epith.c.size = as.numeric(BreastCancer$Epith.c.size)
+BreastCancer$Bare.nuclei = as.numeric(BreastCancer$Bare.nuclei)
+BreastCancer$Bl.cromatin = as.numeric(BreastCancer$Bl.cromatin)
+BreastCancer$Normal.nucleoli = as.numeric(BreastCancer$Normal.nucleoli)
+BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
+```
+* Verificação dos dados faltantes
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```

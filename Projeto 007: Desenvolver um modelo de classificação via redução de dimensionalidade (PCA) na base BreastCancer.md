@@ -115,9 +115,7 @@ head(data)
 
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ctrl = trainControl(method = "cv",number = 5,allowParallel = TRUE)
-registerDoParallel(4)
-getDoParWorkers()
+control = trainControl(method = "cv",number = 5,allowParallel = TRUE)
 ```
 
 ### Seleção de modelo

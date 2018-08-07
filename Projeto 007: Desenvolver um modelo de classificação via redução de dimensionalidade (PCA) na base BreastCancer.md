@@ -81,5 +81,5 @@ ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
 ```
 * Matriz de correlação
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+ggcorrplot(data,label = T,nbreaks = 5,label_round = 2)
 ```

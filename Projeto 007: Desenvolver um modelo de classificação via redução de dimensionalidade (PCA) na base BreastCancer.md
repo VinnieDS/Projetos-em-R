@@ -97,14 +97,9 @@ data = data %>% select()
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
-part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
-treino = mtcars[part,]
-teste = mtcars[-part,]
-```
-
-* Controle do treino
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ctrl = trainControl(method = "cv",number = 5)
+part = createDataPartition(y = data$Class, p = 0.8, list = FALSE)
+treino = data[part,]
+teste = data[-part,]
 ```
 
 * Pré processamento com PCA
@@ -112,6 +107,13 @@ ctrl = trainControl(method = "cv",number = 5)
 pp_data = preProcess(data[, -8], method = c("pca"))
 data = predict(pp_data, newdata = data[, -8])
 head(data)
+```
+
+* Controle do treino
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ctrl = trainControl(method = "cv",number = 5,allowParallel = TRUE)
+registerDoParallel(4)
+getDoParWorkers()
 ```
 
 ### Seleção de modelo
@@ -152,10 +154,25 @@ dotplot(resultados)
 
 ### Tuning 
 
-* O melhor modelo de acordo com os resultados acima é o random forest
+* O melhor modelo de acordo com os resultados acima é o gbm
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-tuned_model <- train(x = predictors, y = output,
-                     ntree = 5, # number of trees (passed ot random forest)
-                     method = "rf") # random forests
-print(tuned_model)
+grid = expand.grid(interaction.depth=c(1,2), 
+                    n.trees=c(10,20),
+                    shrinkage=c(0.01,0.1),
+                    n.minobsinnode = 20)      
+
+registerDoParallel(4)
+getDoParWorkers()
+
+gbm.tune = train(x=treino[1:10],y=treino$Class,
+                              method = "gbm",
+                              metric = "ROC",
+                              trControl = ctrl,
+                              tuneGrid=grid,
+                              verbose=FALSE)
+gbm.tune$bestTune
+plot(gbm.tune)  
+res = gbm.tune$results
 ```
+
+### Teste e avaliação de perfomance

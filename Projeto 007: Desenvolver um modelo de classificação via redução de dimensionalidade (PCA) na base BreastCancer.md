@@ -113,3 +113,39 @@ pp_data = preProcess(data[, -8], method = c("pca"))
 data = predict(pp_data, newdata = data[, -8])
 head(data)
 ```
+
+### Seleção de modelo
+
+* Modelos de Naive Bayes, Linear Generalizado, Gradient Boosted, KNN e Random Forest
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(95)
+modelnb = train(Class~., data=treino, method="nb", trControl=control)
+set.seed(71)
+modelglm = train(Class~., data=treino, method="glm", trControl=control)
+set.seed(78)
+modelknn = train(Class~., data=treino, method="knn", trControl=control)
+set.seed(80)
+modelgbm = train(Class~., data=treino, method="gbm", trControl=control)
+set.seed(97)
+modelrf = train(Class~., data=treino, method="rf", trControl=control)
+```
+
+* Agregação dos resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+resultados = resamples(list(NB=modelLnb, GLM=modelglm, KNN=modelknn, GBM=modelGbm, Rf=modelrf))
+```
+
+* Resumo dos resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+summary(resultados)
+```
+
+* Boxplots dos resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+bwplot(resultados)
+```
+
+* Dot plots dos resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+dotplot(resultados)
+```

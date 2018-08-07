@@ -83,3 +83,15 @@ ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorrplot(data,label = T,nbreaks = 5,label_round = 2)
 ```
+
+### Preparação para o treinamento.
+
+* Divisão do dataset
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(86)
+part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)
+treino = mtcars[part,]
+teste = mtcars[-part,]
+```
+
+* COntrole do treino

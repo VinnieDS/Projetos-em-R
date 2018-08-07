@@ -1,6 +1,6 @@
 # Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base BreastCancer.
 
-O objetivo é identificar cada uma das várias classes benignas ou malignas. As amostras chegam periodicamente como o Dr. Wolberg relata seus casos clínicos. O banco de dados, portanto, reflete essa ordem cronológica agrupamento dos dados. Esta informação de agrupamento aparece imediatamente abaixo, tendo sido removida dos dados em si. Cada variável, exceto a primeira, foi convertida em 11 números numéricos primitivos. atributos com valores que variam de 0 a 10. Há 16 valores de atributos ausentes. Uma base de dados com 699 observações em 11 variáveis, sendo uma delas uma variável de caráter, 9 sendo ordenada ou nominal e 1 classe alvo.
+O objetivo é identificar cada uma das várias classes benignas ou malignas. As amostras chegam periodicamente como o Dr. Wolberg relata seus casos clínicos. O banco de dados, portanto, reflete essa ordem cronológica agrupamento dos dados. Esta informação de agrupamento aparece imediatamente abaixo, tendo sido removida dos dados em si. Cada variável, exceto a primeira, foi convertida em 11 números numéricos primitivos. atributos com valores que variam de 0 a 10. Há 16 valores de atributos ausentes. Uma base de dados com 699 observações em 11 variáveis, sendo uma delas uma variável de caráter, 9 sendo ordenada ou nominal e 1 classe alvo. Iremos realizar uma redução de dimensionalidade em vez da seleção de variáveis 
 
 1] Id - Sample code number
 
@@ -32,8 +32,10 @@ library(caret);
 library(SmartEDA);
 library(GGally);
 library(rpart);
-library(e1079);
+library(shiny);
 library(Amelia);
+library(pROC);
+library(gbm);
 library(mlbench);
 ```
 
@@ -90,12 +92,6 @@ ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
 ggcorrplot(data,label = T,nbreaks = 5,label_round = 2)
 ```
 
-### Seleção de variáveis
-
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-data = data %>% select()
-```
-
 ### Preparação para o treinamento.
 
 * Pré processamento com PCA
@@ -136,7 +132,7 @@ modelrf = train(Class~., data=treino, method="rf", trControl=control)
 
 * Agregação dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(NB=modelnb, GLM=modelglm, KNN=modelknn, GBM=modelgbm, Rf=modelrf))
+resultados = resamples(list(NB=modelnb, GLM=modelglm, KNN=modelknn, GBM=modelgbm, RF=modelrf))
 ```
 
 * Resumo dos resultados
@@ -155,14 +151,15 @@ dotplot(resultados)
 ```
 
 * Conclusão
+De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.
 
-### Tuning 
+### Tuning - Mellhorar a performance e evitar o overfiting
 
 * Grid 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 grid = expand.grid(interaction.depth=c(1,2), 
                     n.trees=c(10,20,30,40,50,100),
-                    shrinkage=c(0.01,0.1),
+                    shrinkage=c(0.001,0.01,0.1),
                     n.minobsinnode = 20)      
 ```
 * Treino
@@ -183,28 +180,42 @@ res = gbm.tune$results
 
 ### Teste e avaliação de perfomance
 
+* Predições
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.pred = predict(gbm.tune,teste)
 ```
-
+* Matriz de confusão e métricas relacionadas ao teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 confusionMatrix(gbm.pred,teste$Class)
 ```
-
+* Obtenção das probabilidades
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.probs = predict(gbm.tune,teste,type="prob")
 head(gbm.probs)
 ```
-
+* Curva ROC 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.ROC = roc(predictor=gbm.probs$benign,
                response=teste$Class,
                levels=rev(levels(teste$Class)))
-            
+
+plot(gbm.ROC,main=""Diagnóstico de Cancer de Mama via GBM")
 ```
+* Área da curva ROC
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.ROC$auc
-plot(gbm.ROC,main="GBM ROC")
+```
+
+### Salvar o modelo tune
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+saveRDS(gbm.tune,file = "modelo_cancer_final")
 ```
 
 ### Conclusão
+
+Utilizando a redução de dimensionalidade PCA conseguimos um modelo com auc de 0.9979 (classificador quase perfeito) e uma acuracia de 0.9784 nos dados de teste uma performance muito melhor do que a referencia que treinou os mesmos dados com o algoritmo de KNN (K=1) e obteve a acuracia de 0.95 e assim reduzindo a taxa de falsos positivos e falsos negativos. 
+
+### Deployment in Shiny R (Criação do APP)
+
+Utilizando o modelo desenvolvido que melhor explica a relação do cancer de mama do tipo benigno com o maligino iremos desenvolver um app no qual o usuario vai inserir os fatores determinantes para o tipo de cancer e o app vai retornar com o tipo e a probabilidade do diagnostico.

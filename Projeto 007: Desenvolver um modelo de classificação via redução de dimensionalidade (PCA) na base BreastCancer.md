@@ -98,6 +98,14 @@ data = data %>% select()
 
 ### Preparação para o treinamento.
 
+* Pré processamento com PCA
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pp_data = preProcess(data[, -11], method = c("pca"))
+data_1 = predict(pp_data, newdata = data[, -11])
+head(data_1)
+data = cbind(data_1,data$Class)
+names(data)[9] = "Class"
+```
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
@@ -105,17 +113,9 @@ part = createDataPartition(y = data$Class, p = 0.8, list = FALSE)
 treino = data[part,]
 teste = data[-part,]
 ```
-
-* Pré processamento com PCA
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pp_data = preProcess(data[, -8], method = c("pca"))
-data = predict(pp_data, newdata = data[, -8])
-head(data)
-```
-
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-control = trainControl(method = "cv",number = 5,allowParallel = TRUE)
+control = trainControl(method = "cv",number = 5,classProbs = TRUE,allowParallel = TRUE)
 ```
 
 ### Seleção de modelo
@@ -136,7 +136,7 @@ modelrf = train(Class~., data=treino, method="rf", trControl=control)
 
 * Agregação dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(NB=modelLnb, GLM=modelglm, KNN=modelknn, GBM=modelGbm, Rf=modelrf))
+resultados = resamples(list(NB=modelnb, GLM=modelglm, KNN=modelknn, GBM=modelgbm, Rf=modelrf))
 ```
 
 * Resumo dos resultados
@@ -154,21 +154,28 @@ bwplot(resultados)
 dotplot(resultados)
 ```
 
+* Conclusão
+
 ### Tuning 
 
-* O melhor modelo de acordo com os resultados acima é o gbm
+* Grid 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 grid = expand.grid(interaction.depth=c(1,2), 
-                    n.trees=c(10,20),
+                    n.trees=c(10,20,30,40,50,100),
                     shrinkage=c(0.01,0.1),
                     n.minobsinnode = 20)      
-
+```
+* Treino
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.tune = train(x=treino[1:10],y=treino$Class,
                               method = "gbm",
                               metric = "ROC",
-                              trControl = ctrl,
+                              trControl = control,
                               tuneGrid=grid,
                               verbose=FALSE)
+```
+* Resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 gbm.tune$bestTune
 plot(gbm.tune)  
 res = gbm.tune$results

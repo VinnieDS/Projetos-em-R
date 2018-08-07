@@ -49,7 +49,7 @@ dim(BreastCancer)
 
 ### Análise explorátoria de dados.
 
-* Análise dos dados com foco no target
+* Análise dos dados brutos com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(BreastCancer,Target="Class",op_file = "EDA_BreastCancer.html")
 ```
@@ -88,20 +88,44 @@ data$Bare.nuclei[is.na(data$Bare.nuclei)] = predict(bare_nuclei_miss, data[is.na
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
 ```
-* Matriz de correlação
+* Matriz de correlação (dados altamente correlacionados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorrplot(data,label = T,nbreaks = 5,label_round = 2)
+ggcorr(data[-10],label = T,nbreaks = 5,label_round = 2)
+```
+
+### Analise de componentes principais.
+
+* Analise de componentes principais
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pc = prcomp(data[,-10], center = TRUE, scale. = TRUE)
+print(pc)
+summary(pc)
+```
+
+* Gráfico da analise de componentes principais
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+library(devtools)
+install_github("ggbiplot", "vqv")
+library(ggbiplot)
+g = ggbiplot(pc, obs.scale = 1, var.scale = 1, groups = data$Class, ellipse = TRUE, circle = TRUE, ellipse.prob = 0.68)
+g = g+scale_alpha_discrete(name = '')
+g = g+theme(legend.direction = 'horizontal', legend.position = 'top')
+print(g)
 ```
 
 ### Preparação para o treinamento.
 
 * Pré processamento com PCA
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pp_data = preProcess(data[, -11], method = c("pca"))
+pp_data = preProcess(data[, -10], method = c("pca"))
 data_1 = predict(pp_data, newdata = data[, -11])
 head(data_1)
 data = cbind(data_1,data$Class)
 names(data)[9] = "Class"
+```
+* Matriz de correlação com o dado pre processado pelo PCA
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ggcorr(data,label = T,nbreaks = 5,label_round = 2)
 ```
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

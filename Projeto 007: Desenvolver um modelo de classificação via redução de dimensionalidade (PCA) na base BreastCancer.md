@@ -68,11 +68,12 @@ BreastCancer$Bl.cromatin = as.numeric(BreastCancer$Bl.cromatin)
 BreastCancer$Normal.nucleoli = as.numeric(BreastCancer$Normal.nucleoli)
 BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
 ```
-* Mudança do nome para modelagem
+* Mudança do nome para modelagem e retirada do ID
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data = BreastCancer
+data = data[,-1]
+dim(data)
 ```
-
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 
@@ -153,7 +154,7 @@ dotplot(resultados)
 * Conclusão
 De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.
 
-### Tuning - Mellhorar a performance e evitar o overfiting
+### Tuning - Melhorar a performance e evitar o overfiting
 
 * Grid 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -206,7 +207,7 @@ plot(gbm.ROC,main=""Diagnóstico de Cancer de Mama via GBM")
 gbm.ROC$auc
 ```
 
-### Salvar o modelo tune
+### Salvar o modelo treinado e testado
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 saveRDS(gbm.tune,file = "modelo_cancer_final")

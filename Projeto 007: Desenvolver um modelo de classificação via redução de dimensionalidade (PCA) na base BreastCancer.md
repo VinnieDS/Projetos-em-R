@@ -182,3 +182,27 @@ res = gbm.tune$results
 ```
 
 ### Teste e avaliação de perfomance
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+gbm.pred = predict(gbm.tune,teste)
+```
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+confusionMatrix(gbm.pred,teste$Class)
+```
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+gbm.probs = predict(gbm.tune,teste,type="prob")
+head(gbm.probs)
+```
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+gbm.ROC = roc(predictor=gbm.probs$benign,
+               response=teste$Class,
+               levels=rev(levels(teste$Class)))
+            
+```
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+gbm.ROC$auc
+plot(gbm.ROC,main="GBM ROC")
+```

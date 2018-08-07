@@ -72,7 +72,7 @@ BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
 bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 
                          Epith.c.size + Bl.cromatin + Normal.nucleoli, 
                          data=data[!is.na(data$Bare.nuclei),], method="anova")
-               
+              
 data$Bare.nuclei[is.na(data$Bare.nuclei)] = predict(bare_nuclei_miss, data[is.na(data$Bare.nuclei),])
 ```
 ### Análise explorátoria de dados.

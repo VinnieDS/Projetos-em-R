@@ -206,3 +206,5 @@ gbm.ROC = roc(predictor=gbm.probs$benign,
 gbm.ROC$auc
 plot(gbm.ROC,main="GBM ROC")
 ```
+
+### Conclusão

@@ -43,14 +43,13 @@ library(mlbench);
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data(BreastCancer)
 dim(BreastCancer)
-data = BreastCancer
 ```
 
 ### Análise explorátoria de dados.
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(data,Target="Class",op_file = "EDA_BreastCancer.html")
+ExpReport(BreastCancer,Target="Class",op_file = "EDA_BreastCancer.html")
 ```
 
 ### Features Engineering.
@@ -67,6 +66,11 @@ BreastCancer$Bl.cromatin = as.numeric(BreastCancer$Bl.cromatin)
 BreastCancer$Normal.nucleoli = as.numeric(BreastCancer$Normal.nucleoli)
 BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
 ```
+* Mudança do nome para modelagem
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+data = BreastCancer
+```
+
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 

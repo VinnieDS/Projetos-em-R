@@ -69,7 +69,9 @@ BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
 ```
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + Epith.c.size + Bl.cromatin + Normal.nucleoli, data=full[!is.na(data$Bare.nuclei),], method="anova")
+bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 
+                         Epith.c.size + Bl.cromatin + Normal.nucleoli, 
+                         data=full[!is.na(data$Bare.nuclei),], method="anova")
                
 data$Bare.nuclei[is.na(data$Bare.nuclei)] = predict(bare_nuclei_miss, data[is.na(data$Bare.nuclei),])
 ```
@@ -84,14 +86,26 @@ ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
 ggcorrplot(data,label = T,nbreaks = 5,label_round = 2)
 ```
 
+### Seleção de variáveis
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+data = data %>% select()
+```
+
 ### Preparação para o treinamento.
 
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
-part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)
+part = createDataPartition(y = mtcars$mpg, p = 0.8, list = FALSE)
 treino = mtcars[part,]
 teste = mtcars[-part,]
 ```
 
-* COntrole do treino
+* Controle do treino
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ctrl = trainControl(method = "cv",number = 5)
+```
+
+
+

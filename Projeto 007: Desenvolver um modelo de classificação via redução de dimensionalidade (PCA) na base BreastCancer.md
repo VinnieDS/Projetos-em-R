@@ -107,5 +107,9 @@ teste = mtcars[-part,]
 ctrl = trainControl(method = "cv",number = 5)
 ```
 
-
-
+* Pré processamento com PCA
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pp_data = preProcess(data[, -8], method = c("pca"))
+data = predict(pp_data, newdata = data[, -8])
+head(data)
+```

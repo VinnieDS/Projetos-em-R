@@ -105,7 +105,9 @@ summary(pc)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 install_github("ggbiplot", "vqv")
 library(ggbiplot)
-g = ggbiplot(pc, obs.scale = 1, var.scale = 1, groups = data$Class, ellipse = TRUE, circle = TRUE, ellipse.prob = 0.68)
+g = ggbiplot(pc, obs.scale = 1, var.scale = 1, 
+             groups = data$Class, ellipse = TRUE, 
+             circle = TRUE, ellipse.prob = 0.68)
 g = g+scale_alpha_discrete(name = '')
 g = g+theme(legend.direction = 'horizontal', legend.position = 'top')
 print(g)

@@ -151,6 +151,8 @@ set.seed(80)
 modelgbm = train(Class~., data=treino, method="gbm", trControl=control)
 set.seed(97)
 modelrf = train(Class~., data=treino, method="rf", trControl=control)
+set.seed(11)
+modelxgbTree = train(Class~., data=treino, method="xgbTree", trControl=control)
 ```
 
 * Agregação dos resultados

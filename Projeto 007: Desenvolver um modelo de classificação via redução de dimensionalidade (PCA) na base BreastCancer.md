@@ -61,7 +61,7 @@ ExpReport(BreastCancer,Target="Class",op_file = "EDA_BreastCancer.html")
 data = BreastCancer
 data = data[,-1]
 dim(data)
-```tab
+```
 * Transformação dos fatores em dados númericos
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data_if = data[,-10] %>% mutate_if(is.factor, as.numeric)

@@ -161,7 +161,9 @@ modelsvmRadial = train(Class~., data=treino, method="svmRadial", trControl=contr
 
 * Agregação dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(NB=modelnb, C50=modelc50, GLM=modelglm, KNN=modelknn, GBM=modelgbm, RF=modelrf, XGB=modelxgbTree, SVM=modelsvmRadial))
+resultados = resamples(list(NB=modelnb, C50=modelc50, GLM=modelglm, 
+                            KNN=modelknn, GBM=modelgbm, RF=modelrf, 
+                            XGB=modelxgbTree, SVM=modelsvmRadial))
 ```
 
 * Resumo dos resultados

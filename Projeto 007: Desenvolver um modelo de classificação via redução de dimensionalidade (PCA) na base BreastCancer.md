@@ -187,7 +187,7 @@ grid = expand.grid(interaction.depth=c(1,2),
 ```
 * Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-gbm.tune = train(x=treino[1:10],y=treino$Class,
+gbm.tune = train(x=treino[2:8],y=treino$Class,
                               method = "gbm",
                               metric = "ROC",
                               trControl = control,

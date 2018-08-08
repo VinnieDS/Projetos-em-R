@@ -18,13 +18,13 @@ library(rpart);
 
 * Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-base = read.csv2("base.csv")
-dim(base)
+datadb = read.csv2("datadb.csv")
+dim(datadb)
 ```
 
 ### Análise explorátoria de dados.
 
 * Análise dos dados com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(base,Target="Survived",op_file = "EDA_csts.html")
+ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```

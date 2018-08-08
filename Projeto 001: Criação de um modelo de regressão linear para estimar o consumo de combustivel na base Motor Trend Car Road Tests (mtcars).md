@@ -76,23 +76,23 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 
 ### Seleção de variáveis
 
-* Procedimento de seleção do modelo
+* Procedimento de seleção do modelo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars))$coef
 ```
-* Detectando colinearidade
+* Detectando colinearidade:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fitvif = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
 kable(vif(fitvif),align = 'c')
 ```
-* Método de seleção gradual
+* Método de seleção gradual:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fit = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
 step = stepAIC(fit, direction="both", trace=FALSE)
 summary(step)$coeff
 summary(step)$r.squared
 ```
-* Teste de razão de verossimilhança
+* Teste de razão de verossimilhança:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fit1 = lm(mpg ~ factor(am), data = mtcars)
 fit2 = lm(mpg ~ factor(am)+wt, data = mtcars)
@@ -101,7 +101,7 @@ fit4 = lm(mpg ~ factor(am)+wt+qsec+hp, data = mtcars)
 fit5 = lm(mpg ~ factor(am)+wt+qsec+hp+drat, data = mtcars)
 anova(fit1, fit2, fit3, fit4, fit5)
 ```
-* Ajustando o modelo final
+* Ajustando o modelo final:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_rl_final = lm(mpg ~ wt+qsec+factor(am), data = mtcars)
 summary(modelo_rl_final)$coef

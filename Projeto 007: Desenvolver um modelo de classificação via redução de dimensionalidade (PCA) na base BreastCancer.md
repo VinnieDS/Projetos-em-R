@@ -27,6 +27,7 @@ O objetivo é identificar cada uma das várias classes benignas ou malignas. As 
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+library(devtools);
 library(dplyr);
 library(caret);
 library(SmartEDA);
@@ -102,7 +103,6 @@ summary(pc)
 
 * Gráfico da analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(devtools)
 install_github("ggbiplot", "vqv")
 library(ggbiplot)
 g = ggbiplot(pc, obs.scale = 1, var.scale = 1, groups = data$Class, ellipse = TRUE, circle = TRUE, ellipse.prob = 0.68)

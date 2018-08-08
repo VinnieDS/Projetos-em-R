@@ -27,7 +27,9 @@ str(mydata2)
 ### Modelagem do dataset em dplyr.
 * Seleção de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
+base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,
+                                     mrxWheelNumber,wheelpositionname,td_time,
+                                     td_press,td_temp)
 str(base_telemetria)
 
 base_rotas = mydata2 %>% select(TRUCK,LOC,BLAST,EXCAV,LOAD,DIST,SHIFT,DDMMYY)

@@ -118,14 +118,12 @@ print(g)
 * Pré processamento com PCA
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pp_data = preProcess(data[, -10], method = c("pca"))
-data_1 = predict(pp_data, newdata = data[, -11])
-head(data_1)
-data = cbind(data_1,data$Class)
-names(data)[9] = "Class"
+data = predict(pp_data, newdata = data[, -11])
+head(data)
 ```
 * Matriz de correlação com o dado pre processado pelo PCA
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(data,label = T,nbreaks = 5,label_round = 2)
+ggcorr(data[2:8],label = T,nbreaks = 5,label_round = 2)
 ```
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -136,7 +134,7 @@ teste = data[-part,]
 ```
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-control = trainControl(method = "cv",number = 5,classProbs = TRUE,allowParallel = TRUE)
+control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel = TRUE)
 ```
 
 ### Seleção de modelo

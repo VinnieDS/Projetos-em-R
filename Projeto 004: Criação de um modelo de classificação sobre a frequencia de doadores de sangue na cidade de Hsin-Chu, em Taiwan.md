@@ -24,7 +24,7 @@ dim(datadb)
 
 ### Análise explorátoria de dados.
 
-* Análise dos dados com foco no target
+* Análise dos dados brutos com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
@@ -34,4 +34,11 @@ ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 * 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 datadb$class = as.factor(datadb$class)
+```
+
+### Análise explorátoria de dados.
+
+* Análise dos dados modelados com foco no target
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```

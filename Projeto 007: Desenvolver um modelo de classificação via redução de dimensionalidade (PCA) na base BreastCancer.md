@@ -118,7 +118,7 @@ print(g)
 * Pré processamento com PCA
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pp_data = preProcess(data[, -10], method = c("pca"))
-data = predict(pp_data, newdata = data[, -11])
+data = predict(pp_data, newdata = data[, -10])
 head(data)
 ```
 * Matriz de correlação com o dado pre processado pelo PCA

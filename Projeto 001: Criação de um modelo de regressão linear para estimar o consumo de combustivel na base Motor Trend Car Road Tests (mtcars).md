@@ -179,7 +179,7 @@ defaultSummary(res_cv_model_svm)
 ```
 
 ### Base de comparação de resultados
-Base de resultados
+* Base de resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 base_comp = cbind(res_cv_model_linear,pred_rf = round(res_cv_model_rf$pred,1),pred_svm = round(res_cv_model_svm$pred,1))
 lm=defaultSummary(res_cv_model_linear)

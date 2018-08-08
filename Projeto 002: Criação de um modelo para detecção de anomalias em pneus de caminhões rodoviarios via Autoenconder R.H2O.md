@@ -4,24 +4,28 @@ Na área de manutenção de caminhões recebe as informações de maneira remota
 
 ### Pacotes.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(h2o);library(dplyr);library(ggplot2);library(caret);library(stringr);
+library(h2o);
+library(dplyr);
+library(ggplot2);
+library(caret);
+library(stringr);
 ```
 
 ### Entrada de dados.
-Dados de telemetria e dos caminhões
+* Dados de telemetria e dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mydata1 = read.csv2("tele.csv")
 str(mydata1)
 ```
 
-Dados de rotas dos caminhões
+* Dados de rotas dos caminhões
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 mydata2 = read.csv2("rota.csv")
 str(mydata2)
 ```
 
 ### Modelagem do dataset em dplyr.
-Seleção de variáveis:
+* Seleção de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 base_telemetria = mydata1 %>% select(h_tyredatakey,vehicleid,tyreserialnumber,mrxWheelNumber,wheelpositionname,td_time,td_press,td_temp)
 str(base_telemetria)
@@ -30,7 +34,7 @@ base_rotas = mydata2 %>% select(TRUCK,LOC,BLAST,EXCAV,LOAD,DIST,SHIFT,DDMMYY)
 str(base_rotas)
 ```
 
-Criação do chaveiro (Data & Caminhão):
+* Criação do chaveiro (Data & Caminhão):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 chave = str_c(base_telemetria$vehicleid, base_telemetria$td_time)
 base_telemetria = cbind(chave,base_telemetria)
@@ -39,23 +43,23 @@ chave = str_c(base_rotas$TRUCK, base_rotas$tDDMMYY)
 base_rotas = cbind(chave,base_rotas)
 ```
 
-Junção das base de telemetria e das rotas dos caminhões:
+* Junção das base de telemetria e das rotas dos caminhões:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = left_join(base_telemetria,base_rotas,by="chave")
 ```
 
-Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar):
+* Ajustamento dos dados na regra do negócio (retirar instâncias com menos de 600 Bar):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% filter(td_press<600)
 ```
 
-Criação de variáveis (Transformação da informação dos trechos):
+* Criação de variáveis (Transformação da informação dos trechos):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dummy = dummyVars(~.,data = dataset,levelsOnly = TRUE)
 predict(dummy, dataset)
 ```
 
-Criação de variáveis (Binalização dos dados contínuos por quartis):
+* Criação de variáveis (Binalização dos dados contínuos por quartis):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset.bin = subset(dataset, select = ...)
 
@@ -75,12 +79,12 @@ for (i in 1:length(v.bin) ){
 
 ### Analise exploratoria de dados no dataset
 
-Visão completa do dataset:
+* Visão completa do dataset:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(dataset,op_file = "teste.html")
 ```
 
-Analise das variáveis continuas:
+* Analise das variáveis continuas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 # Resumo 
 ExpNumStat (Affairs, 
@@ -97,7 +101,7 @@ ExpNumViz(Affairs,
           sample=8) # seleção aleatória de plots
 ```
 
-Analise das variáveis categóricas:
+* Analise das variáveis categóricas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpCatViz(Affairs,
           gp=NULL, # Variavel target
@@ -108,31 +112,31 @@ ExpCatViz(Affairs,
           sample=4) # seleção aleatória de plot
 ```
 
-Gráficos de correlação de variáveis:
+* Gráficos de correlação de variáveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(dataset,label = T,nbreaks = 5,label_round = 4)
 ```
 
 ### Seleção de variáveis.
 
-Dataset final:
+* Dataset final:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset = dataset %>% select()
 ```
 
 ### Modelagem da rede neural Autoencoder não supervisionado via H2O.
 
-Iniciar o framework h2o no R:
+* Iniciar o framework h2o no R:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 h2o.init()
 ```
 
-Inserir os dados no h2o:
+* Inserir os dados no h2o:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset.hex = as.h2o(dataset, destination_frame="dataset.hex")
 ```
 
-Treino do modelo da rede neural Autoencoder (epochs = 100):
+* Treino do modelo da rede neural Autoencoder (epochs = 100):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                autoencoder = TRUE,
@@ -141,7 +145,7 @@ modelo_auto = h2o.deeplearning(x = feature_names, training_frame = dataset.hex,
                                hidden = c(6,5,6), epochs = 100)                         
 ```
 
-Detecção de anomalias do modelo:
+* Detecção de anomalias do modelo:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 dataset_anomalias = h2o.anomaly(modelo_auto, dataset.hex, per_feature=FALSE)
 head(dataset_anomalias)
@@ -150,12 +154,12 @@ tab_anomalias = as.data.frame(dataset_anomalias)
 
 ### Analise dos resultados da rede neural Autoencoder.
 
-Gráfico de reconstrução do dataset:
+* Gráfico de reconstrução do dataset:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 plot(sort(tab_anomalias$Reconstruction.MSE), main='Reconstrução do dataset')
 ```
 
-Ponto de corte dos dados anomalos:
+* Ponto de corte dos dados anomalos:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
@@ -166,7 +170,13 @@ Ponto de corte dos dados anomalos:
 ```
 
 ### Verificação dos trechos com maior frequencia de anomalias detectadas.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 
 ### Verificação dos caminhões com maior frequencia de anomalias detectadas.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```
 
 ### Conclusão.

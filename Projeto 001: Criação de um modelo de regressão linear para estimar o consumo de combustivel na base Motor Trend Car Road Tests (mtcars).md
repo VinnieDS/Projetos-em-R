@@ -33,36 +33,40 @@ Informações sobre Atributos:
 ### Pacotes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-library(caret);library(dplyr);library(datasets);
-library(psych);library(car);library(stats);
-library(ggplot2);library(MASS);library(car);
-library(knitr);library(printr);
+library(caret);
+library(dplyr);
+library(psych);
+library(car);
+library(stats);
+library(ggplot2);
+library(MASS);
+library(knitr);
+library(printr);
 
 ```
 
 ### Entrada de dados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data(mtcars)
-kable(head(mtcars),align = 'c')
 dim(mtcars)
 str(mtcars)
 ```
 
 ### Analise exploratoria de dados
 
-Painel de estatísticas:
+* Painel de estatísticas:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pairs.panels(mtcars[1,3,4,5], gap = 0, bg = c("red", "green", "blue")[mtcars$cyl],pch = 18)
 ```
 
-Relação entre as variáveis (mpg x am):
+* Relação entre as variáveis (mpg x am):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggplot(mtcars, aes(y=mpg, x=factor(am, labels = c("automatic", "manual")), fill=factor(am)))+
         geom_violin(colour="black", size=1)+
         xlab("transmission") + ylab("MPG")
 ```
 
-Relação entre as variáveis (mpg x cyl):
+* Relação entre as variáveis (mpg x cyl):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cyl)))+
         geom_violin(colour="black", size=1)+
@@ -72,23 +76,23 @@ ggplot(mtcars, aes(y=mpg, x=factor(cyl, labels = c("2","4","6")), fill=factor(cy
 
 ### Seleção de variáveis
 
-Procedimento de seleção do modelo
+* Procedimento de seleção do modelo
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 summary(lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars))$coef
 ```
-Detectando colinearidade
+* Detectando colinearidade
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fitvif = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
 kable(vif(fitvif),align = 'c')
 ```
-Método de seleção gradual
+* Método de seleção gradual
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fit = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+factor(vs)+factor(am)+gear+carb, data = mtcars)
 step = stepAIC(fit, direction="both", trace=FALSE)
 summary(step)$coeff
 summary(step)$r.squared
 ```
-Teste de razão de verossimilhança
+* Teste de razão de verossimilhança
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 fit1 = lm(mpg ~ factor(am), data = mtcars)
 fit2 = lm(mpg ~ factor(am)+wt, data = mtcars)
@@ -97,7 +101,7 @@ fit4 = lm(mpg ~ factor(am)+wt+qsec+hp, data = mtcars)
 fit5 = lm(mpg ~ factor(am)+wt+qsec+hp+drat, data = mtcars)
 anova(fit1, fit2, fit3, fit4, fit5)
 ```
-Ajustando o modelo final
+* Ajustando o modelo final
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 modelo_rl_final = lm(mpg ~ wt+qsec+factor(am), data = mtcars)
 summary(modelo_rl_final)$coef
@@ -105,12 +109,13 @@ summary(modelo_rl_final)$r.squared
 ```
 
 ### Controle do treinamento
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ctrl = trainControl(method = "cv",number = 10)
 ```
 
 ### Partição da base
-Particionando a base com 70% de treino e 30% de teste.
+* Particionando a base com 70% de treino e 30% de teste.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(25441)
 part = createDataPartition(y = mtcars$mpg, p = 0.7, list = FALSE)

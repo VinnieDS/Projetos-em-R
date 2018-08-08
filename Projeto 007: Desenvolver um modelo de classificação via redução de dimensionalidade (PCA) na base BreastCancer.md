@@ -174,6 +174,7 @@ dotplot(resultados)
 ```
 
 * Conclusão
+
 De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.
 
 ### Tuning - Melhorar a performance e evitar o overfiting

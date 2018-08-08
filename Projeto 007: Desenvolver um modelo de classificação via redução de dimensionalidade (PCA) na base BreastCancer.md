@@ -137,7 +137,7 @@ teste = data[-part,]
 control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel = TRUE)
 ```
 
-### Seleção de modelo
+### Seleção de modelo.
 
 * Modelos de Naive Bayes, C50, GLM, GBM, KNN, Random Forest, Xgboost e SVM
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -185,7 +185,7 @@ dotplot(resultados)
 
 De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.
 
-### Tuning - Melhorar a performance e evitar o overfiting
+### Tuning - Melhorar a performance e evitar o overfiting.
 
 * Grid 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -210,7 +210,7 @@ plot(gbm.tune)
 res = gbm.tune$results
 ```
 
-### Teste e avaliação de perfomance
+### Teste e avaliação de perfomance.
 
 * Predições
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -238,16 +238,16 @@ plot(gbm.ROC,main="Diagnóstico de Cancer de Mama via GBM")
 gbm.ROC$auc
 ```
 
-### Salvar o modelo treinado e testado
+### Salvar o modelo treinado e testado.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 saveRDS(gbm.tune,file = "modelo_cancer_final")
 ```
 
-### Conclusão
+### Conclusão.
 
 Utilizando a redução de dimensionalidade PCA conseguimos um modelo com auc de 0.9979 (classificador quase perfeito) e uma acuracia de 0.9784 nos dados de teste uma performance muito melhor do que a referencia que treinou os mesmos dados com o algoritmo de KNN (K=1) e obteve a acuracia de 0.95 e assim reduzindo a taxa de falsos positivos e falsos negativos. 
 
-### Deployment in Shiny R (Criação do APP)
+### Deployment in Shiny R (Criação do APP).
 
 Utilizando o modelo desenvolvido que melhor explica a relação do cancer de mama do tipo benigno com o maligino iremos desenvolver um app no qual o usuario vai inserir os fatores determinantes para o tipo de cancer e o app vai retornar com o tipo e a probabilidade do diagnostico.

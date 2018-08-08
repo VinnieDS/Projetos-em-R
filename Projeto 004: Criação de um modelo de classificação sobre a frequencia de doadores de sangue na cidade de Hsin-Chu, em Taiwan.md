@@ -31,7 +31,7 @@ ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 
 ### Features Engineering.
 
-* 
+* Transformação dos dados númericos em fatores
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 datadb$class = as.factor(datadb$class)
 ```
@@ -42,3 +42,13 @@ datadb$class = as.factor(datadb$class)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
+
+### Pré-processo.
+
+
+
+
+
+
+
+

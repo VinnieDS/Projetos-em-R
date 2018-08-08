@@ -50,3 +50,7 @@ ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 
 ```
 
+* Matriz de correlação com o dado pre processado pela analise de componentes principais
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+
+```

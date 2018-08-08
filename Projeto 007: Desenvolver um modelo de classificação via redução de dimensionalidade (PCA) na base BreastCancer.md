@@ -76,6 +76,10 @@ dim(data)
 ```
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+missmap(data)
+```
+* Preenchimento dos dados faltantes via algoritmo rpart (Variável "Bare.nuclei")
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 
                          Epith.c.size + Bl.cromatin + Normal.nucleoli, 
                          data=data[!is.na(data$Bare.nuclei),], method="anova")

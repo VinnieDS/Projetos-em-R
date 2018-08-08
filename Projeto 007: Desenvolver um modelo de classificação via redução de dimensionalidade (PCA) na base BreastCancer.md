@@ -94,7 +94,7 @@ ggcorr(data[-10],label = T,nbreaks = 5,label_round = 2)
 
 ### Analise de componentes principais.
 
-* Analise de componentes principais
+* Desenvolvimento da analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pc = prcomp(data[,-10], center = TRUE, scale. = TRUE)
 print(pc)
@@ -115,13 +115,13 @@ print(g)
 
 ### Preparação para o treinamento.
 
-* Pré processamento com PCA
+* Pré processamento com analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pp_data = preProcess(data[, -10], method = c("pca"))
 data = predict(pp_data, newdata = data[, -10])
 head(data)
 ```
-* Matriz de correlação com o dado pre processado pelo PCA
+* Matriz de correlação com o dado pre processado pela analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(data[2:8],label = T,nbreaks = 5,label_round = 2)
 ```
@@ -139,7 +139,7 @@ control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel
 
 ### Seleção de modelo
 
-* Modelos de Naive Bayes, Linear Generalizado, Gradient Boosted, KNN e Random Forest
+* Modelos de Naive Bayes, GLM, GBM, KNN e Random Forest
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(95)
 modelnb = train(Class~., data=treino, method="nb", trControl=control)

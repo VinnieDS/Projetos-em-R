@@ -43,12 +43,10 @@ datadb$class = as.factor(datadb$class)
 ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
 
-### Pré-processo.
+### Preparação para o treinamento.
 
+* Pré-processamento
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
-
-
-
-
-
+```
 

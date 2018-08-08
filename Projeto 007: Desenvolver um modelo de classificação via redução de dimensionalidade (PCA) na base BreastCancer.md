@@ -139,10 +139,12 @@ control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel
 
 ### Seleção de modelo
 
-* Modelos de Naive Bayes, GLM, GBM, KNN e Random Forest
+* Modelos de Naive Bayes, C50, GLM, GBM, KNN, Random Forest, Xgboost e SVM
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(95)
 modelnb = train(Class~., data=treino, method="nb", trControl=control)
+set.seed(40)
+modelc50 = train(Class~., data=treino, method="C5.0", trControl=control)
 set.seed(71)
 modelglm = train(Class~., data=treino, method="glm", trControl=control)
 set.seed(78)
@@ -153,11 +155,13 @@ set.seed(97)
 modelrf = train(Class~., data=treino, method="rf", trControl=control)
 set.seed(11)
 modelxgbTree = train(Class~., data=treino, method="xgbTree", trControl=control)
+set.seed(75)
+modelsvmRadial = train(Class~., data=treino, method="svmRadial", trControl=control)
 ```
 
 * Agregação dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(NB=modelnb, GLM=modelglm, KNN=modelknn, GBM=modelgbm, RF=modelrf))
+resultados = resamples(list(NB=modelnb, C50=modelc50, GLM=modelglm, KNN=modelknn, GBM=modelgbm, RF=modelrf, XGB=modelxgbTree, SVM=modelsvmRadial))
 ```
 
 * Resumo dos resultados

@@ -28,3 +28,10 @@ dim(datadb)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
+
+### Features Engineering.
+
+* 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+datadb$class = as.factor(datadb$class)
+```

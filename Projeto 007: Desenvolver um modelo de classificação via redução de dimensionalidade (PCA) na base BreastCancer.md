@@ -56,23 +56,17 @@ ExpReport(BreastCancer,Target="Class",op_file = "EDA_BreastCancer.html")
 
 ### Features Engineering.
 
-* Transformação dos fatores em dados númericos
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-BreastCancer$Cl.thickness = as.numeric(BreastCancer$Cl.thickness)
-BreastCancer$Cell.size = as.numeric(BreastCancer$Cell.size)
-BreastCancer$Cell.shape = as.numeric(BreastCancer$Cell.shape)
-BreastCancer$Marg.adhesion = as.numeric(BreastCancer$Marg.adhesion)
-BreastCancer$Epith.c.size = as.numeric(BreastCancer$Epith.c.size)
-BreastCancer$Bare.nuclei = as.numeric(BreastCancer$Bare.nuclei)
-BreastCancer$Bl.cromatin = as.numeric(BreastCancer$Bl.cromatin)
-BreastCancer$Normal.nucleoli = as.numeric(BreastCancer$Normal.nucleoli)
-BreastCancer$Mitoses = as.numeric(BreastCancer$Mitoses)
-```
 * Mudança do nome para modelagem e retirada do ID
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data = BreastCancer
 data = data[,-1]
 dim(data)
+```tab
+* Transformação dos fatores em dados númericos
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+data_if = data[,-10] %>% mutate_if(is.factor, as.numeric)
+data = cbind(data_if,data[10])
+str(data)
 ```
 * Verificação dos dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

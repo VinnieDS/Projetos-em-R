@@ -181,6 +181,11 @@ bwplot(resultados)
 dotplot(resultados)
 ```
 
+* Comparação estatística dos resultados (Entre os melhores modelos)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+compare_models(modelc50, modelgbm)
+```
+
 * Conclusão
 
 De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.

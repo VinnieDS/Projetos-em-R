@@ -112,6 +112,12 @@ resultados = resamples(list(treino_over=modelxgbTree_o, treino_under=modelxgbTre
 bwplot(resultados)
 dotplot(resultados)
 ```
+* Comparação estatística
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+compare_models(modelxgbTree_o, modelxgbTree_u)
+compare_models(modelxgbTree_o, modelxgbTree_r)
+compare_models(modelxgbTree_u, modelxgbTree_r)
+```
 
 ### Tuning.
 

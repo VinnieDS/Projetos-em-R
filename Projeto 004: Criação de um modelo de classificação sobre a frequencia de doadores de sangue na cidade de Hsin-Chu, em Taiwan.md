@@ -66,11 +66,43 @@ teste = data[-part,]
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 control = trainControl(method = "cv",number = 10,allowParallel = TRUE)
 ```
+### Balanceamento de classes.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(9567)
+down_train = downSample(x = treino[,-5], y = treino$class)
+table(down_train$Class)
+
+set.seed(8475)
+up_train = upSample(x = treino[,-5], y = train$class)                         
+table(up_train$Class)
+```
 
 ### Treino do modelo
 
-* Modelo Xgboost
+* Modelo Xgboost (Oversampling)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(1784)
-modelxgbTree = train(class~., data=treino, method="xgbTree", trControl=control)
+modelxgbTree_o = train(class~., data=treino, method="xgbTree", trControl=control)
+```
+* Modelo Xgboost (Undersampling)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(1784)
+modelxgbTree_u = train(class~., data=treino, method="xgbTree", trControl=control)
+```
+* Resultados do treino
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+resultados = resamples(list(treino_over=modelxgbTree_o, treino_under=modelxgbTree_u))
+```
+
+### Teste do modelo
+
+* Predições
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgbtree.pred = predict(modelxgbTree,teste)
+```
+
+* Matriz de confusão
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+confusionMatrix(xgbtree.pred,teste$class,positive = "1")
 ```

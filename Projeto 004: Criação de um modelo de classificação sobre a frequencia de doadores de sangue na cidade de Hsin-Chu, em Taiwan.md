@@ -1,4 +1,4 @@
-# Projeto 4: Criação de um modelo de classificação sobre a frequencia de doadores de sangue na cidade de Hsin-Chu, em Taiwan
+# Projeto 4: Criação de um modelo de classificação Xgboost sobre a frequencia de doadores de sangue na cidade de Hsin-Chu, em Taiwan
 
 Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transfusão de Sangue na cidade de Hsin-Chu, em Taiwan. O centro passa seu ônibus de serviço de transfusão de sangue para uma universidade na cidade de Hsin-Chu para coletar sangue doado a cada três meses. Para construir um modelo de machine learning, selecionamos aleatoriamente 748 doadores do banco de dados do doador. Esses 748 dados de doadores, cada um incluindo R (Recência - meses desde a última doação), F (Frequência - número total de doações), M (monetária - total de sangue doado em cc), T (tempo - meses desde a primeira doação) e uma variável binária representando se doou sangue em março de 2007 (1 representa doar sangue; 0 significa não doar sangue). De acordo com uma análise explorátoria de dados e um entendimento dos dados podemos abordar um modelo de classificação com base numa árvore de decisão e tambem num modelo Xgboost.
 
@@ -58,13 +58,13 @@ head(datadb)
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
-part = createDataPartition(y = data$Class, p = 0.8, list = FALSE)
+part = createDataPartition(y = datadb$class, p = 0.8, list = FALSE)
 treino = data[part,]
 teste = data[-part,]
 ```
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel = TRUE)
+control = trainControl(method = "cv",number = 10,allowParallel = TRUE)
 ```
 
 ### Treino do modelo
@@ -72,5 +72,5 @@ control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel
 * Modelo Xgboost
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(1784)
-modelxgbTree = train(Class~., data=treino, method="xgbTree", trControl=control)
+modelxgbTree = train(class~., data=treino, method="xgbTree", trControl=control)
 ```

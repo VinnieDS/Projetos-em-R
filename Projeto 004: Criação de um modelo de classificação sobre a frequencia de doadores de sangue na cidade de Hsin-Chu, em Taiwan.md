@@ -7,6 +7,7 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(dplyr);
 library(caret);
+library(ROSE);
 library(SmartEDA);
 library(GGally);
 library(Matrix);
@@ -68,41 +69,55 @@ control = trainControl(method = "cv",number = 10,allowParallel = TRUE)
 ```
 ### Balanceamento de classes.
 
+* Undersampling
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(9567)
 down_train = downSample(x = treino[,-5], y = treino$class)
 table(down_train$Class)
-
-set.seed(8475)
-up_train = upSample(x = treino[,-5], y = train$class)                         
-table(up_train$Class)
+down_train = as.matrix(down_train)
 ```
-
-### Treino do modelo
-
-* Modelo Xgboost (Oversampling)
+* Oversampling
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-set.seed(1784)
-modelxgbTree_o = train(class~., data=treino, method="xgbTree", trControl=control)
+set.seed(8475)
+up_train = upSample(x = treino[,-5], y = treino$class)                         
+table(up_train$Class)
+up_train = as.matrix(up_train)
 ```
+
+### Seleção do modelo.
+
 * Modelo Xgboost (Undersampling)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(1784)
-modelxgbTree_u = train(class~., data=treino, method="xgbTree", trControl=control)
+modelxgbTree_u = train(Class~., data=down_train, method="xgbTree", trControl=control)
+```
+* Modelo Xgboost (Oversampling)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(1784)
+modelxgbTree_o = train(Class~., data=up_train, method="xgbTree", trControl=control)
 ```
 * Resultados do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 resultados = resamples(list(treino_over=modelxgbTree_o, treino_under=modelxgbTree_u))
+bwplot(resultados)
+dotplot(resultados)
 ```
 
-### Teste do modelo
+### Tuning.
 
-* Predições
+* Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-xgbtree.pred = predict(modelxgbTree,teste)
+grid = expand.grid(interaction.depth=c(1,2), 
+                    n.trees=c(10,20,30,40,50,100),
+                    shrinkage=c(0.001,0.01,0.1),
+                    n.minobsinnode = 20)
 ```
-
-* Matriz de confusão
+* Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-confusionMatrix(xgbtree.pred,teste$class,positive = "1")
+gbm.tune = train(x=treino[2:8],y=treino$Class,
+                              method = "xgbTree",
+                              metric = "ROC",
+                              trControl = control,
+                              tuneGrid=grid,
+                              verbose=FALSE)
 ```

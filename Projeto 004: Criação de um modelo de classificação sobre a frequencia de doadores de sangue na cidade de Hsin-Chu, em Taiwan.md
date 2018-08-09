@@ -44,7 +44,7 @@ ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
 * Matriz de correlação com o dado pre processado
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-
+ggcorr(datadb[1:4],label = T,nbreaks = 5,label_round = 2)
 ```
 
 ### Preparação para o treinamento.

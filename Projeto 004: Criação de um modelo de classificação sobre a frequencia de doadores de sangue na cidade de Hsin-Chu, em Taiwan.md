@@ -107,14 +107,14 @@ dotplot(resultados)
 
 * Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-grid = expand.grid(interaction.depth=c(1,2), 
-                    n.trees=c(10,20,30,40,50,100),
-                    shrinkage=c(0.001,0.01,0.1),
-                    n.minobsinnode = 20)
+grid = expand.grid(nrounds = 1000,
+                         eta = c(0.1, 0.01, 0.001, 0.0001),
+                         max_depth = c(2, 4, 6, 8, 10),
+                         gamma = 1)
 ```
 * Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-gbm.tune = train(x=treino[2:8],y=treino$Class,
+xgboost.tune = train(x=up_train[1:4],y=up_train$Class,
                               method = "xgbTree",
                               metric = "ROC",
                               trControl = control,

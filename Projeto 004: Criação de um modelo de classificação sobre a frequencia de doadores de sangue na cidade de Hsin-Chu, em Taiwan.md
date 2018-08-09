@@ -107,17 +107,17 @@ dotplot(resultados)
 
 * Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-grid = expand.grid(nrounds = 1000,
-                         eta = c(0.1, 0.01, 0.001, 0.0001),
-                         max_depth = c(2, 4, 6, 8, 10),
-                         gamma = 1)
+grid = expand.grid(nrounds = c(100,200,500)
+                   eta = c(0.1, 0.01, 0.001, 0.0001),
+                   max_depth = c(2, 4, 6, 8, 10),
+                   gamma = 1)
 ```
 * Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-xgboost.tune = train(x=up_train[1:4],y=up_train$Class,
-                              method = "xgbTree",
-                              metric = "ROC",
-                              trControl = control,
-                              tuneGrid=grid,
-                              verbose=FALSE)
+xgboost.tune = train(x=as.matrix(up_train %>% select(-Class)),
+                     y=as.factor(up_train$Class),
+                     method = "xgbTree",
+                     trControl = control,
+                     tuneGrid=grid,
+                     verbose=FALSE)
 ```

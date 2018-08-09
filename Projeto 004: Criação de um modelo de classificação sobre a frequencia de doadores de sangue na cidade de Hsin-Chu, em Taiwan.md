@@ -42,15 +42,14 @@ datadb$class = as.factor(datadb$class)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(datadb,Target="class",op_file = "EDA_csts.html")
 ```
-
-### Preparação para o treinamento.
-
-* Pré-processamento
+* Matriz de correlação com o dado pre processado
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```
 
-* Matriz de correlação com o dado pre processado pela analise de componentes principais
+### Preparação para o treinamento.
+
+* Pré-processamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 
 ```

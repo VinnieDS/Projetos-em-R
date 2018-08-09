@@ -51,5 +51,26 @@ ggcorr(datadb[1:4],label = T,nbreaks = 5,label_round = 2)
 
 * Pré-processamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pp_data = preProcess(datadb[1:4], method = c("scale"))
+datadb = predict(pp_data, newdata = data[,1:4])
+head(datadb)
+```
+* Divisão do dataset
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(86)
+part = createDataPartition(y = data$Class, p = 0.8, list = FALSE)
+treino = data[part,]
+teste = data[-part,]
+```
+* Controle do treino
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel = TRUE)
+```
 
+### Treino do modelo
+
+* Modelo Xgboost
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(1784)
+modelxgbTree = train(Class~., data=treino, method="xgbTree", trControl=control)
 ```

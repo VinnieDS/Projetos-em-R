@@ -27,7 +27,7 @@ Este estudo adotou o banco de dados de doadores do Centro de Serviços de Transf
 
 Um estudo para verificação de padrões no gráfico diario no par de moeda EURUSD para criação de estrategias de negociação em forex.
 
-## Projeto 6: Criação de regras de associação para criação de perfis de consumo de produtos do varejo.
+## Projeto 6: Porto Seguro’s Safe Driver Prediction - Kaggle
 
 Nada estraga a emoção de comprar um carro novo mais rapidamente do que ver sua nova fatura de seguro. A dor é ainda mais dolorosa quando você sabe que é um bom motorista. Não parece justo que você tenha que pagar tanto se for cauteloso durante anos. A Porto Seguro , uma das maiores seguradoras de automóveis e residenciais do Brasil, concorda completamente. Imprecisões nas previsões de sinistro da companhia de seguros de automóveis aumentam o custo do seguro para os bons motoristas e reduzem o preço dos maus. Nesta competição, você é desafiado a construir um modelo que prevê a probabilidade de um motorista iniciar uma reivindicação de seguro de automóvel no próximo ano. Embora a Porto Seguro tenha usado o aprendizado de máquina nos últimos 20 anos, eles procuram a comunidade de aprendizado de máquinas de Kaggle para explorar métodos novos e mais poderosos. Uma previsão mais precisa permitir-lhes-á adaptar ainda mais os seus preços e, esperamos, tornar a cobertura do seguro automóvel mais acessível a mais condutores.
 

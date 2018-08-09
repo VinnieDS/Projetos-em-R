@@ -53,20 +53,21 @@ ggcorr(datadb[1:4],label = T,nbreaks = 5,label_round = 2)
 * Pré-processamento
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pp_data = preProcess(datadb[1:4], method = c("scale"))
-datadb = predict(pp_data, newdata = data[,1:4])
+datadb = predict(pp_data, newdata = datadb)
 head(datadb)
 ```
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
 part = createDataPartition(y = datadb$class, p = 0.8, list = FALSE)
-treino = data[part,]
-teste = data[-part,]
+treino = datadb[part,]
+teste = datadb[-part,]
 ```
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 control = trainControl(method = "cv",number = 10,allowParallel = TRUE)
 ```
+
 ### Balanceamento de classes.
 
 * Undersampling
@@ -74,14 +75,18 @@ control = trainControl(method = "cv",number = 10,allowParallel = TRUE)
 set.seed(9567)
 down_train = downSample(x = treino[,-5], y = treino$class)
 table(down_train$Class)
-down_train = as.matrix(down_train)
 ```
 * Oversampling
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(8475)
 up_train = upSample(x = treino[,-5], y = treino$class)                         
 table(up_train$Class)
-up_train = as.matrix(up_train)
+```
+* Método ROSE
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(9560)
+rose_train = ROSE(class ~ ., data  = treino)$data                         
+table(rose_train$class)
 ```
 
 ### Seleção do modelo.
@@ -96,9 +101,14 @@ modelxgbTree_u = train(Class~., data=down_train, method="xgbTree", trControl=con
 set.seed(1784)
 modelxgbTree_o = train(Class~., data=up_train, method="xgbTree", trControl=control)
 ```
+* Modelo Xgboost (ROSE)
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(1787)
+modelxgbTree_r = train(class~., data=rose_train, method="xgbTree", trControl=control)
+```
 * Resultados do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(treino_over=modelxgbTree_o, treino_under=modelxgbTree_u))
+resultados = resamples(list(treino_over=modelxgbTree_o, treino_under=modelxgbTree_u, treino_rose=modelxgbTree_r))
 bwplot(resultados)
 dotplot(resultados)
 ```
@@ -107,17 +117,57 @@ dotplot(resultados)
 
 * Grid
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-grid = expand.grid(nrounds = c(100,200,500)
+grid = expand.grid(nrounds = c(10,50,100,500),
                    eta = c(0.1, 0.01, 0.001, 0.0001),
                    max_depth = c(2, 4, 6, 8, 10),
-                   gamma = 1)
+                   gamma = 1,
+                   colsample_bytree = 1,
+                   min_child_weight = 100,
+                   subsample = 1)
 ```
 * Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-xgboost.tune = train(x=as.matrix(up_train %>% select(-Class)),
+xgboost.tune = train(x=(up_train %>% select(-Class)),
                      y=as.factor(up_train$Class),
                      method = "xgbTree",
                      trControl = control,
                      tuneGrid=grid,
                      verbose=FALSE)
+```
+* Resultados
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgboost.tune$bestTune
+plot(xgboost.tune)  
+res = xgboost.tune$results
+```
+
+### Teste e avaliação de perfomance.
+
+* Predições
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgb.pred = predict(xgb.tune,teste)
+```
+* Matriz de confusão e métricas relacionadas ao teste
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+confusionMatrix(xgb.pred,teste$class,positive = "1")
+```
+* Obtenção das probabilidades
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgb.probs = predict(xgb.tune,teste,type="prob")
+head(gbm.probs)
+```
+* Curva ROC
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgb.ROC = roc(predictor=xgb.probs,response=teste$class,levels=rev(levels(teste$class)))
+plot(xgb.ROC,main="Curva ROC da frequencia de doadores de sangue")
+```
+* Área da curva ROC
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+xgb.ROC$auc
+```
+
+### Salvar o modelo treinado e testado.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+saveRDS(xgb.tune,file = "modelo_doadores_sangue")
 ```

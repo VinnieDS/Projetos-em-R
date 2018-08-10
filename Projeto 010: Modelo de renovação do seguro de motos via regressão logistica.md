@@ -30,6 +30,7 @@ str(data)
 missmap(data)
 data = na.omit(data)
 ```
+## Analise Exploratoria de dados.
 
 ## Seleção de variaveis.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

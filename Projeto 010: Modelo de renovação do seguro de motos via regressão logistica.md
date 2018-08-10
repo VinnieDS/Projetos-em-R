@@ -107,11 +107,13 @@ t.test(data$fat_tt_glm2,smote$fat_tt_glm2)
 ```
 
 ### Preparação do treinamento.
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-control = trainControl(method= "cv",number = 3, allowParallel = TRUE)
+control = trainControl(method= "cv",number = 5, allowParallel = TRUE)
 ```
 
-### Treinamento do modelo glm sem balanceamento.
+### Treinamento do modelo GLM.
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(106)
 modelglm = train(QTD_PROP~., data=treino, method="glm", trControl=control)
@@ -125,7 +127,8 @@ set.seed(788)
 modelglm_smote = train(QTD_PROP~., data=smote, method="glm", trControl=control)
 ```
 
-### Treinamento do modelo árvore de decisão CART sem balanceamento.
+### Treinamento do modelo árvore de decisão CART.
+
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(106)
 modelrpart = train(QTD_PROP~., data=treino, method="rpart", trControl=control)
@@ -153,3 +156,56 @@ resultados_rpart = resamples(list(treino=modelrpart,treino_under=modelrpart_unde
 bwplot(resultados_rpart)
 dotplot(resultados_rpart)
 ```
+### Testes e Estatísticas
+
+* Predições GLM
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_modelglm = predict(modelglm,teste)
+pred_modelglm_under = predict(modelglm_under,teste)
+pred_modelglm_over = predict(modelglm_over,teste)
+pred_modelglm_rose = predict(modelglm_rose,teste)
+pred_modelglm_smote = predict(modelglm_smote,teste)
+```
+* Matriz de confusão dos modelos GLM
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+desbal_glm = confusionMatrix(pred_modelglm,teste$QTD_PROP)
+under_glm = confusionMatrix(pred_modelglm_under,teste$QTD_PROP)
+over_glm = confusionMatrix(pred_modelglm_over,teste$QTD_PROP)
+rose_glm = confusionMatrix(pred_modelglm_rose,teste$QTD_PROP)
+smote_glm = confusionMatrix(pred_modelglm_smote,teste$QTD_PROP)
+```
+* Tabela de métricas dos modelos GLM
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+desbal_estat_glm = desbal$byClass
+under_estat_glm = under$byClass
+over_estat_glm = over$byClass
+rose_estat_glm = rose$byClass
+smote_estat_glm = smote$byClass
+tab_estat_glm = cbind(desbal_estat_glm,under_estat_glm,over_estat_glm,rose_estat_glm,smote_estat_glm)
+```
+* Predições AD CART
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+pred_modelrpart = predict(modelrpart,teste)
+pred_modelrpart_under = predict(modelrpart_under,teste)
+pred_modelrpart_over = predict(modelrpart_over,teste)
+pred_modelrpart_rose = predict(modelrpart_rose,teste)
+pred_modelrpart_smote = predict(modelrpart_smote,teste)
+```
+* Matriz de confusão dos modelos AD CART
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+desbal_rpart = confusionMatrix(pred_modelrpart,teste$QTD_PROP)
+under_rpart = confusionMatrix(pred_modelrpart_under,teste$QTD_PROP)
+over_rpart = confusionMatrix(pred_modelrpart_over,teste$QTD_PROP)
+rose_rpart = confusionMatrix(pred_modelrpart_rose,teste$QTD_PROP)
+smote_rpart = confusionMatrix(pred_modelrpart_smote,teste$QTD_PROP)
+```
+* Tabela de métricas dos modelos AD CART
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+desbal_estat_rpart = desbal$byClass
+under_estat_rpart = under$byClass
+over_estat_rpart = over$byClass
+rose_estat_rpart = rose$byClass
+smote_estat_rpart = smote$byClass
+tab_estat_rpart = cbind(desbal_estat_rpart,under_estat_rpart,over_estat_rpart,rose_estat_rpart,smote_estat_rpart)
+```
+### Conclusões

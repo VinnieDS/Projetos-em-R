@@ -31,9 +31,11 @@ missmap(data)
 data = na.omit(data)
 ```
 
-## Seleção de variaveis
+## Seleção de variaveis.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-data = data %>% select(COD_REGIAO_POLITICA,FAMILIA_GRUPO_AUTO2,var_reg_final_for,FLG_PARCERIA_VALID,diferenca50_c,fat_tt_glm2,tx_comer_renov,dsc_porte_final,QTD_PROP)
+data = data %>% select(COD_REGIAO_POLITICA,FAMILIA_GRUPO_AUTO2,var_reg_final_for,
+                       FLG_PARCERIA_VALID,diferenca50_c,fat_tt_glm2,tx_comer_renov,
+                       dsc_porte_final,QTD_PROP)
 ```
 
 ## Divisão do dataset.
@@ -54,15 +56,53 @@ tab_teste = round(prop.table(table(teste$QTD_PROP)),2)
 
 ## Resumos das variaveis importantes entre as bases.
 
-# Risco
-
+* Risco
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 summary(data$fat_tt_glm2)
 summary(treino$fat_tt_glm2)
 summary(teste$fat_tt_glm2)
-
 par(mfrow=c(3,1))
 hist(data$fat_tt_glm2)
 hist(treino$fat_tt_glm2)
 hist(teste$fat_tt_glm2)
 ```
+## Balanceamento de base.
+
+* Undersampling
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(9567)
+under = downSample(x = (treino %>% select(-QTD_PROP)), y = treino$QTD_PROP)
+tab_under = round(prop.table(table(under$Class)),2)
+summary(under)
+```
+* Oversampling
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(8475)
+over = upSample(x = (treino %>% select(-QTD_PROP)), y = treino$QTD_PROP)                         
+tab_over = round(prop.table(table(over$Class)),2)
+summary(over)
+```
+* Método ROSE
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(9560)
+rose = ROSE(QTD_PROP ~ ., data  = treino)$data                         
+tab_rose = round(prop.table(table(rose$QTD_PROP)),2)
+summary(rose)
+```
+* Método SMOTE
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(9574)
+smote = SMOTE(QTD_PROP ~ ., data  = treino)$data                         
+tab_smote = round(prop.table(table(smote$QTD_PROP)),2)
+summary(smote)
+```
+# Avaliação das variáveis na amostragens.
+
+* Variavel de risco
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+t.test(data$fat_tt_glm2,under$fat_tt_glm2)
+t.test(data$fat_tt_glm2,over$fat_tt_glm2)
+t.test(data$fat_tt_glm2,rose$fat_tt_glm2)
+t.test(data$fat_tt_glm2,smote$fat_tt_glm2)
+```
+

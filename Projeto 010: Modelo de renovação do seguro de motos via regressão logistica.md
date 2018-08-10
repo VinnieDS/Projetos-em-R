@@ -96,7 +96,7 @@ smote = SMOTE(QTD_PROP ~ ., data  = treino)$data
 tab_smote = round(prop.table(table(smote$QTD_PROP)),2)
 summary(smote)
 ```
-# Avaliação das variáveis na amostragens.
+### Avaliação das variáveis na amostragens.
 
 * Variavel de risco
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

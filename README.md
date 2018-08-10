@@ -35,7 +35,7 @@ Nada estraga a emoção de comprar um carro novo mais rapidamente do que ver sua
 
 O objetivo é identificar cada uma das várias classes benignas ou malignas. As amostras chegam periodicamente como o Dr. Wolberg relata seus casos clínicos. O banco de dados, portanto, reflete essa ordem cronológica agrupamento dos dados. Esta informação de agrupamento aparece imediatamente abaixo, tendo sido removida dos dados em si. Cada variável, exceto a primeira, foi convertida em 11 números numéricos primitivos. atributos com valores que variam de 0 a 10. Há 16 valores de atributos ausentes. Uma base de dados com 699 observações em 11 variáveis, sendo uma delas uma variável de caráter, 9 sendo ordenada ou nominal e 1 classe alvo.
 
-## Projeto 8:  Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). 
+## Projeto 8: Criação de um modelo de regressão (deep learning) para estimar a Força de Compressão do concreto (FCC). 
 
 O concreto é o material mais importante em engenharia civil. A resistência à compressão do concreto é uma função altamente não-linear da idade e dos ingredientes.
 
@@ -47,5 +47,5 @@ População de países, taxa de fertilidade e expectativa de vida.
 
 https://www.kaggle.com/gemartin/world-bank-data-1960-to-2016
 
-## Projeto 10: Projeto 10: Modelo de renovação do seguro de motos comparação entre o modelo de regressão logística e árvores de decisão CART(Problema de classes desbalanceadas).
+## Projeto 10: Modelo de renovação do seguro de motos comparação entre o modelo de regressão logística e árvores de decisão CART (Problema de classes desbalanceadas).
 

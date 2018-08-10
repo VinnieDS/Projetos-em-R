@@ -47,5 +47,5 @@ População de países, taxa de fertilidade e expectativa de vida.
 
 https://www.kaggle.com/gemartin/world-bank-data-1960-to-2016
 
-## Projeto 10: Projeto 10: Modelo de renovação do seguro de motos via regressão logistica (Problema de classes desbalanceadas)
+## Projeto 10: Projeto 10: Modelo de renovação do seguro de motos comparação entre o modelo de regressão logística e árvores de decisão CART(Problema de classes desbalanceadas).
 

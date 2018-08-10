@@ -2,12 +2,14 @@
 
 ## Pacotes.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(readr);
 library(caret);
 library(dplyr);
 library(ROSE);
 library(Amelia);
 library(doParallel);
+```
 
 ## Entradas de dados.
 

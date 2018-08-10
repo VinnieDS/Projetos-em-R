@@ -106,3 +106,50 @@ t.test(data$fat_tt_glm2,rose$fat_tt_glm2)
 t.test(data$fat_tt_glm2,smote$fat_tt_glm2)
 ```
 
+### Preparação do treinamento.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+control = trainControl(method= "cv",number = 3, allowParallel = TRUE)
+```
+
+### Treinamento do modelo glm sem balanceamento.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(106)
+modelglm = train(QTD_PROP~., data=treino, method="glm", trControl=control)
+set.seed(197)
+modelglm_under = train(Class~., data=under, method="glm", trControl=control)
+set.seed(112)
+modelglm_over = train(Class~., data=over, method="glm", trControl=control)
+set.seed(788)
+modelglm_rose = train(QTD_PROP~., data=rose, method="glm", trControl=control)
+set.seed(788)
+modelglm_smote = train(QTD_PROP~., data=smote, method="glm", trControl=control)
+```
+
+### Treinamento do modelo árvore de decisão CART sem balanceamento.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+set.seed(106)
+modelrpart = train(QTD_PROP~., data=treino, method="rpart", trControl=control)
+set.seed(197)
+modelrpart_under = train(Class~., data=under, method="rpart", trControl=control)
+set.seed(112)
+modelrpart_over = train(Class~., data=over, method="rpart", trControl=control)
+set.seed(788)
+modelrpart_rose = train(QTD_PROP~., data=rose, method="rpart", trControl=control)
+set.seed(781)
+modelrpart_smote = train(QTD_PROP~., data=smote, method="rpart", trControl=control)
+```
+
+### Verificação dos resultados.
+
+* Resultados GLM
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+resultados_glm = resamples(list(treino=modelglm,treino_under=modelglm_under,treino_over=modelglm_over,treino_rose=modelglm_rose, treino_smote=modelglm_smote))
+bwplot(resultados_glm)
+dotplot(resultados_glm)
+```
+* Resultados CART
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+resultados_rpart = resamples(list(treino=modelrpart,treino_under=modelrpart_under,treino_over=modelrpart_over,treino_rose=modelrpart_rose,treino_smote=modelrpart_smote))
+bwplot(resultados_rpart)
+dotplot(resultados_rpart)
+```

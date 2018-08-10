@@ -147,13 +147,17 @@ modelrpart_smote = train(QTD_PROP~., data=smote, method="rpart", trControl=contr
 
 * Resultados GLM
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados_glm = resamples(list(treino=modelglm,treino_under=modelglm_under,treino_over=modelglm_over,treino_rose=modelglm_rose, treino_smote=modelglm_smote))
+resultados_glm = resamples(list(treino=modelglm,treino_under=modelglm_under,
+                                treino_over=modelglm_over,treino_rose=modelglm_rose,
+                                treino_smote=modelglm_smote))
 bwplot(resultados_glm)
 dotplot(resultados_glm)
 ```
 * Resultados CART
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados_rpart = resamples(list(treino=modelrpart,treino_under=modelrpart_under,treino_over=modelrpart_over,treino_rose=modelrpart_rose,treino_smote=modelrpart_smote))
+resultados_rpart = resamples(list(treino=modelrpart,treino_under=modelrpart_under,
+                                  treino_over=modelrpart_over,treino_rose=modelrpart_rose,
+                                  treino_smote=modelrpart_smote))
 bwplot(resultados_rpart)
 dotplot(resultados_rpart)
 ```

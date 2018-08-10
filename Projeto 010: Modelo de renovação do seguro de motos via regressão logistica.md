@@ -1,4 +1,4 @@
-# Projeto 10: Modelo de renovação do seguro de motos via regressão logistica (Problema de classes desbalanceadas)
+# Projeto 10: Modelo de renovação do seguro de motos comparação entre o modelo de regressão logística e árvores de decisão CART (Problema de classes desbalanceadas).
 
 ## Pacotes.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

@@ -156,11 +156,11 @@ search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 1000)
 
 * Grid Search Deep learning:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_grid = h2o.grid("deeplearning", x = 2:31, y = "Survived",
+dl_grid = h2o.grid("deeplearning", x = 1:11, y = "Survived",
                     grid_id = "dl_grid",
                     training_frame = treino.hex,
                     validation_frame = teste.hex,
-                    seed = 1,
+                    seed = 74,
                     hidden = c(10,10),
                     hyper_params = hyper_params,
                     search_criteria = search_criteria)
@@ -168,7 +168,7 @@ dl_grid = h2o.grid("deeplearning", x = 2:31, y = "Survived",
 
 * Resultados do Grid:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "logloss", decreasing = TRUE)
+dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "MSE", decreasing = TRUE)
 print(dl_gridperf)
 ```
 

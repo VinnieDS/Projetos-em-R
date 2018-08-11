@@ -159,9 +159,8 @@ search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 1000)
 dl_grid = h2o.grid("deeplearning", x = 1:11, y = "Survived",
                     grid_id = "dl_grid",
                     training_frame = treino.hex,
-                    validation_frame = teste.hex,
                     seed = 74,
-                    hidden = c(10,10),
+                    hidden = c(8,8,6,6,3),
                     hyper_params = hyper_params,
                     search_criteria = search_criteria)
 ```

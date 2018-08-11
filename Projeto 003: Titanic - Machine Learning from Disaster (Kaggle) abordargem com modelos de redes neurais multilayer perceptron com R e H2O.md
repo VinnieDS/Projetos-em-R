@@ -176,15 +176,15 @@ best_dl = h2o.getModel(best_dl_model_id)
 h2o.varimp_plot(best_dl)
 ```
 
-* Predições e threshold:
+* Predições:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-prediction = h2o.predict(best_dl_perf, newdata = teste.hex)
+prediction = h2o.predict(best_dl, newdata = teste.hex)
 ```
 
 ### Solução ao Kaggle
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-solucao = data.frame(PassengerId = teste["PassengerId"], Survived = prediction)
+solucao = data.frame(PassengerId = teste[1], Survived = prediction[1])
 write.csv(solucao, file="solucao_deep_learning_h2o.csv",  row.names = FALSE)
 ```
 ### Resultado

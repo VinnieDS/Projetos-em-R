@@ -187,6 +187,6 @@ prediction = h2o.predict(best_dl, newdata = teste.hex)
 solucao = data.frame(PassengerId = teste[1], Survived = prediction[1])
 write.csv(solucao, file="solucao_deep_learning_h2o.csv",  row.names = FALSE)
 ```
-### Resultado
+### Resultado da submissão ao Kaggle
 
-Modelando o dataset e utilizando o Grid e escolhendo o melhor modelo de deep learning de acordo com logloss conseguimos uma pontuação de 0.80 e com isso na competição  
+Modelando o dataset e utilizando o Grid e escolhendo o melhor modelo de deep learning de acordo com logloss conseguimos uma pontuação de 0.75119 e com isso na competição leva a posição 8597 de 10034 e assim para melhorar a acuracia podemos rodar o modelo com uma seleção de variaveis com base no iv.

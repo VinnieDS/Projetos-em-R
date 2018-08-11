@@ -123,6 +123,13 @@ ExpReport(treino,Target="Survived",op_file = "EDA_titanic_trans.html")
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ggcorr(treino,label = T,nbreaks = 5,label_round = 2)
 ```
+### Seleção de variáveis.
+
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+treino = treino %>% select(Pclass.1,Pclass.3,Sex.male,Sex.female,Title.Miss,Title.Mr,Title.Mrs,Embarked.C,Embarked.S,FamilySize.1,FamilySize.2,Survived)
+teste = teste %>% select(Pclass.1,Pclass.3,Sex.male,Sex.female,Title.Miss,Title.Mr,Title.Mrs,Embarked.C,Embarked.S,FamilySize.1,FamilySize.2)
+```
+
 ### Inicialização do H2O.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

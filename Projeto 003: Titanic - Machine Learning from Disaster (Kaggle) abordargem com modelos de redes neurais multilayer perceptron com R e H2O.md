@@ -171,7 +171,7 @@ dl_gridperf = h2o.getGrid(grid_id = "dl_grid",sort_by = "MSE", decreasing = TRUE
 print(dl_gridperf)
 ```
 
-* Selecionar o model_id para o modelo top DL, escolhido pela validação logloss:
+* Selecionar o model_id para o modelo top DL, escolhido pela validação MSE:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 best_dl_model_id = dl_gridperf@model_ids[[1]]
 best_dl = h2o.getModel(best_dl_model_id)

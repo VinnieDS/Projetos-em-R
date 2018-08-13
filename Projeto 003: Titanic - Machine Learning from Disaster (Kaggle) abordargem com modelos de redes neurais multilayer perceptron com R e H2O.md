@@ -106,12 +106,7 @@ full$FsizeD[full$FamilySize == 1] = 'sozinho'
 full$FsizeD[full$FamilySize < 5 & full$FamilySize > 1] = 'pequena_familia'
 full$FsizeD[full$FamilySize > 4] = 'grande_familia'
 ```
-* Criação da variavél grupo combinação Fare e Pclass:
-
-** Binarização da variável Fare:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-```
-** Combinação da varável binarizada com Pclass:
+* Binarização da variável Fare:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ```
 * Retirada de dados não modelaveis:

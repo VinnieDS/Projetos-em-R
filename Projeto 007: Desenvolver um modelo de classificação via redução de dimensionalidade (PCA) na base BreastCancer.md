@@ -118,7 +118,7 @@ print(g)
 * Pré processamento com analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 pp_data = preProcess(data[, -10], method = c("pca"))
-data = predict(pp_data, newdata = data[, -10])
+data = predict(pp_data, newdata = data[, -11])
 head(data)
 ```
 * Matriz de correlação com o dado pre processado pela analise de componentes principais

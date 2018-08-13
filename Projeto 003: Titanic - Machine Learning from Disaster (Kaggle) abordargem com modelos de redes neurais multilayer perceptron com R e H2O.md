@@ -90,9 +90,32 @@ full$Age = log(full$Age)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full$Pclass = as.factor(full$Pclass)
 ```
+* Criação da variavél categorica Cabine:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$Cabin = ifelse(Cabin = NULL ,"sem_cabine","com_cabine")
+```
+* Criação da variavél grupo crianças (Idade <18):
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$Child[full$Age < 18] = 'Child'
+full$Child[full$Age >= 18] = 'Adult'
+full$Child = as.factor(full$Child)
+```
+* Criação da variavél grupo tamanho da familia:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$FsizeD[full$FamilySize == 1] = 'sozinho'
+full$FsizeD[full$FamilySize < 5 & full$FamilySize > 1] = 'pequena_familia'
+full$FsizeD[full$FamilySize > 4] = 'grande_familia'
+```
+* Criação da variavél grupo combinação Fare e Pclass:
+** Binarização da variável Fare:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+```
+** Combinação da varável binarizada com Pclass:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket,-Cabin)
+full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket)
 ```
 * Criação de variaveis dummy:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

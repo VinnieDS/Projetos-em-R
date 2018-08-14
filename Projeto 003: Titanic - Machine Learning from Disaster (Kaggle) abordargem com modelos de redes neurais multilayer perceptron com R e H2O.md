@@ -107,9 +107,6 @@ full$FsizeD[full$FamilySize == 1] = 'sozinho'
 full$FsizeD[full$FamilySize < 5 & full$FamilySize > 1] = 'pequena_familia'
 full$FsizeD[full$FamilySize > 4] = 'grande_familia'
 ```
-* Binarização da variável Fare:
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket)

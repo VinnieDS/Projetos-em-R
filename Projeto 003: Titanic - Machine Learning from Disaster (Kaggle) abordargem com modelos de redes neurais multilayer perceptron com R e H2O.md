@@ -92,7 +92,8 @@ full$Pclass = as.factor(full$Pclass)
 ```
 * Criação da variavél categorica Cabine:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-full$Cabin = ifelse(Cabin = NULL ,"sem_cabine","com_cabine")
+titanic$CabinType = substr(titanic$Cabin, 1, 1)
+titanic$CabinType = as.factor(titanic$CabinType)
 ```
 * Criação da variavél grupo crianças (Idade <18):
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

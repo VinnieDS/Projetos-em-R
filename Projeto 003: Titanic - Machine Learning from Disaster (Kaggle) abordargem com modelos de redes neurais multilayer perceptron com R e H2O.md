@@ -107,6 +107,12 @@ full$FsizeD[full$FamilySize == 1] = 'sozinho'
 full$FsizeD[full$FamilySize < 5 & full$FamilySize > 1] = 'pequena_familia'
 full$FsizeD[full$FamilySize > 4] = 'grande_familia'
 ```
+* Criação da variavél grupo tamanho da familia:
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+full$mae = 0
+full$mae[full$Sex=='female' & full$Parch>0 & full$Age>18 & full$Title!='Miss']< = 1
+full$mae = as.factor(full$mae)
+```
 * Retirada de dados não modelaveis:
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 full = full %>% select(-PassengerId,-Name,-SibSp,-Parch,-Ticket)
@@ -168,7 +174,7 @@ activation_opt = c("Rectifier", "RectifierWithDropout")
 l1_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 l2_opt = c(0, 0.00001, 0.0001, 0.001, 0.01, 0.1)
 hyper_params = list(activation = activation_opt,l1 = l1_opt,l2 = l2_opt)
-search_criteria = list(strategy = "RandomDiscrete", max_runtime_secs = 1000)
+search_criteria = list(strategy = "Cartesian", max_runtime_secs = 5000)
 ```
 
 * Grid Search Deep learning:

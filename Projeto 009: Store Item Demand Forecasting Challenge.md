@@ -1,5 +1,7 @@
 # Projeto 9: Store Item Demand Forecasting Challenge - Predict 3 months of item sales at different stores
 
+Esta competição é oferecida como uma maneira de explorar diferentes técnicas de séries temporais em um conjunto de dados relativamente simples e limpo. Você recebe 5 anos de dados de vendas de itens de loja e pede para prever 3 meses de vendas de 50 itens diferentes em 10 lojas diferentes. Qual é a melhor maneira de lidar com a sazonalidade? As lojas devem ser modeladas separadamente ou você pode agrupá-las juntas? O aprendizado profundo funciona melhor que o ARIMA? Pode bater o xgboost? Esta é uma grande competição para explorar diferentes modelos e melhorar suas habilidades em previsão.
+
 ### Pacotes.
 
 library(dplyr);

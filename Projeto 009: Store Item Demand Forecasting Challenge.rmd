@@ -39,14 +39,14 @@ month = month(data$date)
 year = year(data$date)
 ```
 
-### Analise explotoria de dados.
+### Análise explotoria de dados.
 
 * Analise dos dados com foco do target.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(data,Target="sales",op_file = "EDA_base_forecast.html")
 ```
 
-### Analise de series de temporais.
+### Análise de series de temporais.
 
 * Gráfico da serie temporal.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

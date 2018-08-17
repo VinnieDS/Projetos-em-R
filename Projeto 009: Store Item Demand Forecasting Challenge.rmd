@@ -42,12 +42,14 @@ year = year(data$date)
 
 ### Analise explotoria de dados.
 
+* Analise dos dados com foco do target.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(data,Target="sales",op_file = "EDA_base_forecast.html")
 ```
 
 ### Analise de series de temporais.
 
+* Gráfico da serie temporal.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data_ts = ts(data$sales, start=c(2013,1,1), end=c(2017,12,31), frequency=365)
 plot(data_ts, main = "Sales - Time series")

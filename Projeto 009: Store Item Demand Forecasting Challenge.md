@@ -4,13 +4,16 @@ Esta competição é oferecida como uma maneira de explorar diferentes técnicas
 
 ### Pacotes.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 library(dplyr);
 library(forecast);
 library(caret);
 library(SmartEDA);
+```
 
 ### Entrada de dados.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 treino = read.csv("train.csv")
 teste = read.csv("teste.csv")
 teste$sales = NA
@@ -18,37 +21,49 @@ treino$id = NA
 data = rbind(data,teste)
 dim(data)
 str(data)
+```
 
 ### Transformação de dados.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data$date = as.Date(data$date)
 data$store = as.factor(data$store)
 data$item = as.factor(data$item)
+```
 
 ### Features Engineering.
-* Criação de informações em reverencia a data.
 
+* Criação de informações em reverencia a data.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 weekday = weekday(data$date)
 month = month(data$date)
 year = year(data$date)
+```
 
 ### Analise explotoria de dados.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ExpReport(data,Target="sales",op_file = "EDA_base_forecast.html")
+```
 
 ### Analise de series de temporais.
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data_ts = ts(data$sales, start=c(2013,1,1), end=c(2017,12,31), frequency=365)
 plot(data_ts, main = "Sales - Time series")
+```
 
 * Decomposição da serie temporal.
-
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 stlRes = stl(data_ts, s.window = "periodic")
 plot(stlRes,main = "Decomposição da serie Sales")
+```
 
 ### Divisão do dataset
 
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(8674)
 part = createDataPartition(y = data$sales, p = 0.8, list = FALSE)
 treino = data[part,]
 teste = data[-part,]
+```

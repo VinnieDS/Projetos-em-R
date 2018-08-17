@@ -25,13 +25,12 @@ str(data)
 
 ### Transformação de dados.
 
+* Transformação do tipo de dados.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 data$date = as.Date(data$date)
 data$store = as.factor(data$store)
 data$item = as.factor(data$item)
 ```
-
-### Features Engineering.
 
 * Criação de informações em reverencia a data.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -61,11 +60,15 @@ stlRes = stl(data_ts, s.window = "periodic")
 plot(stlRes,main = "Decomposição da serie Sales")
 ```
 
+### Features Engineering.
+
+
+
 ### Divisão do dataset
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(8674)
-part = createDataPartition(y = data$sales, p = 0.8, list = FALSE)
+part = createDataPartition(y = data$sales, p = 0.90, list = FALSE)
 treino = data[part,]
 teste = data[-part,]
 ```

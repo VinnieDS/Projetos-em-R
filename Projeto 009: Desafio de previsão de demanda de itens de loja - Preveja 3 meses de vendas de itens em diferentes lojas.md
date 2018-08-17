@@ -81,7 +81,7 @@ plot(stlRes,main = "Decomposição da serie Sales")
 
 * Agregar as vendas via média
 
-
+* Agregar as vendas via desvio padrão
 
 ### Divisão do dataset.
 

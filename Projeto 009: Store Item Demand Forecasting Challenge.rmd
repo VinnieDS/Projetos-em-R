@@ -34,9 +34,26 @@ data$item = as.factor(data$item)
 
 * Criação de informações em reverencia a data.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
+# Dia de semana
 weekday = weekday(data$date)
-month = month(data$date)
-year = year(data$date)
+
+# Mês
+month = as.numeric(format(date, format = "%m"))
+
+# Ano
+year = as.numeric(format(date, format = "%Y"))
+
+# Trimestre
+month = as.numeric(format(date, format = "%m"))[1]
+if (month < 4) {
+    quarter = paste( format(date, format = "%Y")[1], "Q1", sep="-")
+} else if (month > 3 & month < 7) {
+    quarter = paste( format(date, format = "%Y")[1], "Q2", sep="-")            
+} else if (month > 6 & month < 10) {
+    quarter = paste( format(date, format = "%Y")[1], "Q3", sep="-")
+} else if (month > 9) {
+    quarter = paste( format(date, format = "%Y")[1], "Q4", sep="-")
+}
 ```
 
 ### Análise explotoria de dados.
@@ -61,6 +78,8 @@ plot(stlRes,main = "Decomposição da serie Sales")
 ```
 
 ### Features Engineering.
+
+* Agregar as vendas via média
 
 
 

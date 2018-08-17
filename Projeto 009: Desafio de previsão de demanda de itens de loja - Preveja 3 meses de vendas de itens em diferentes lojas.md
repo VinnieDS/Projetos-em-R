@@ -79,11 +79,11 @@ plot(stlRes,main = "Decomposição da serie Sales")
 
 ### Features Engineering.
 
-* Agregar as vendas via média
+* Agregar as vendas via média.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ```
 
-* Agregar as vendas via desvio padrão
+* Agregar as vendas via desvio padrão.
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ```
 

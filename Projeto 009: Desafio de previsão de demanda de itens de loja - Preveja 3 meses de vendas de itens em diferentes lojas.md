@@ -87,6 +87,10 @@ plot(stlRes,main = "Decomposição da serie Sales")
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 ```
 
+* Agregar as vendas via mediana.
+```{r, cache=FALSE, message=FALSE, warning=FALSE}
+```
+
 ### Divisão do dataset.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

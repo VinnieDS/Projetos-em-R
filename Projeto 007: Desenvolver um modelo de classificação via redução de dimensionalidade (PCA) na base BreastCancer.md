@@ -71,7 +71,8 @@ missmap(data, main = "Verificação de valores faltantes")
 
 * Análise de dados modelados e com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggplot(data, aes(x=diagnosis))+geom_bar(stat="count", width=0.5, fill="steelblue")+theme_minimal()+ggtitle("Target")
+ggplot(data, aes(x=diagnosis))+geom_bar(stat="count", width=0.5, fill="steelblue")
+       +theme_minimal()+ggtitle("Target")
 ```
 * Matriz de correlação (dados altamente correlacionados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}

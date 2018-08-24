@@ -38,19 +38,29 @@ As características são calculadas a partir de uma imagem digitalizada de um as
 Informações sobre Atributos:
 
 1) Número ID 
+
 2) Diagnóstico (M = maligno, B = benigno) 
 
 Dez características reais são calculadas para cada núcleo celular:
 
 a) raio (média das distâncias do centro para os pontos no perímetro) 
+
 b) textura (desvio padrão dos valores da escala de cinza) 
+
 c) perímetro 
+
 d) área 
+
 e) suavidade (variação local no comprimento do raio) 
+
 f) compactação (perímetro ^ 2 / área - 1.0) 
+
 g) concavidade (gravidade das porções côncavas do contorno) 
+
 h) pontos côncavos (número de porções côncavas do contorno)
+
 i) simetria 
+
 j) dimensão fractal ("aproximação costeira" - 1)
 
 A média, erro padrão e "pior" ou maior (média dos três maiores valores) desses recursos foram calculados para cada imagem, resultando em 30 recursos. Por exemplo, o campo 3 é o raio médio, o campo 13 é o raio SE, o campo 23 é o pior raio.

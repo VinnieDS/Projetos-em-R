@@ -41,114 +41,66 @@ https://www.kaggle.com/uciml/breast-cancer-wisconsin-data/home
 ### Pacotes.
 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-library(devtools);
-library(dplyr);
-library(caret);
-library(SmartEDA);
-library(GGally);
-library(rpart);
-library(shiny);
-library(Amelia);
-library(pROC);
-library(gbm);
-library(mlbench);
+library(dplyr)
+library(caret)
+library(ggplot2)
+library(GGally)
+library(Amelia)
+library(pROC)
 ```
 
 ### Entrada de dados.
 
 * Dados de treino e teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-data(BreastCancer)
-dim(BreastCancer)
-```
-
-### Análise explorátoria de dados.
-
-* Análise dos dados brutos com foco no target
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(BreastCancer,Target="Class",op_file = "EDA_BreastCancer.html")
-```
-
-### Features Engineering.
-
-* Mudança do nome para modelagem e retirada do ID
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-data = BreastCancer
-data = data[,-1]
+data = read.csv("../input/data.csv" , header = TRUE , sep = ",")
 dim(data)
-```
-* Transformação dos fatores em dados númericos
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-data_if = data[,-10] %>% mutate_if(is.factor, as.numeric)
-data = cbind(data_if,data[10])
+str(data)
+data = data[2:32]
 str(data)
 ```
-* Verificação dos dados faltantes
+
+### Verificação de dados faltantes.
+
+* Mapa de dados faltantes
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-missmap(data)
+missmap(data, main = "Verificação de valores faltantes")
 ```
-* Preenchimento dos dados faltantes via algoritmo rpart (Variável "Bare.nuclei")
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-bare_nuclei_miss = rpart(Bare.nuclei ~ Cl.thickness + Cell.size + Cell.shape + Marg.adhesion + Epith.c.size + 
-                         Epith.c.size + Bl.cromatin + Normal.nucleoli, 
-                         data=data[!is.na(data$Bare.nuclei),], method="anova")
-              
-data$Bare.nuclei[is.na(data$Bare.nuclei)] = predict(bare_nuclei_miss, data[is.na(data$Bare.nuclei),])
-```
+
 ### Análise explorátoria de dados.
 
 * Análise de dados modelados e com foco no target
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ExpReport(data,Target="Class",op_file = "EDA_BreastCancer_trans.html")
+ggplot(data, aes(x=diagnosis))+geom_bar(stat="count", width=0.5, fill="steelblue")+theme_minimal()+ggtitle("Target")
 ```
 * Matriz de correlação (dados altamente correlacionados)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(data[-10],label = T,nbreaks = 5,label_round = 2)
-```
-
-### Analise de componentes principais.
-
-* Desenvolvimento da analise de componentes principais
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pc = prcomp(data[,-10], center = TRUE, scale. = TRUE)
-print(pc)
-summary(pc)
-```
-
-* Gráfico da analise de componentes principais
-```{r, cache=FALSE, message=FALSE, warning=FALSE}
-install_github("ggbiplot", "vqv")
-library(ggbiplot)
-g = ggbiplot(pc, obs.scale = 1, var.scale = 1, 
-             groups = data$Class, ellipse = TRUE, 
-             circle = TRUE, ellipse.prob = 0.68)
-g = g+scale_alpha_discrete(name = '')
-g = g+theme(legend.direction = 'horizontal', legend.position = 'top')
-print(g)
+ggcorr(data[-1],label = F,nbreaks = 5,hjust = 0.5, size = 3, color = "grey50", layout.exp = 2)
 ```
 
 ### Preparação para o treinamento.
 
 * Pré processamento com analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-pp_data = preProcess(data[, -10], method = c("pca"))
-data = predict(pp_data, newdata = data[, -11])
+pp_data = preProcess(data[, -1], method = c("pca"))
+data = predict(pp_data, newdata = data)
 head(data)
 ```
 * Matriz de correlação com o dado pre processado pela analise de componentes principais
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-ggcorr(data[2:8],label = T,nbreaks = 5,label_round = 2)
+ggcorr(data[-1],label = T,nbreaks = 5,label_round = 2,label_size = 4,hjust = 0.5, size = 4, 
+       color = "grey50", layout.exp = 2)
 ```
 * Divisão do dataset
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(86)
-part = createDataPartition(y = data$Class, p = 0.8, list = FALSE)
+part = createDataPartition(y = data$diagnosis, p = 0.9, list = FALSE)
 treino = data[part,]
 teste = data[-part,]
 ```
 * Controle do treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel = TRUE)
+control = trainControl(method = "cv",number = 5,classProbs = TRUE)
 ```
 
 ### Seleção de modelo.
@@ -156,28 +108,14 @@ control = trainControl(method = "cv",number = 10,classProbs = TRUE,allowParallel
 * Modelos de Naive Bayes, C50, GLM, GBM, KNN, Random Forest, Xgboost e SVM
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
 set.seed(95)
-modelnb = train(Class~., data=treino, method="nb", trControl=control)
-set.seed(40)
-modelc50 = train(Class~., data=treino, method="C5.0", trControl=control)
-set.seed(71)
-modelglm = train(Class~., data=treino, method="glm", trControl=control)
-set.seed(78)
-modelknn = train(Class~., data=treino, method="knn", trControl=control)
+modelsvm = train(diagnosis~., data=treino, method="svmRadial", trControl=control)
 set.seed(80)
-modelgbm = train(Class~., data=treino, method="gbm", trControl=control)
-set.seed(97)
-modelrf = train(Class~., data=treino, method="rf", trControl=control)
-set.seed(11)
-modelxgbTree = train(Class~., data=treino, method="xgbTree", trControl=control)
-set.seed(75)
-modelsvmRadial = train(Class~., data=treino, method="svmRadial", trControl=control)
+modelgbm = train(diagnosis~., data=treino, method="gbm", trControl=control)
 ```
 
 * Agregação dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-resultados = resamples(list(NB=modelnb, C50=modelc50, GLM=modelglm, 
-                            KNN=modelknn, GBM=modelgbm, RF=modelrf, 
-                            XGB=modelxgbTree, SVM=modelsvmRadial))
+resultados = resamples(list(SVM = modelsvm,GBM = modelgbm))
 ```
 
 * Resumo dos resultados
@@ -187,17 +125,17 @@ summary(resultados)
 
 * Boxplots dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-bwplot(resultados)
+bwplot(resultados, main = "Seleção de Modelos")
 ```
 
 * Dot plots dos resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-dotplot(resultados)
+dotplot(resultados, main = "Seleção de Modelos")
 ```
 
 * Comparação estatística dos resultados (Entre os melhores modelos)
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-compare_models(modelc50, modelgbm)
+compare_models(modelsvm, modelgbm)
 ```
 
 * Conclusão
@@ -208,14 +146,14 @@ De acordo com a acuracia vamos utilizar o modelo gbm para modelar os dados.
 
 * Grid 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-grid = expand.grid(interaction.depth=c(1,2), 
-                    n.trees=c(10,20,30,40,50,100),
-                    shrinkage=c(0.001,0.01,0.1),
-                    n.minobsinnode = 20)      
+grid = expand.grid(n.trees=c(20,30,50,100),
+                   interaction.depth=c(1,2),
+                   shrinkage=c(0.001,0.01,0.1),
+                   n.minobsinnode = c(20,30))    
 ```
 * Treino
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-gbm.tune = train(x=treino[2:8],y=treino$Class,
+gbm.tune = train(x=treino[2:11],y=treino$diagnosis,
                               method = "gbm",
                               metric = "ROC",
                               trControl = control,
@@ -224,9 +162,7 @@ gbm.tune = train(x=treino[2:8],y=treino$Class,
 ```
 * Resultados
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-gbm.tune$bestTune
-plot(gbm.tune)  
-res = gbm.tune$results
+plot(gbm.tune, main = "Tunning GBM")   
 ```
 
 ### Teste e avaliação de perfomance.
@@ -237,7 +173,8 @@ gbm.pred = predict(gbm.tune,teste)
 ```
 * Matriz de confusão e métricas relacionadas ao teste
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-confusionMatrix(gbm.pred,teste$Class)
+confusionMatrix(gbm.pred,teste$diagnosis,positive = "B")
+fourfoldplot(confusionMatrix(gbm.pred,teste$diagnosis,positive = "B")$table, main = "Matriz de confusão GBM Tune")
 ```
 * Obtenção das probabilidades
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -246,11 +183,9 @@ head(gbm.probs)
 ```
 * Curva ROC 
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
-gbm.ROC = roc(predictor=gbm.probs$benign,
-               response=teste$Class,
-               levels=rev(levels(teste$Class)))
-
-plot(gbm.ROC,main="Diagnóstico de Cancer de Mama via GBM")
+gbm.ROC = roc(predictor=gbm.probs$B,response=teste$diagnosis)
+plot(gbm.ROC,main="Diagnóstico de Cancer de Mama via GBM",
+     print.auc=TRUE,auc.polygon=TRUE,auc.polygon.col="gray",print.thres=TRUE)
 ```
 * Área da curva ROC
 ```{r, cache=FALSE, message=FALSE, warning=FALSE}
@@ -265,8 +200,4 @@ saveRDS(gbm.tune,file = "modelo_cancer_final")
 
 ### Conclusão.
 
-Utilizando a redução de dimensionalidade PCA conseguimos um modelo com auc de 0.9979 (classificador quase perfeito) e uma acuracia de 0.9784 nos dados de teste uma performance muito melhor do que a referencia que treinou os mesmos dados com o algoritmo de KNN (K=1) e obteve a acuracia de 0.95 e assim reduzindo a taxa de falsos positivos e falsos negativos. 
-
-### Deployment in Shiny R (Criação do APP).
-
-Utilizando o modelo desenvolvido que melhor explica a relação do cancer de mama do tipo benigno com o maligino iremos desenvolver um app no qual o usuario vai inserir os fatores determinantes para o tipo de cancer e o app vai retornar com o tipo e a probabilidade do diagnostico.
+Utilizando a redução de dimensionalidade PCA conseguimos um modelo com auc de 0.9905 (classificador quase perfeito) e uma acuracia de 0.96 nos dados de teste uma performance muito melhor do que a referencia que treinou os mesmos dados com o algoritmo de KNN (K=1) e obteve a acuracia de 0.95 e assim reduzindo a taxa de falsos positivos e falsos negativos. 

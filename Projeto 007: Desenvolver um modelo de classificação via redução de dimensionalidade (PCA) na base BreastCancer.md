@@ -1,28 +1,42 @@
 # Projeto 7: Desenvolver um modelo de classificação via redução de dimensionalidade (PCA) na base Breast Cancer.
 
-O objetivo é identificar cada uma das várias classes benignas ou malignas. As amostras chegam periodicamente como o Dr. Wolberg relata seus casos clínicos. O banco de dados, portanto, reflete essa ordem cronológica agrupamento dos dados. Esta informação de agrupamento aparece imediatamente abaixo, tendo sido removida dos dados em si. Cada variável, exceto a primeira, foi convertida em 11 números numéricos primitivos. atributos com valores que variam de 0 a 10. Há 16 valores de atributos ausentes. Uma base de dados com 699 observações em 11 variáveis, sendo uma delas uma variável de caráter, 9 sendo ordenada ou nominal e 1 classe alvo. Iremos realizar uma redução de dimensionalidade em vez da seleção de variáveis, pois os preditores desse dataset são altamente correlacionados e isso pode atrapalhar nas predições.
+As características são calculadas a partir de uma imagem digitalizada de um aspirador de agulha fina (PAAF) de uma massa mamária. Eles descrevem características dos núcleos celulares presentes na imagem. O espaço tridimensional é o descrito em: [KP Bennett e OL Mangasarian: "Discriminação Linear de Programação Robusta de Dois Conjuntos Linearmente Inseparáveis", Optimization Methods and Software 1, 1992, 23-34]. Esta base de dados também está disponível através do servidor ftp da UW CS: ftp ftp.cs.wisc.edu cd math-prog / cpo-dataset / machine-learn / WDBC / Também pode ser encontrado no UCI Machine Learning Repository: https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29
 
-1] Id - Sample code number
+Informações sobre Atributos:
 
-2] Cl.thickness - Clump Thickness
+1) Número ID 
 
-3] Cell.size - Uniformity of Cell Size
+2) Diagnóstico (M = maligno, B = benigno) 
 
-4] Cell.shape - Uniformity of Cell Shape
+Dez características reais são calculadas para cada núcleo celular:
 
-5] Marg.adhesion - Marginal Adhesion
+a) raio (média das distâncias do centro para os pontos no perímetro) 
 
-6] Epith.c.size - Single Epithelial Cell Size
+b) textura (desvio padrão dos valores da escala de cinza) 
 
-7] Bare.nuclei - Bare Nuclei
+c) perímetro 
 
-8] Bl.cromatin - Bland Chromatin
+d) área 
 
-9] Normal.nucleoli - Normal Nucleoli
+e) suavidade (variação local no comprimento do raio) 
 
-10] Mitoses - Mitoses
+f) compactação (perímetro ^ 2 / área - 1.0) 
 
-11] Class - Class
+g) concavidade (gravidade das porções côncavas do contorno) 
+
+h) pontos côncavos (número de porções côncavas do contorno)
+
+i) simetria 
+
+j) dimensão fractal ("aproximação costeira" - 1)
+
+A média, erro padrão e "pior" ou maior (média dos três maiores valores) desses recursos foram calculados para cada imagem, resultando em 30 recursos. Por exemplo, o campo 3 é o raio médio, o campo 13 é o raio SE, o campo 23 é o pior raio.
+
+Todos os valores de recursos são recodificados com quatro dígitos significativos.
+Valores de atributo ausentes: nenhum
+Distribuição de classes: 357 benignas, 212 malignas
+
+https://www.kaggle.com/uciml/breast-cancer-wisconsin-data/home
 
 ### Pacotes.
 
